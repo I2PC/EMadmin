@@ -7,7 +7,8 @@ from django.conf import settings
 
 class BaseProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
-                                primary_key=True)
+                                primary_key=True,
+                                related_name='_baseprofile')
     slug = models.UUIDField(default=uuid.uuid4, blank=True, editable=False)
     # Add more user profile fields here. Make sure they are nullable
     # or with default values
@@ -17,7 +18,7 @@ class BaseProfile(models.Model):
                                 blank=True)
     bio = models.CharField("Short Bio", max_length=200, blank=True, null=True)
     email_verified = models.BooleanField("Email verified", default=False)
-
+    institution = models.CharField(max_length=128, null=False, blank=False)
     class Meta:
         abstract = True
 
