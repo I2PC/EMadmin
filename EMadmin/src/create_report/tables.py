@@ -7,7 +7,7 @@ class ProjectsTable(tables.Table):
     go_to_Html_Summary = tables.TemplateColumn('<a href="http://%s/%s/{{record.projname}}">'
                                      '{{record.projname}}</a>'%
                                      (settings.PUBLISHURL, settings.PUBLISHUSER), order_by=('projname'))
-    get_Report = tables.TemplateColumn('<a href={% url "create_report:create_report_latex" record.projname %}>'
+    get_Report = tables.TemplateColumn('<a href={% url "create_report:create_report_latex" record.id %}>'
                                        '{{record.projname}}</a>',
                                        order_by=('projname'))
 

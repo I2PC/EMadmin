@@ -23,8 +23,9 @@ class SkipAcquisitionForm(forms.Form):
     project = forms.ModelChoiceField(queryset=None, initial=0)
 
 class AcquisitionForm(forms.ModelForm):
+    shiftLength = forms.FloatField(initial=3, label="Turn length (days)")
     backupPath = forms.CharField(required=True,
-                                 initial=settings.BACKUPMESSAGE)
+                                 label="Backup (double click to see disks)")
     schedule = forms.BooleanField(widget= forms.CheckboxInput(),initial=False,
                                   label="Run scipion in batch mode (schedule)",
                                   required=False)
@@ -52,9 +53,9 @@ class AcquisitionForm(forms.ModelForm):
 
         # if  lsyncd running report error TRANSFERTOOL
         counterList = is_running(settings.TRANSFERTOOL)
-        print "lsync pid =", counterList
-        for k, v in self.cleaned_data.iteritems():
-             print "**", k, v, "**"
+        # print "lsync pid =", counterList
+        # for k, v in self.cleaned_data.iteritems():
+        #     print "**", k, v, "**"
         if counterList[0] != 0 and\
                 (not self.cleaned_data.get('multiple_backup')):
             msg = "There is at least one backup script running in the " \
@@ -66,7 +67,6 @@ class AcquisitionForm(forms.ModelForm):
                   "backup warning' and resend the " \
                   "form" % settings.TRANSFERTOOL
             raise forms.ValidationError(msg)
-#        return self.cleaned_data.get('backupPath')
         return self.cleaned_data
 
     class Meta:

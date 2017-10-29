@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from datetime import datetime
+#from datetime import datetime
+from django.utils import timezone
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
@@ -10,17 +11,18 @@ from django.conf import settings
 class Workflow(models.Model):
     name = models.CharField(max_length=128, blank=False)
     workflow = models.TextField(unique=True, blank=False)
-    date = models.DateTimeField(default=datetime.now, blank=True)
+    date = models.DateTimeField(default=timezone.now, blank=True)
 
     def __unicode__(self):  #For Python 2, use __str__ on Python 3
         return self.name
 
 # Create your models here.
 class Microscope(models.Model):
-    name     = models.CharField(max_length=64, unique=True, blank=False)
-    detector = models.CharField(max_length=64, unique=True, default='FalconIII')
+    name      = models.CharField(max_length=64, unique=True, blank=False)
+    model     = models.CharField(max_length=128, unique=True, blank=False)
+    detector  = models.CharField(max_length=64, unique=True, default='FalconIII')
     detectorPixelSize = models.FloatField(default=14)  # microns
-    cs = models.FloatField(default=2.7)  # mm
+    cs = models.FloatField(default=2.7)  #           mm
     # microscope data is in this folder
     dataFolder = models.CharField(max_length=256,
                                   default='/home/scipionuser/OffloadData')
@@ -30,12 +32,13 @@ class Microscope(models.Model):
 
 class Acquisition(models.Model):
     microscope = models.ForeignKey(Microscope, default=settings.DEFAULTMIC)
-    user       = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False)
+    user       = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False)  #
     workflow   = models.ForeignKey(Workflow, default=settings.DEFAULTWORKFLOW)
     sample     = models.CharField(max_length=128)
     voltage    = models.IntegerField(default=200)
-    date       = models.DateTimeField(default=datetime.now, blank=True)
-    projname   = models.CharField(max_length=128, blank=True, unique=True)
+    date       = models.DateTimeField(default=timezone.now, blank=True)  #
+    shiftLength = models.FloatField(default=3)
+    projname   = models.CharField(max_length=128, blank=True, unique=True)  #
     backupPath = models.CharField(max_length=128,
                                   default='NOBACKUP',blank=True)
     multiple_backup = models.BooleanField(default=False)
@@ -68,17 +71,17 @@ O1_HOLE_CHOICES = [(30, '30'), (70, '70')]
 PHP_CHOICES = [(0, '--'), (1, '1'), (2, '2'),(3, '3'), (4, '4'), (5, '5'), (6, '6')]
 
 class Acquisition2(models.Model):
-    acquisition = models.ForeignKey(Acquisition, unique=True)
+    acquisition = models.OneToOneField(Acquisition)
     nominal_magnification = models.FloatField(blank=False)
     sampling_rate = models.FloatField(blank=False)  # A/px OK
     spotsize = models.FloatField(blank=False)
     illuminated_area = models.FloatField(blank=True, default=1.68) #microns OK
-    dose_per_frame = models.FloatField(blank=False)  # e/A^2 y fraction--> change frame by fraction, OK
+    #dose_per_fraction = models.FloatField(blank=False)  # e/A^2 y fraction--> change frame by fraction, OK
     dose_rate = models.FloatField(blank=False)  # e/px*sec 
     total_exposure_time = models.FloatField(blank=False) # seconds
     number_of_fractions = models.PositiveIntegerField(blank=False)
     frames_in_fraction = models.PositiveIntegerField(blank=False)
-    nominal_defocus = models.CharField(max_length=128, blank=False, default="array of floats") # array the floats microns
+    nominal_defocus_range = models.CharField(max_length=128, blank=False, default="array of floats") # array the floats microns
     autofocus_distance = models.FloatField(blank=False)
     drift_meassurement = models.CharField(max_length=16, choices=DRIFT_MEASU_CHOICES,
                                           default='never')
