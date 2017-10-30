@@ -172,3 +172,4 @@ PUBLISHCMD="rsync -Lav %(REPORT_FOLDER)s " + "%s@%s:public_html/"%(PUBLISHUSER,P
 TRANSFERTOOL='/usr/bin/lsyncd'
 TRANSFERTOOLARGS=["-nodaemon", "-delay", "300" , "-rsync"]
 LATEX_REPORT_TEMPLATE = join(MEDIA_ROOT, 'TEM_report.tex')
+LOGIN_REDIRECT_URL = '/'  # after login redirect here

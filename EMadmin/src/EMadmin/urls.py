@@ -19,7 +19,9 @@ urlpatterns = [
 ]
 
 # User-uploaded files like profile pics need to be served in development
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+urlpatterns += staticfiles_urlpatterns()
 
 # Include django debug toolbar if DEBUG is on
 if settings.DEBUG:

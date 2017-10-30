@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.views import generic
 from django.contrib.auth import get_user_model
 from django.contrib import auth
@@ -8,6 +8,7 @@ from authtools import views as authviews
 from braces import views as bracesviews
 from django.conf import settings
 from . import forms
+from django.http import HttpResponseRedirect
 
 User = get_user_model()
 
@@ -18,13 +19,13 @@ class LoginView(bracesviews.AnonymousRequiredMixin,
     form_class = forms.LoginForm
 
     def form_valid(self, form):
-        redirect = super(LoginView, self).form_valid(form)
+        r = super(LoginView, self).form_valid(form)
         remember_me = form.cleaned_data.get('remember_me')
         if remember_me is True:
             ONE_MONTH = 30*24*60*60
             expiry = getattr(settings, "KEEP_LOGGED_DURATION", ONE_MONTH)
             self.request.session.set_expiry(expiry)
-        return redirect
+        return r
 
 
 class LogoutView(authviews.LogoutView):

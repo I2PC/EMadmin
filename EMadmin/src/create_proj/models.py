@@ -76,11 +76,13 @@ class Acquisition2(models.Model):
     sampling_rate = models.FloatField(blank=False)  # A/px OK
     spotsize = models.FloatField(blank=False)
     illuminated_area = models.FloatField(blank=True, default=1.68) #microns OK
-    #dose_per_fraction = models.FloatField(blank=False)  # e/A^2 y fraction--> change frame by fraction, OK
-    dose_rate = models.FloatField(blank=False)  # e/px*sec 
+
+    dose_per_fraction = models.FloatField(blank=False)  # e/A^2 y fraction--> change frame by fraction, OK
+    #dose_rate = models.FloatField(blank=False)  # e/px*sec
     total_exposure_time = models.FloatField(blank=False) # seconds
     number_of_fractions = models.PositiveIntegerField(blank=False)
     frames_in_fraction = models.PositiveIntegerField(blank=False)
+
     nominal_defocus_range = models.CharField(max_length=128, blank=False, default="array of floats") # array the floats microns
     autofocus_distance = models.FloatField(blank=False)
     drift_meassurement = models.CharField(max_length=16, choices=DRIFT_MEASU_CHOICES,
@@ -90,6 +92,7 @@ class Acquisition2(models.Model):
     max_image_shift = models.IntegerField(default=5)
     exposure_hole = models.IntegerField(choices=EXPOSURE_HOLE_CHOICES,
                                       default=1)
+
     c2 = models.IntegerField(choices=C2_CHOICES,
                                       default=50)
     o1 = models.IntegerField(choices=O1_HOLE_CHOICES,
