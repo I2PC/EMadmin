@@ -1,0 +1,121 @@
+\documentclass[12pt,a4paper]{article}
+%
+% AUTHOR: Roberto Marabini Ruiz
+%
+\usepackage{helvet} 
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{a4wide}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+% SELECT ONE OF THE FOLLOWING PACKAGES FOR THE LANGUAGE 
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage[absolute]{textpos}
+\usepackage{tabularx} 
+\usepackage{tabulary}                 
+\usepackage{fancyhdr}
+\usepackage[table]{xcolor}
+\usepackage{color}
+\pagestyle{fancy}
+\headsep=50pt
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PLEASE FILL THE ADEQUATE DATA IN THE TABLE REPLACING
+% THE VALUES EXEMPLIFIED
+\lhead{}
+\fancyhead[C]{\begin{tabularx}{1.0\textwidth}{|l X|l|l|}
+\hline 
+% In the following line change Course Name: PPIII, PPB
+\textbf{}& \textbf{MICROSCOPE USAGE REPORT} & \textbf{Date:}  &  2017-03-30 \\ 
+\hline
+% In the following line insert your Name and IST ID
+\multicolumn{2}{|l|}{\textbf{User:} acquisitionUserName} & \textbf{ID:} &  acquisitionId \\ 
+\hline
+\multicolumn{2}{|l|}{\textbf{Project:} acquisitionProjName} & \textbf{Sample:} & acquisitionProjname\\ 
+\hline
+\end{tabularx}}
+\rhead{}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DO NOT CHANGE THIS BLOCK
+\begin{document}
+\textblockorigin{-18pt}{-2pt}
+\begin{textblock*}{10cm}(2cm,1cm)
+\begin{tabular}{l l}
+\raisebox{-.25\height}{\includegraphics[width=1.5cm]{mic.jpg}}&\color{blue}{\LARGE Electron Microscopy Facility at CNB-CSIC}\vspace{1cm}\\
+\end{tabular}
+\end{textblock*}
+
+\section*{\\Data Acquisition Report}
+\def\arraystretch{1.25}%  1 is the default, change whatever you need
+% MICROSCOPE
+\begin{tabulary}{\linewidth}{L L}
+  \hline\cellcolor{blue!25}Microscope & \cellcolor{blue!25}\\\hline
+  Model & microscopeName\\\hline
+  Detector & microscopeDetector\\\hline
+  Physical Pixel Size & acquisitiondetectorPixelSize
+  Voltage & acquisitionVoltage\\\hline
+  Spheric Aberration & microscopeCs\\\hline
+\end{tabulary}
+%
+  \hspace{1cm}
+%
+% DATA ACQUISITON
+\begin{tabulary}{\linewidth}{L L}
+  \hline
+  \cellcolor{blue!25}Data Acquisition Params & \cellcolor{blue!25} \\\hline
+  Nominal magnification & acquisitionNominalMagnification \\\hline
+  Sampling Rate & acquisitionSamplingRatepixSize\\\hline
+  Spot Size & acquisitionSpotlSize \\\hline
+  Illuminated Area & aquisitionIlluminatedArea\\\hline
+\end{tabulary}\\\\
+% DOSE
+\newline
+%
+\begin{tabulary}{\linewidth}{L L}
+  \\\hline
+  \cellcolor{blue!25}Dose & \cellcolor{blue!25} \\\hline
+  Dose per Fraction ($e/\AA$) & acquisitionDosePerFraction \\\hline
+  Total Exposure Time & acquisitionTotalExptime \\\hline
+  Number Fractions & acquisitionNumFrames \\\hline
+  Frames per Fraction & acquisitionFramesPerFrac\\\hline
+\end{tabulary}
+%
+  \hspace{1cm}
+%
+\begin{tabulary}{\linewidth}{L L}
+  \\\hline
+  \cellcolor{blue!25}Apertures & \cellcolor{blue!25} \\\hline
+  C2 & acquisitionC2 \\\hline
+  O1 & acquisitionO1 \\\hline
+  PhP & acquisitionPhP \\\hline
+  &\\
+\end{tabulary}\\\\
+\newline
+%EPU PARAMETERS
+\begin{tabulary}{\linewidth}{L L}
+  \\\hline
+  \cellcolor{blue!25}EPU parameters & \cellcolor{blue!25} \\\hline
+  C2 & acquisitionC2 \\\hline
+  O1 & acquisitionO1 \\\hline
+  PhP & acquisitionPhP \\\hline
+  &\\
+\end{tabulary}
+
+\newpage
+\section*{Resolution and Fit Histograms}
+
+To be done
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DO NOT CHANGE THIS BLOCK 
+%\newpage 
+%\textblockorigin{-18pt}{-2pt}
+%\begin{textblock*}{10cm}(2cm,1cm)
+%\begin{tabular}{l l}
+%\raisebox{-.25\height}{\includegraphics[width=1.5cm]{mic.jpg}}&\color{blue}{\LARGE Electron Microscopy Facility at CNB-CSIC}\vspace{1cm}\\
+%\end{tabular}
+%\end{textblock*}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}                             % The required last line

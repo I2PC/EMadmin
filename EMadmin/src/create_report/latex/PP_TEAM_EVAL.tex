@@ -1,0 +1,135 @@
+\documentclass[12pt,a4paper]{article}
+%
+% AUTHOR: Roberto Marabini Ruiz
+%
+\usepackage{helvet} 
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{a4wide}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[absolute]{textpos}
+\usepackage{tabularx} 
+\usepackage{tabulary}                 
+\usepackage{fancyhdr}
+\usepackage[table]{xcolor}
+\usepackage{color}
+\pagestyle{fancy}
+\headsep=50pt
+
+% FORM HEADER
+\lhead{}
+\fancyhead[C]{\begin{tabularx}{1.0\textwidth}{|X|l|l|}
+\hline 
+ \textbf{MICROSCOPE USAGE REPORT} 
+         & \textbf{Date:}  
+         & \VAR{acquisitionDate}\\\hline
+{\textbf{User:} \VAR{acquisitionUserName}} 
+         & \textbf{ID:} 
+         &  \VAR{acquisitionId} \\\hline
+{\textbf{Project:} \VAR{acquisitionProjName}} 
+         & \textbf{Sample:} 
+         & \VAR{acquisitionSample} \\\hline
+{\textbf{Backup Dir:} \VAR{acquisitionBackupPath}}
+         & \textbf{Shift (days):}
+         & \VAR{acquisitionShiftLength}\\
+\end{tabularx}}
+\rhead{}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HEADER
+\begin{document}
+\textblockorigin{-18pt}{-2pt}
+\begin{textblock*}{10cm}(2cm,1cm)
+\begin{tabular}{l l}
+\raisebox{-.25\height}{\includegraphics[width=1.5cm]{mic.jpg}}&\color{blue}{\LARGE Electron Microscopy Facility at CNB-CSIC}\vspace{1cm}\\
+\end{tabular}
+\end{textblock*}
+
+\section*{\\Data Acquisition Report}
+\def\arraystretch{1.25}  % cell padding  1 is the default, 
+                         % change whatever you need
+% MICROSCOPE
+\begin{tabulary}{\linewidth}{L L}
+  \hline\cellcolor{blue!25}Microscope & \cellcolor{blue!25}\\\hline
+  Microscope ID & \VAR{microscopeName}\\\hline
+  Model & \VAR{microscopeModel}\\\hline
+  Detector & \VAR{microscopeDetector}\\\hline
+  Physical Pixel Size ($\mu$) & \VAR{acquisitiondetectorPixelSize}\\\hline
+  Voltage ($kV$)& \VAR{acquisitionVoltage}\\\hline
+  Spheric Aberration ($mm$)& \VAR{microscopeCs}\\\hline
+\end{tabulary}
+%
+  \hspace{1cm}
+%
+% DATA ACQUISITON
+\begin{tabulary}{\linewidth}{L L}
+  \hline
+  \cellcolor{blue!25}Acquisition Params & \cellcolor{blue!25} \\\hline
+  Nominal Magnification & \VAR{acquisitionNominalMagnification} \\\hline
+  Sampling Rate ($\AA/px$)& \VAR{acquisitionSamplingRate}\\\hline
+  Spot Size & \VAR{acquisitionSpotSize} \\\hline
+  Illuminated Area ($\mu$)& \VAR{aquisitionIlluminatedArea}\\\hline
+   & \\
+   & \\
+\end{tabulary}\\\\
+% DOSE
+   \newline
+%
+\begin{tabulary}{\linewidth}{L L}
+  \\\hline
+  \cellcolor{blue!25}Dose \& Fractions & \cellcolor{blue!25} \\\hline
+  Dose per Fraction ($e/\AA^2$) & 
+      \VAR{acquisitionDosePerFraction} \\\hline
+  Total Exposure Time ($s$)& 
+      \VAR{acquisitionTotalExptime} \\\hline
+  Number Fractions & 
+      \VAR{acquisitionNumFrames} \\\hline
+  Frames per Fraction & 
+      \VAR{acquisitionFramesPerFrac}\\\hline
+  \cellcolor{blue!25}Apertures & \cellcolor{blue!25} \\\hline
+  C2  & \VAR{acquisitionC2} \\\hline
+  O1  & \VAR{acquisitionO1} \\\hline
+  PhP & \VAR{acquisitionPhP} \\\hline
+\end{tabulary}
+%
+  \hspace{1cm}
+%
+% EPU PARAMETERS
+\begin{tabulary}{\linewidth}{L L}
+  \\\hline
+  \cellcolor{blue!25}EPU parameters & \cellcolor{blue!25} \\\hline
+  Defocus Range ($\mu$)& \VAR{acquisitionNominalDefocusRange} \\\hline
+  Autofocus Distance ($\mu$) & 
+      \VAR{acquisitionAutoDefocusDistance} \\\hline
+  Drift Meassurement ($?$) & 
+      \VAR{acquisitionDriftMeassurement} \\\hline
+  Delay after stage shift ($s$) & 
+      \VAR{acquisitionDelayAfterStageShift} \\\hline
+  Delay after image shift ($s$) &
+      \VAR{acquisitionDelayAfterImageShift} \\\hline
+  Maximum image shift ($?$) &
+      \VAR{acquisitionMaxImageShift} \\\hline
+  Exposures per Hole ($-$)& 
+      \VAR{acquisitionExposureHole} \\\hline
+      &\\
+\end{tabulary}
+
+\newpage\thispagestyle{empty}
+\section*{Resolution and Fit Histograms}
+
+To be done
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DO NOT CHANGE THIS BLOCK 
+%\newpage 
+%\textblockorigin{-18pt}{-2pt}
+%\begin{textblock*}{10cm}(2cm,1cm)
+%\begin{tabular}{l l}
+%\raisebox{-.25\height}{\includegraphics[width=1.5cm]{mic.jpg}}&\color{blue}{\LARGE Electron Microscopy Facility at CNB-CSIC}\vspace{1cm}\\
+%\end{tabular}
+%\end{textblock*}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}                             % The required last line

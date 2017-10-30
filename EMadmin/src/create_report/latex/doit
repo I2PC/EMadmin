@@ -1,0 +1,2 @@
+okular PP_TEAM_EVAL.pdf&
+latexmk -pvc -pdf PP_TEAM_EVAL.tex 
