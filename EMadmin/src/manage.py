@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# sudo fuser -k 8000/tcp
 import os
 import sys
 

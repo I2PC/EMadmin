@@ -13,7 +13,7 @@ def parse_ProtImportMovies(protocol, acquisition2):
     protocol["sphericalAberration"] = acquisition.microscope.cs
     protocol["magnification"] = acquisition2.nominal_magnification
     protocol["samplingRate"] = acquisition2.sampling_rate
-    protocol["dosePerFrame"] = acquisition2.dose_per_frame
+    protocol["dosePerFrame"] = acquisition2.dose_per_fraction
 
 def parse_ProtMonitorSummary(protocol, acquisition2=None):
     protocol["emailFrom"] = settings.EMAILFROM

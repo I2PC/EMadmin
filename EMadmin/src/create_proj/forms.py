@@ -34,12 +34,15 @@ class AcquisitionForm(forms.ModelForm):
                                   required=False)
 
     def __init__(self, *args, **kwargs):
-        _dir_list = [os.path.join(settings.BACKUPPATH, o)
-                     for o in os.listdir(settings.BACKUPPATH)
-                     if os.path.isdir(os.path.join(settings.BACKUPPATH,o))]
-        super(AcquisitionForm, self).__init__(*args, **kwargs)
-        self.fields['backupPath'].widget = ListTextWidget(
-                data_list=_dir_list, name='dir-list', size=40)
+        try:
+            _dir_list = [os.path.join(settings.BACKUPPATH, o)
+                         for o in os.listdir(settings.BACKUPPATH)
+                         if os.path.isdir(os.path.join(settings.BACKUPPATH,o))]
+            super(AcquisitionForm, self).__init__(*args, **kwargs)
+            self.fields['backupPath'].widget = ListTextWidget(
+                    data_list=_dir_list, name='dir-list', size=40)
+        except:
+            data_list = []  # directory does not exists
 
 #    def clean_backupPath(self):
     def clean(self):

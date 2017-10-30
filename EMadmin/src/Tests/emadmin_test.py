@@ -9,6 +9,7 @@ import unittest, time, os
 from collections import OrderedDict
 from loremipsum import get_paragraphs, get_sentences
 import sqlite3
+import shutil
 
 class onLineShopTester(unittest.TestCase):
     username    = "testUser1"
@@ -20,7 +21,8 @@ class onLineShopTester(unittest.TestCase):
     admin_url   = base_url + "admin/"
     database    = "db.sqlite3"
 
-    chromeDriver = "/usr/local/bin/chromedriver"
+    #chromeDriver = "/usr/local/bin/chromedriver"
+    chromeDriver = "/home/roberto/bin/chromedriver"
 
     def setUp(self):
 #        self.driver = webdriver.Firefox()
@@ -122,6 +124,8 @@ class onLineShopTester(unittest.TestCase):
             conn.commit()
         except Exception as e:
             print (e)
+        # delete project
+
 
     def deleteProjectFromUser(self, email):
         try:
@@ -131,20 +135,27 @@ class onLineShopTester(unittest.TestCase):
                      WHERE email='%s'"""%email
             cur.execute(sql)
             user_id = cur.fetchone()[0]
+            sql = """SELECT projname FROM create_proj_acquisition
+                     WHERE user_id=%d"""%user_id
+            cur.execute(sql)
+            projname = cur.fetchone()[0]
             sql = """DELETE FROM create_proj_acquisition
                      WHERE user_id='%d'"""%user_id
             cur.execute(sql)
             conn.commit()
+            shutil.rmtree(os.path.join(os.environ['HOME'], "ScipionUserData",
+                                       "projects", projname))
         except Exception as e:
             print (e)
 
     def test_emadmin(self):
-        ##self.deleteUser(self.email)
-        self.seeHome(2)
-        ##self.signUp()  # create user
-        ##self.signOut()  # log out
         self.deleteProjectFromUser(self.email)
+        self.deleteUser(self.email)
+        self.seeHome(2)
+        self.signUp()  # create user
+        self.signOut()  # log out
         self.signIn()  # log in
+        #time.sleep(60)
         self.createProject1()  # first form
         self.createProject2()  # first form
 

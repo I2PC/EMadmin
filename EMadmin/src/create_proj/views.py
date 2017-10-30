@@ -44,7 +44,7 @@ def launch_backup(acquisition):
     """backup using lsyncd
     """
 
-    if acquisition.backupPath == settings.BACKUPMESSAGE:
+    if len(acquisition.backupPath)<3:
         return
     else:
         # get root directory
@@ -52,11 +52,18 @@ def launch_backup(acquisition):
         projname = acquisition.projname
         sourcePath = os.path.join(scipion_user_data, 'projects', projname)
         targetPath = os.path.join(acquisition.backupPath, projname)
-        args=None
-        args = list(settings.TRANSFERTOOLARGS)
+        args = [settings.TRANSFERTOOL]
+        args += settings.TRANSFERTOOLARGS
         args += [sourcePath]
         args += [targetPath]
-        s = subprocess.Popen([settings.TRANSFERTOOL] +  args)
+        """The child process receives the same SIGINT as your parent process
+         because it's in the same process group. You can put the child in its
+          own process group by calling os.setpgrp() in the child process.
+          Popen's preexec_fn argument is useful here:
+        """
+        print args
+        s = subprocess.Popen(["nohup"] +  args,
+                             preexec_fn=os.setpgrp)
 
 @login_required
 def add_acquisition(request):
@@ -161,8 +168,9 @@ def call_scipion_last(acquisition2):
     # get root directory
     scipion = os.path.join(settings.SCIPIONPATH,'scipion')
     #run command
-    args = ["last"]
-    proc = subprocess.Popen([scipion] +  args)
+    args = [scipion]
+    args += ["last"]
+    proc = subprocess.Popen(["nohup"] +  args, preexec_fn=os.setpgrp)
 
 def schedule_protocol(acquisition2):
     """
