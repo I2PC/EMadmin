@@ -6,4 +6,10 @@ django-admin-bootstrapped>=2.5.7
 django-authtools>=1.6.0
 easy-thumbnails>=2.4.1
 django-tables2==1.13.0
+static3==0.7.0
+sqlparse==0.2.4
+psutil==5.4.0
+Pillow==4.3.0
+loremipsum==1.0.5
+gunicorn==19.7.1
 
