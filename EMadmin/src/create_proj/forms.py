@@ -24,7 +24,7 @@ class SkipAcquisitionForm(forms.Form):
 
 class AcquisitionForm(forms.ModelForm):
     shiftLength = forms.FloatField(initial=3, label="Turn length (days)")
-    backupPath = forms.CharField(required=True,
+    backupPath = forms.CharField(required=False,
                                  label="Backup (double click to see disks)")
     schedule = forms.BooleanField(widget= forms.CheckboxInput(),initial=False,
                                   label="Run scipion in batch mode (schedule)",

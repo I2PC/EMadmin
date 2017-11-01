@@ -33,3 +33,4 @@ if settings.DEBUG:
                                           pin_security=False)
     except ImportError:
         pass
+#home/roberto/Scipion/webservices/EMadminVirt/bin/gunicorn  -b localhost:8000 --log-file=-  --error-logfile=-   EMadmin.wsgi
