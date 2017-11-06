@@ -43,6 +43,8 @@ class Acquisition(models.Model):
                                   default='NOBACKUP',blank=True)
     multiple_backup = models.BooleanField(default=False)
     schedule = models.BooleanField(default=False)
+    noScipionProject = models.BooleanField(default=False)  # scipion project
+                                                         # no available
 
     def save(self, *args, **kwargs):
         #create project name
@@ -99,3 +101,14 @@ class Acquisition2(models.Model):
                                       default=70)
     php = models.IntegerField(choices=PHP_CHOICES,
                                       default=3)
+
+    def __unicode__(self):  #For Python 2, use __str__ on Python 3
+        try:
+            return "user=%s, sample=%s, date=%s" % \
+                   (self.acquisition.user,
+                    self.acquisition.sample,
+                    self.acquisition.date.strftime('%Y-%m-%d %H:%M'))
+        except:
+            return "sample=%s, date=%s"%(
+                self.acquisition.sample,
+                self.acquisition.date.strftime('%Y-%m-%d %H:%M'))

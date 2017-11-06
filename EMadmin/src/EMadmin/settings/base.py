@@ -82,6 +82,7 @@ INSTALLED_APPS = (
     'create_proj',
     'create_report',
     'django_tables2',
+    'statistics',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -171,5 +172,7 @@ PUBLISHCMD="rsync -Lav %(REPORT_FOLDER)s " + "%s@%s:public_html/"%(PUBLISHUSER,P
 #BACKUPMESSAGE='delete and double click to see mounted disks'
 TRANSFERTOOL='/usr/bin/lsyncd'
 TRANSFERTOOLARGS=["-nodaemon", "-delay", "300" , "-rsync"]
-LATEX_REPORT_TEMPLATE = join(MEDIA_ROOT, 'TEM_report.tex')
+LATEX_REPORT_TEMPLATE = join(MEDIA_ROOT, 'TEM_report.tex') # in production override
+                      # to LATEX_REPORT_TEMPLATE = join(STATIC_ROOT, 'TEM_report.tex')
+LATEX_REPORT_TEMPLATE_ICON = join(MEDIA_ROOT, 'mic.jpg')
 LOGIN_REDIRECT_URL = '/'  # after login redirect here
