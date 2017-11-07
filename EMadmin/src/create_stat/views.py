@@ -37,7 +37,11 @@ def create_one_statistics(acquisition):
         return None
 
     statistic = Statistics.objects.get_or_create(acquisition=acquisition)[0]
+
     script = os.path.join(settings.SCIPIONPATH,'scripts/scipionbox_report_statistics.py')
+    if not os.path.exists(script):
+        print "HORROR script %d does not exist" % script
+        exit(-1)
     args = ["python"]
     args += [script]
     args += ['-p', acquisition.projname]
@@ -46,7 +50,7 @@ def create_one_statistics(acquisition):
     p = subprocess.Popen([scipion] +  args, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
-    output, err = p.communicate(b"input data that is passed to subprocess' stdin")
+    output, err = p.communicate()
     rc = p.returncode
     d = json.loads(err)
     if d:
