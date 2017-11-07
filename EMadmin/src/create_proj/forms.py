@@ -15,9 +15,14 @@ class SkipAcquisitionForm(forms.Form):
          user = kwargs.pop('user',None)
          last_week = datetime.today() - timedelta(days=7)
          super(SkipAcquisitionForm, self).__init__(*args, **kwargs)
-         self.fields['project'].queryset =  \
-             Acquisition.objects.filter(date__gte=last_week,
-                                        user=user).order_by('-date')
+         if user.is_staff:
+             self.fields['project'].queryset =  \
+                 Acquisition.objects.filter(
+                     date__gte=last_week).order_by('-date')
+         else:
+             self.fields['project'].queryset =  \
+                 Acquisition.objects.filter(
+                     date__gte=last_week, user=user).order_by('-date')
 
     """Show objects recorded last week"""
     project = forms.ModelChoiceField(queryset=None, initial=0)

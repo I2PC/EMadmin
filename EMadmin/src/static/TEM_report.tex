@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 %
-% AUTHOR: Roberto Marabini Ruiz
+% AUTHOR: Roberto Marabini__
 %
 \usepackage{helvet} 
 \renewcommand{\familydefault}{\sfdefault}
@@ -15,37 +15,29 @@
 \usepackage{fancyhdr}
 \usepackage[table]{xcolor}
 \usepackage{color}
-\pagestyle{fancy}
-\headsep=50pt
 
-% FORM HEADER
-\lhead{}
-\fancyhead[C]{\begin{tabularx}{1.0\textwidth}{|X|l|l|}
-\hline 
- \textbf{MICROSCOPE USAGE REPORT} 
-         & \textbf{Date:}  
-         & \VAR{acquisitionDate}\\\hline
-{\textbf{User:} \VAR{acquisitionUserName}} 
-         & \textbf{ID:} 
-         &  \VAR{acquisitionId} \\\hline
-{\textbf{Project:} \VAR{acquisitionProjName}} 
-         & \textbf{Sample:} 
-         & \VAR{acquisitionSample} \\\hline
-{\textbf{Backup Dir:} \VAR{acquisitionBackupPath}}
-         & \textbf{Shift (days):}
-         & \VAR{acquisitionShiftLength}\\
-\end{tabularx}}
-\rhead{}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HEADER
 \begin{document}
-\textblockorigin{-18pt}{-2pt}
-\begin{textblock*}{10cm}(2cm,1cm)
-\begin{tabular}{l l}
-\raisebox{-.25\height}{\includegraphics[width=1.5cm]{mic.jpg}}&\color{blue}{\LARGE Electron Microscopy Facility at CNB/CIB-CSIC}\vspace{1cm}\\
-\end{tabular}
-\end{textblock*}
+\raisebox{-.25\height}
+{\color{blue}{\LARGE Electron Microscopy Facility at CNB/CIB-CSIC}}\vspace{1cm}\\
+% FORM HEADER
+\begin{tabularx}{1.0\textwidth}{|X|l|l|}
+\hline
+ \textbf{MICROSCOPE USAGE REPORT}
+         & \textbf{Date:}
+         & \VAR{acquisitionDate}\\\hline
+{\textbf{User:} \VAR{acquisitionUserName}}
+         & \textbf{ID:}
+         &  \VAR{acquisitionId} \\\hline
+{\textbf{Project:} \VAR{acquisitionProjName}}
+         & \textbf{Sample:}
+         & \VAR{acquisitionSample} \\\hline
+{\textbf{Backup Dir:} \VAR{acquisitionBackupPath}}
+         & \textbf{Shift (days):}
+         & \VAR{acquisitionShiftLength}\\\hline
+\end{tabularx}
 
 \section*{\\Data Acquisition Report}
 \def\arraystretch{1.25}  % cell padding  1 is the default, 
@@ -69,7 +61,7 @@
   \cellcolor{blue!25}Acquisition Params & \cellcolor{blue!25} \\\hline
   Nominal Magnification & \VAR{acquisitionNominalMagnification} \\\hline
   Sampling Rate ($\AA/px$)& \VAR{acquisitionSamplingRate}\\\hline
-  Spot Size & \VAR{acquisitionSpotlSize} \\\hline
+  Spot Size & \VAR{acquisitionSpotSize} \\\hline
   Illuminated Area ($\mu$)& \VAR{aquisitionIlluminatedArea}\\\hline
    & \\
    & \\
@@ -102,34 +94,24 @@
   \cellcolor{blue!25}EPU parameters & \cellcolor{blue!25} \\\hline
   Defocus Range ($\mu$)& \VAR{acquisitionNominalDefocusRange} \\\hline
   Autofocus Distance ($\mu$) & 
-      \VAR{acquisitionDefocusDistance} \\\hline
-  Drift Meassurement ($?$) & 
-      \VAR{acquisitionDriftMeassurement} \\\hline
+      \VAR{acquisitionAutoDefocusDistance} \\\hline
+  Drift Meassurement  &
+      \VAR{acquisitionDriftMeassurement} \\\hline % TODO: ($nm/s$)
   Delay after stage shift ($s$) & 
       \VAR{acquisitionDelayAfterStageShift} \\\hline
   Delay after image shift ($s$) &
       \VAR{acquisitionDelayAfterImageShift} \\\hline
-  Maximum image shift ($?$) &
+  Maximum image shift ($\mu$) &
       \VAR{acquisitionMaxImageShift} \\\hline
-  Exposures per Hole ($-$)& 
+  Exposures per Hole&
       \VAR{acquisitionExposureHole} \\\hline
       &\\
 \end{tabulary}
 
-\newpage\thispagestyle{empty}
+\newpage
 \section*{Resolution and Fit Histograms}
 
-To be done
+Workflow name = \VAR{acquisitionWorkflowName}\\
+Numer of Movies = \VAR{statisticsNumberMovies}
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% DO NOT CHANGE THIS BLOCK 
-%\newpage 
-%\textblockorigin{-18pt}{-2pt}
-%\begin{textblock*}{10cm}(2cm,1cm)
-%\begin{tabular}{l l}
-%\raisebox{-.25\height}{\includegraphics[width=1.5cm]{mic.jpg}}&\color{blue}{\LARGE Electron Microscopy Facility at CNB-CSIC}\vspace{1cm}\\
-%\end{tabular}
-%\end{textblock*}
-
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}                             % The required last line
