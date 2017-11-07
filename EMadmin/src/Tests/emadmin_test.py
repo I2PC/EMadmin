@@ -97,7 +97,7 @@ class onLineShopTester(unittest.TestCase):
         self.find_element_by_id("id_autofocus_distance", 5)
         self.pullDownMenuById('id_drift_meassurement','always')
         self.find_element_by_id("id_delay_after_stage_shift", 5)
-        self.find_element_by_id("id_delay_after_image_shift", 5)
+        self.find_element_by_id("id_delay_after_shift", 5)
         self.find_element_by_id("id_max_image_shift", 5)
         self.pullDownMenuById('id_exposure_hole','2')
         self.pullDownMenuById('id_c2','50')
