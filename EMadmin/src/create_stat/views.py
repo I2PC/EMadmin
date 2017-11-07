@@ -15,36 +15,43 @@ import json
 
 @login_required
 def create_all_statistics(request):
-    print "create_all_statistics"
     acquisitions = Acquisition.objects.filter(noScipionProject=False)
 
     for acquisition in acquisitions:
-        print "ADQUISITION", acquisitions, acquisition.noScipionProject
         # get a directory that belongs to the project
         # if it does not exits is time to close the entry
         #otherwise open a stadistic and compute it
         out_dir = os.path.join(settings.SCIPIONUSERDATA,
                                "projects", acquisition.projname, "Logs")
-        if not os.path.isdir(out_dir):
-            print "CLOSEEEEEEEEEEEEEEEEEE", acquisition
-            acquisition.noScipionProject = True
-            acquisition.save()
-        else:
-            print "CREATE"
-            create_one_statistics(acquisition)
+        create_one_statistics(acquisition)
     return HttpResponse("Rango says hello world!")
 
 def create_one_statistics(acquisition):
-    print "create_one_statistics"
-    statistics = Statistics.objects.get_or_create(acquisition=acquisition)
+    out_dir = os.path.join(settings.SCIPIONUSERDATA,
+                           "projects", acquisition.projname, "Logs")
+    if acquisition.noScipionProject == True:
+        return None
+    elif not os.path.isdir(out_dir):
+        acquisition.noScipionProject = True
+        acquisition.save()
+        return None
+
+    statistic = Statistics.objects.get_or_create(acquisition=acquisition)[0]
     script = os.path.join(settings.SCIPIONPATH,'scripts/scipionbox_report_statistics.py')
     args = ["python"]
     args += [script]
     args += ['-p', acquisition.projname]
     scipion = os.path.join(settings.SCIPIONPATH,'scipion')
-    result = subprocess.Popen([scipion] +  args, stdout=subprocess.PIPE)<<<<<<<<<<<<<<<<<<<
-    print json.load(result.stdout)
 
-#    numberMovies = models.IntegerField(default=-1)
-#    averageResolution = models.FloatField(default=-1)
-#    resolutionData = models.TextField()
+    p = subprocess.Popen([scipion] +  args, stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    output, err = p.communicate(b"input data that is passed to subprocess' stdin")
+    rc = p.returncode
+    d = json.loads(err)
+    if d:
+        statistic.averageResolution =  d['averageResolution']
+        statistic.resolutionData = json.dumps(d['resolutionData'])
+        statistic.numberMovies = d['numberMovies']
+        statistic.save()
+    return statistic

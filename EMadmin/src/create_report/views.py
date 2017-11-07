@@ -11,7 +11,11 @@ from django.contrib.auth.decorators import login_required
 import jinja2
 #from jinja2 import Template
 import os
-
+from create_stat.views import create_one_statistics
+from create_stat.models import  Statistics
+from plot import doPlot
+import json
+import numpy as np
 
 @login_required
 def create_report(request):
@@ -26,6 +30,8 @@ def create_report(request):
     RequestConfig(request, paginate={"per_page": 20}).configure(table)
     return render(request, 'create_report/report.html', {'report': table})
 
+
+@login_required
 def create_report_latex(request, idacquisition):
     # init template procesor jinja2 for
     latex_jinja_env = jinja2.Environment(
@@ -42,6 +48,17 @@ def create_report_latex(request, idacquisition):
 	loader = jinja2.FileSystemLoader(os.path.abspath('/'))
     )
     acquisition = Acquisition.objects.get(pk=idacquisition)
+    # fill statistics entry
+    statistic = create_one_statistics(acquisition)
+    if statistic:
+        numberMicrographs = statistic.numberMovies
+    else:
+        try:
+            statistic = Statistics.objects.get(acquisition=acquisition)
+            numberMicrographs = statistic.numberMovies
+        except Statistics.DoesNotExist:
+            numberMicrographs = -1
+
     latexTemplateFile = settings.LATEX_REPORT_TEMPLATE
     latexLogoFile = settings.LATEX_REPORT_TEMPLATE_ICON
     template = latex_jinja_env.get_template(os.path.realpath(latexTemplateFile))
@@ -97,6 +114,11 @@ def create_report_latex(request, idacquisition):
 
     #processing
     options['acquisitionWorkflowName'] = acquisition.workflow
+    options['statisticsNumberMovies'] = numberMicrographs
+
+    # create histograms and plot them
+    if numberMicrographs > 0:
+        doPlot(np.array(json.loads(statistic.resolutionData)), "resolution (A)", "no Movies", "/tmp/kkk")
 
     # if project exists compile data in scipionuserdata/project/Logs
     # otherwise use /tmp

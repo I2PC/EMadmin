@@ -11,4 +11,7 @@ class Statistics(models.Model):
     averageResolution = models.FloatField(default=-1)
     resolutionData = models.TextField()
 
+    def __str__(self):
+        return "stat of %s"%self.acquisition.projname
+
 

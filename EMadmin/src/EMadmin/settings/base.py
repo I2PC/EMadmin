@@ -82,7 +82,7 @@ INSTALLED_APPS = (
     'create_proj',
     'create_report',
     'django_tables2',
-    'statistics',
+    'create_stat',
 )
 
 MIDDLEWARE_CLASSES = (
