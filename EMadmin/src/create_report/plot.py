@@ -42,7 +42,7 @@ def newfig(width):
 
 def savefig(filename):
     plt.savefig('{}.pgf'.format(filename))
-    plt.savefig('{}.pdf'.format(filename))
+    #plt.savefig('{}.pdf'.format(filename))
     return  '{}.pgf'.format(filename), '{}.pdf'.format(filename)
 
 
