@@ -56,6 +56,7 @@ def create_one_statistics(acquisition):
     if d:
         statistic.averageResolution =  d['averageResolution']
         statistic.resolutionData = json.dumps(d['resolutionData'])
+        statistic.defocusData = json.dumps(d['defocusData'])
         statistic.numberMovies = d['numberMovies']
         statistic.save()
     return statistic

@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 %
-% AUTHOR: Roberto Marabini__
+% AUTHOR: Roberto Marabini__This is it
 %
 \usepackage{helvet} 
 \renewcommand{\familydefault}{\sfdefault}
@@ -15,7 +15,7 @@
 \usepackage{fancyhdr}
 \usepackage[table]{xcolor}
 \usepackage{color}
-
+\usepackage{pgf}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HEADER
@@ -113,5 +113,17 @@
 
 Workflow name = \VAR{acquisitionWorkflowName}\\
 Numer of Movies = \VAR{statisticsNumberMovies}
+
+\begin{figure}[!htbp]
+    \caption{Resolution Histogram.\label{fig:resHist}}
+    \centering
+    \input{\VAR{pgfResolutionFile}}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \caption{Defocus Histogram.\label{fig:defHist}}
+    \centering
+    \input{\VAR{pgfDefocusFile}}
+\end{figure}
 
 \end{document}                             % The required last line

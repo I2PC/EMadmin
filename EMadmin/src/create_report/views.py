@@ -30,6 +30,29 @@ def create_report(request):
     RequestConfig(request, paginate={"per_page": 20}).configure(table)
     return render(request, 'create_report/report.html', {'report': table})
 
+import re
+
+def tex_escape(text):
+    """
+        :param text: a plain text message
+        :return: the message escaped to appear correctly in LaTeX
+    """
+    conv = {
+        '&': r'\&',
+        '%': r'\%',
+        '$': r'\$',
+        '#': r'\#',
+        '_': r'\_',
+        '{': r'\{',
+        '}': r'\}',
+        '~': r'\textasciitilde{}',
+        '^': r'\^{}',
+        '\\': r'\textbackslash{}',
+        '<': r'\textless ',
+        '>': r'\textgreater ',
+    }
+    regex = re.compile('|'.join(re.escape(unicode(key)) for key in sorted(conv.keys(), key = lambda item: - len(item))))
+    return regex.sub(lambda match: conv[match.group()], text)
 
 @login_required
 def create_report_latex(request, idacquisition):
@@ -66,23 +89,23 @@ def create_report_latex(request, idacquisition):
     options = {}
     # Header
     options['acquisitionDate'] = acquisition.date.strftime('%Y-%m-%d %H:%M')
-    options['acquisitionUserName'] = acquisition.user.name
+    options['acquisitionUserName'] = tex_escape(acquisition.user.name)
     options['acquisitionId'] = acquisition.id
-    options['acquisitionProjName'] = acquisition.projname
-    options['acquisitionSample'] = acquisition.sample
-    options['acquisitionBackupPath'] = acquisition.backupPath
+    options['acquisitionProjName'] = tex_escape(acquisition.projname)
+    options['acquisitionSample'] = tex_escape(acquisition.sample)
+    options['acquisitionBackupPath'] = tex_escape(acquisition.backupPath)
     options['acquisitionShiftLength'] = acquisition.shiftLength
 
     # Microscope
-    options['microscopeName'] = acquisition.microscope.name
-    options['microscopeModel'] = acquisition.microscope.model
-    options['microscopeDetector'] = acquisition.microscope.detector
+    options['microscopeName'] = tex_escape(acquisition.microscope.name)
+    options['microscopeModel'] = tex_escape(acquisition.microscope.model)
+    options['microscopeDetector'] = tex_escape(acquisition.microscope.detector)
     options['acquisitiondetectorPixelSize'] = acquisition.microscope.detectorPixelSize
     options['microscopeCs'] = acquisition.microscope.cs
 
     acquisition2 = acquisition.acquisition2
     # Acquisition Params
-    options['acquisitionWorkflow'] = acquisition.workflow.name
+    options['acquisitionWorkflow'] = tex_escape(acquisition.workflow.name)
     options['acquisitionVoltage'] = acquisition.voltage
     options['acquisitionNominalMagnification'] = acquisition2.nominal_magnification
     options['acquisitionSamplingRate'] = acquisition2.sampling_rate
@@ -115,25 +138,39 @@ def create_report_latex(request, idacquisition):
     #processing
     options['acquisitionWorkflowName'] = acquisition.workflow
     options['statisticsNumberMovies'] = numberMicrographs
+    options['pgfResolutionFile'] = ""
 
-    # create histograms and plot them
-    if numberMicrographs > 0:
-        doPlot(np.array(json.loads(statistic.resolutionData)), "resolution (A)", "no Movies", "/tmp/kkk")
 
     # if project exists compile data in scipionuserdata/project/Logs
     # otherwise use /tmp
-    out_dir=os.path.join(settings.SCIPIONUSERDATA, "projects", acquisition.projname, "Logs")
+    out_dir=os.path.join(settings.SCIPIONUSERDATA, "projects", acquisition.projname, "Tmp")
     if os.path.isdir(out_dir):
         pass
     else:
         out_dir = "/tmp"
-    out_file=os.path.join(out_dir,"temp.tex")
-    renderer_template = template.render(**options)
-    with open(out_file, "w") as f:  # saves tex_code to outpout file
-        f.write(renderer_template.replace("_","\_")) #protec again wiard characters
+    out_file_root=os.path.join(out_dir,"temp")
 
-    os.system('pdflatex -output-directory %s %s'%(out_dir, out_file)),
-    with open(os.path.join(out_dir,out_file.replace(".tex",".pdf")), 'r') as pdf:
+    # create histograms and plot them
+    if numberMicrographs > 0:
+        pgfResolution, pdfResolution = doPlot(np.array(json.loads(statistic.resolutionData)),
+               "resolution (A)",
+               "no Movies",
+               out_file_root+"staRes")
+        options['pgfResolutionFile'] = pgfResolution
+        pgfDefocus, pdfDefocus = doPlot(np.array(json.loads(statistic.defocusData)),
+               "defocus (A)",
+               "no Movies",
+               out_file_root+"staDef")
+        options['pgfDefocusFile'] = pgfDefocus
+        print "RES DEF", pgfResolution, pgfDefocus
+
+
+    renderer_template = template.render(**options)
+    with open(out_file_root + ".tex", "w") as f:  # saves tex_code to outpout file
+        f.write(renderer_template)
+
+    os.system('pdflatex -output-directory %s %s'%(out_dir, out_file_root))
+    with open(os.path.join(out_dir, out_file_root + ".pdf"), 'r') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'inline;filename=some_file.pdf'
         return response

@@ -10,6 +10,7 @@ class Statistics(models.Model):
     numberMovies = models.IntegerField(default=-1)
     averageResolution = models.FloatField(default=-1)
     resolutionData = models.TextField()
+    defocusData = models.TextField()
 
     def __str__(self):
         return "stat of %s"%self.acquisition.projname

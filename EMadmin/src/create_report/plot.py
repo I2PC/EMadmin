@@ -43,28 +43,14 @@ def newfig(width):
 def savefig(filename):
     plt.savefig('{}.pgf'.format(filename))
     plt.savefig('{}.pdf'.format(filename))
+    return  '{}.pgf'.format(filename), '{}.pdf'.format(filename)
 
 
 def doPlot(yData, xlabel, ylabel, figurename):
-    # Simple plot
     fig, ax  = newfig(0.6)
-
-    #def ema(y, a):
-    #    s = []
-    #    s.append(y[0])
-    #    for t in range(1, len(y)):
-    #        s.append(a * y[t] + (1-a) * s[t-1])
-    #    return np.array(s)
-    #
-    #y = [0]*200
-    #y.extend([20]*(1000-len(y)))
-    #s = ema(y, 0.01)
-
-
-    n, bins, patches = ax.hist(yData, 50, facecolor='green')
-
-    ax.plot(yData)
+    n, bins, patches = ax.hist(yData, 'auto', facecolor='green')
+    #ax.plot(yData)
     ax.set_xlabel(xlabel=xlabel)
     ax.set_ylabel(ylabel=ylabel)
     mpl.pyplot.tight_layout()
-    savefig(figurename)
+    return savefig(figurename)
