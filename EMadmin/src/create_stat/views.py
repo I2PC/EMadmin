@@ -18,17 +18,12 @@ def create_all_statistics(request):
     acquisitions = Acquisition.objects.filter(noScipionProject=False)
 
     for acquisition in acquisitions:
-        # get a directory that belongs to the project
-        # if it does not exits is time to close the entry
-        #otherwise open a stadistic and compute it
-        out_dir = os.path.join(settings.SCIPIONUSERDATA,
-                               "projects", acquisition.projname, "Logs")
         create_one_statistics(acquisition)
     return HttpResponse("Rango says hello world!")
 
 def create_one_statistics(acquisition):
     out_dir = os.path.join(settings.SCIPIONUSERDATA,
-                           "projects", acquisition.projname, "Logs")
+                           "projects", acquisition.projname, "Tmp")
     if acquisition.noScipionProject == True:
         return None
     elif not os.path.isdir(out_dir):
@@ -58,5 +53,5 @@ def create_one_statistics(acquisition):
         statistic.resolutionData = json.dumps(d['resolutionData'])
         statistic.defocusData = json.dumps(d['defocusData'])
         statistic.numberMovies = d['numberMovies']
-        statistic.save()
+        #statistic.save()
     return statistic
