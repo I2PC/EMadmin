@@ -51,6 +51,9 @@ def create_one_statistics(acquisition):
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     output, err = p.communicate()
+    # if err contains something else (in addition to the dict)
+    # remove it
+    err = err[err.find("{"):err.find("}")+1]
     rc = p.returncode
     d = json.loads(err)
     if d:
