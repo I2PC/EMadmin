@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from forms import AcquisitionForm, SkipAcquisitionForm, AcquisitionForm2
-from models import Acquisition
+from models import Acquisition, Workflow
 import os, sys
 from django.shortcuts import redirect
 from django.conf import settings
@@ -110,7 +110,11 @@ def add_acquisition(request):
                   'create_proj/add_acquisition.html',
                   {'form': formP, 'form2': form2})
     else:
-        form = AcquisitionForm()  # create a clean form
+        try:
+            default_state = Workflow.objects.get(name='myworkflow2')
+            form = AcquisitionForm(initial={'workflow':default_state}) 
+        except:
+            form = AcquisitionForm()  # create a clean form
         form2 = SkipAcquisitionForm(user=request.user)  # create a clean form
     return render(request,
                   'create_proj/add_acquisition.html',
