@@ -16,6 +16,7 @@ from create_stat.models import  Statistics
 from plot import doPlot
 import json
 import numpy as np
+import unidecode
 
 @login_required
 def create_report(request):
@@ -169,7 +170,7 @@ def create_report_latex(request, idacquisition):
         options['dataavailable'] = '\longfalse'
     renderer_template = template.render(**options)
     with open(out_file_root + ".tex", "w") as f:  # saves tex_code to outpout file
-        f.write(renderer_template)
+        f.write(unidecode.unidecode(renderer_template)) 
 
     os.system('pdflatex -output-directory %s %s'%(out_dir, out_file_root))
     with open(os.path.join(out_dir, out_file_root + ".pdf"), 'r') as pdf:
