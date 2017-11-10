@@ -48,7 +48,7 @@ def savefig(filename):
 
 def doPlot(yData, xlabel, ylabel, figurename):
     fig, ax  = newfig(0.6)
-    n, bins, patches = ax.hist(yData, 'auto', facecolor='green')
+    n, bins, patches = ax.hist(yData[yData< 1E30], 'auto', facecolor='green')
     #ax.plot(yData)
     ax.set_xlabel(xlabel=xlabel)
     ax.set_ylabel(ylabel=ylabel)
