@@ -136,7 +136,7 @@ def create_report_latex(request, idacquisition):
     options['mic_jpg'] = latexLogoFile
 
     #processing
-    options['acquisitionWorkflowName'] = acquisition.workflow
+    options['acquisitionWorkflowName'] = tex_escape(acquisition.workflow.name)
     options['statisticsNumberMovies'] = numberMicrographs
     options['pgfResolutionFile'] = ""
 
@@ -163,8 +163,10 @@ def create_report_latex(request, idacquisition):
                out_file_root+"staDef")
         options['pgfDefocusFile'] = pgfDefocus
         print "RES DEF", pgfResolution, pgfDefocus
-
-
+        options['dataavailable'] = '\longtrue'
+    else:
+        print "No micrographs to process"
+        options['dataavailable'] = '\longfalse'
     renderer_template = template.render(**options)
     with open(out_file_root + ".tex", "w") as f:  # saves tex_code to outpout file
         f.write(renderer_template)
