@@ -1,4 +1,5 @@
 <li {% if active_link == "project" %}class="active"{% endif %}><a href="{% url 'create_proj:add_acquisition' %}">Project</a></li>
 <li {% if active_link == "report" %}class="active"{% endif %}><a href="{% url 'create_report:create_report' %}">Report</a></li>
-<li {% if active_link == "statistics" %}class="active"{% endif %}><a href="kk">Statistics</a></li>
+<li {% if active_link == "statistics" %}class="active"{% endif %}><a
+        href="{% url 'create_stat:create_resolution_plot' %}">Statistics</a></li>
 <li {% if active_link == "about" %}class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
