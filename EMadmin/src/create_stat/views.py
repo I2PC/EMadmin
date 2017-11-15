@@ -9,6 +9,7 @@ from django.conf import settings
 from models import Statistics
 import subprocess
 from django.http import HttpResponse
+from fusioncharts import FusionCharts
 import json
 
 # Create your views here.
@@ -24,7 +25,7 @@ def create_all_statistics(request):
         out_dir = os.path.join(settings.SCIPIONUSERDATA,
                                "projects", acquisition.projname, "Logs")
         create_one_statistics(acquisition)
-    return HttpResponse("Rango says hello world!")
+    return HttpResponse("Hi from create_all_statistics")
 
 def create_one_statistics(acquisition):
     out_dir = os.path.join(settings.SCIPIONUSERDATA,
@@ -63,3 +64,56 @@ def create_one_statistics(acquisition):
         statistic.numberMovies = d['numberMovies']
         statistic.save()
     return statistic
+
+from datetime import datetime, timedelta
+@login_required
+def create_resolution_plot(request):
+    statistics = Statistics.objects.all()
+    category=""
+    data=""
+    for statistic in statistics:
+        data += str(statistic.averageResolution) + "|"
+        category += str(statistic.acquisition.date.strftime('%Y-%m-%d')) + "|"
+    for statistic in statistics:
+        data += str(statistic.averageResolution+1.)+ "|"
+        category += (statistic.acquisition.date+timedelta(days=1)).strftime(
+                '%Y-%m-%d')+ "|"
+    for statistic in statistics:
+        data += str(statistic.averageResolution+1.5)
+        category += (statistic.acquisition.date+timedelta(days=2)).strftime(
+                '%Y-%m-%d')
+
+    print category, data
+    _zoomline = FusionCharts("zoomline", "ex1" , "800", "550", "chart-1",
+                             "json",
+    # The chart data is passed as a string to the `dataSource` parameter.
+    """{
+    "chart": {
+        "caption": "Resolution vs Time",
+        "subcaption": "Last year",
+        "yaxisname": "Unique Visitors",
+        "xaxisname": "Date",
+        "yaxisminValue": "0",
+        "yaxismaxValue": "14",
+        "pixelsPerPoint": "0",
+        "pixelsPerLabel": "30",
+        "lineThickness": "1",
+        "compactdatamode": "1",
+        "dataseparator": "|",
+        "labelHeight": "30",
+        "theme": "fint"
+    },
+    "categories": [
+        {
+            "category": "%s"
+        }
+    ],
+    "dataset": [
+        {
+            "seriesname": "talos",
+            "data": "%s"
+        }    ]
+}"""%(category, data))
+
+    return  render(request, 'create_stat/chart.html', {'output' :
+                                                      _zoomline.render()})
