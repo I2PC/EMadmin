@@ -72,7 +72,7 @@ def create_resolution_plot(request):
     category=""
     data=""
     for statistic in statistics:
-        if statistic.numberMovies > 50:
+        if statistic.numberMovies > 25:
             data += str(statistic.averageResolution) + "|"
             category += str(statistic.acquisition.date.strftime('%Y-%m-%d')) + "|"
     _zoomline = FusionCharts("zoomline", "ex1" , "800", "550", "chart-1",
