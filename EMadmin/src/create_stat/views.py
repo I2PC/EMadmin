@@ -72,18 +72,9 @@ def create_resolution_plot(request):
     category=""
     data=""
     for statistic in statistics:
-        data += str(statistic.averageResolution) + "|"
-        category += str(statistic.acquisition.date.strftime('%Y-%m-%d')) + "|"
-    for statistic in statistics:
-        data += str(statistic.averageResolution+1.)+ "|"
-        category += (statistic.acquisition.date+timedelta(days=1)).strftime(
-                '%Y-%m-%d')+ "|"
-    for statistic in statistics:
-        data += str(statistic.averageResolution+1.5)
-        category += (statistic.acquisition.date+timedelta(days=2)).strftime(
-                '%Y-%m-%d')
-
-    print category, data
+        if statistic.numberMovies > 50:
+            data += str(statistic.averageResolution) + "|"
+            category += str(statistic.acquisition.date.strftime('%Y-%m-%d')) + "|"
     _zoomline = FusionCharts("zoomline", "ex1" , "800", "550", "chart-1",
                              "json",
     # The chart data is passed as a string to the `dataSource` parameter.
