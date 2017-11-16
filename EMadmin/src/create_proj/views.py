@@ -111,13 +111,11 @@ def add_acquisition(request):
                   {'form': formP, 'form2': form2})
     else:
         try:
-            #default_state = Workflow.objects.get(name='myworkflow2')
-            #form = AcquisitionForm(initial={'workflow':default_state})
-            form = AcquisitionForm()
+            default_state = Workflow.objects.get(name=settings.DEFAULTWORKFLOW)
+            form = AcquisitionForm(initial={'workflow':default_state})
         except:
             form = AcquisitionForm()  # create a clean form
         form2 = SkipAcquisitionForm(user=request.user)  # create a clean form
-
     return render(request,
                   'create_proj/add_acquisition.html',
                   {'form': form, 'form2': form2})
