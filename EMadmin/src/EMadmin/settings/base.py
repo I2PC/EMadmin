@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from django.core.urlresolvers import reverse_lazy
 from os.path import dirname, join, exists
+import os
 
 # Build paths inside the project like this: join(BASE_DIR, "directory")
 BASE_DIR = dirname(dirname(dirname(__file__)))
@@ -154,7 +155,7 @@ else:
     BACKUPPATH="/"
 BACKUPPATH=os.path.join(BACKUPPATH,"media", user)
 if user == "scipionuser":
-    SCIPIONPATH='/usr/local/scipion'
+    SCIPIONPATH = os.getenv('SCIPION_PATH','/usr/local/scipion')
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
 else:
     SCIPIONPATH='/home/roberto/Scipion/scipion_box'
