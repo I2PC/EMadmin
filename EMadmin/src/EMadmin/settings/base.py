@@ -114,7 +114,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Madrid'
+TIME_ZONE = 'WET'
 
 USE_I18N = True
 
@@ -154,9 +154,11 @@ if hostName == 'linux-bxmv.suse':
 else:
     BACKUPPATH="/"
 BACKUPPATH=os.path.join(BACKUPPATH,"media", user)
+DEFAULTWORKFLOW="defaultWorkflow"
 if user == "scipionuser":
     SCIPIONPATH = os.getenv('SCIPION_PATH','/usr/local/scipion')
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
+    DEFAULTWORKFLOW="xxxxx"
 else:
     SCIPIONPATH='/home/roberto/Scipion/scipion_box'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'

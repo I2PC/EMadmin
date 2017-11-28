@@ -1,0 +1,16 @@
+iff --git a/EMadmin/src/create_proj/views.py b/EMadmin/src/create_proj/views.py
+index 9229fe2..f925c72 100644
+--- a/EMadmin/src/create_proj/views.py
++++ b/EMadmin/src/create_proj/views.py
+@@ -110,7 +110,9 @@ def add_acquisition(request):
+                   'create_proj/add_acquisition.html',
+                   {'form': formP, 'form2': form2})
+     else:
+-        form = AcquisitionForm()  # create a clean form
++        default_state = Acquisition.objects.get(name='')
++        form = AcquisitionForm(initial={'workflow':"myworkflow2"})  # create a
++        # clean form
+         form2 = SkipAcquisitionForm(user=request.user)  # create a clean form
+     return render(request,
+                   'create_proj/add_acquisition.html',
+
