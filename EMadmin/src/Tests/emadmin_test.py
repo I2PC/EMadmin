@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# source ~/webservices/EMadmin/virEMadmin/bin/activate
+# cd /home/scipionuser/webservices/EMadmin/src
+# python manage.py runserver
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -21,8 +24,8 @@ class onLineShopTester(unittest.TestCase):
     admin_url   = base_url + "admin/"
     database    = "db.sqlite3"
 
-    #chromeDriver = "/usr/local/bin/chromedriver"
-    chromeDriver = "/home/roberto/bin/chromedriver"
+    chromeDriver = "/usr/local/bin/chromedriver"
+    #chromeDriver = "/home/roberto/bin/chromedriver"
 
     def setUp(self):
 #        self.driver = webdriver.Firefox()
@@ -74,11 +77,11 @@ class onLineShopTester(unittest.TestCase):
 
     def createProject1(self):
         # Microscope
-        self.find_element_by_link_text("Create_Project")
+        self.find_element_by_link_text("Project")
         self.find_element_by_id("id_sample",self.sample)
         self.find_element_by_id("id_voltage",200)
         self.find_element_by_id("id_shiftLength",2)
-        self.find_element_by_id("id_backupPath","/media/roberto/b3ab7bfb-85ee-4dd7-8cd3-a61070d03d96")
+        self.find_element_by_id("id_backupPath","/run/user/1000")
         self.find_element_by_xpath("//input[@type='submit' and @value='Create Project']")
 
     def createProject2(self):
@@ -97,7 +100,7 @@ class onLineShopTester(unittest.TestCase):
         self.find_element_by_id("id_autofocus_distance", 5)
         self.pullDownMenuById('id_drift_meassurement','always')
         self.find_element_by_id("id_delay_after_stage_shift", 5)
-        self.find_element_by_id("id_delay_after_shift", 5)
+        self.find_element_by_id("id_delay_after_image_shift", 5)
         self.find_element_by_id("id_max_image_shift", 5)
         self.pullDownMenuById('id_exposure_hole','2')
         self.pullDownMenuById('id_c2','50')
@@ -159,6 +162,7 @@ class onLineShopTester(unittest.TestCase):
         #time.sleep(60)
         self.createProject1()  # first form
         self.createProject2()  # first form
+        self.simulateAcquisition()  # link movies
 
 
         #close browser
