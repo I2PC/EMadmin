@@ -257,4 +257,5 @@ def getWorkflow(request, name):
     except:
         return JsonResponse({'error': 'workflow %s is not available'%name})
 
-    return JsonResponse({'error': 'OK', 'data': workflow.workflow})
+    # return JsonResponse({'error': 'OK', 'data': json.loads(workflow.workflow)})
+    return JsonResponse(json.loads(workflow.workflow), safe=False)
