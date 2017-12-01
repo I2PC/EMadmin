@@ -102,4 +102,3 @@ def create_resolution_plot(request):
 
     return  render(request, 'create_stat/chart.html', {'output' :
                                                       _zoomline.render()})
->>>>>>> 7052f8aeb4fca5646e409c165253e5f21fbf24e0
