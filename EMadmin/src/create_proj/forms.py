@@ -82,7 +82,7 @@ class AcquisitionForm(forms.ModelForm):
         model = Acquisition
 #        fields = ('microscope','workflow', 'voltage',
 #                  'sample', 'date','backupPath')
-        exclude = ('user', 'projname', 'date')
+        exclude = ('user', 'projname', 'date', 'noScipionProject')
 
 class AcquisitionForm2(forms.ModelForm):
     # An inline class to provide additional information on the form.

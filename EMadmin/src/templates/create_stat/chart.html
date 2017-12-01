@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ block.super }}Plot Resolution{% endblock %}
+
+{% block extrahead %}
+    <script type="text/javascript" src="{% static "fusioncharts/fusioncharts.js" %}"></script>
+    <script type="text/javascript" src="{% static "fusioncharts/themes/fusioncharts.theme.fint.js" %}"></script>
+{% endblock extrahead %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="project" %}
+{% endblock %}
+
+<!-- Benefits of the Django application -->
+
+
+
+{% block container %}
+<div class="col-md-12">
+        <h2>Report</h2>
+        <p class="lead">Here you may see a plot of the resolution versus time.
+      </div>
+    <div id="chart-1">{{ output|safe }}</div>
+
+
+{% endblock container %}

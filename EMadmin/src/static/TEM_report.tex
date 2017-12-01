@@ -16,6 +16,7 @@
 \usepackage[table]{xcolor}
 \usepackage{color}
 \usepackage{pgf}
+\newif\iflong
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HEADER
@@ -113,7 +114,8 @@
 
 Workflow name = \VAR{acquisitionWorkflowName}\\
 Numer of Movies = \VAR{statisticsNumberMovies}
-
+\VAR{dataavailable}
+\iflong
 \begin{figure}[!htbp]
     \caption{Resolution Histogram.\label{fig:resHist}}
     \centering
@@ -125,5 +127,7 @@ Numer of Movies = \VAR{statisticsNumberMovies}
     \centering
     \input{\VAR{pgfDefocusFile}}
 \end{figure}
-
+\else
+No data available
+\fi
 \end{document}                             % The required last line
