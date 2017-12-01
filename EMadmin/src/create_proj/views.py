@@ -13,6 +13,7 @@ from django.db import IntegrityError
 import json
 from parse_protocol import parse_protocol
 import subprocess
+from django.http import JsonResponse
 
 @login_required
 def index(request):
@@ -248,3 +249,12 @@ def add_acquisition2(request):
         return render(request,
                       'create_proj/add_acquisition2.html',
                       {'form': form})
+
+# get workflow as json
+def getWorkflow(request, name):
+    try:
+        workflow = Workflow.objects.get(name=name)
+    except:
+        return JsonResponse({'error': 'workflow %s is not available'%name})
+
+    return JsonResponse({'error': 'OK', 'data': workflow.workflow})
