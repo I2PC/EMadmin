@@ -6,8 +6,20 @@
 {% block title %}{{ block.super }}Add an Acquisition{% endblock %}
 {% block js %}
     {{ block.super }}
-    <script src="{% static 'site/js/webcomponents/webcomponents-loader.js'%}"></script>
-    <link rel="import" href="{% static 'site/wc/scipion-workflow.html'%}">
+
+    <script>
+        if ( navigator.userAgent.indexOf("Firefox") == -1){
+            var wcomponentsScript = document.createElement('script');
+            wcomponentsScript.setAttribute("src","{% static 'site/js/webcomponents/webcomponents-loader.js'%}");
+            document.head.appendChild(wcomponentsScript);
+
+            var scipionComponent = document.createElement('link');
+            scipionComponent.setAttribute("rel","import");
+            scipionComponent.setAttribute("href","{% static 'site/wc/scipion-workflow.html'%}");
+            document.head.appendChild(scipionComponent);
+
+        }
+    </script>
     <script>
 
         $( document ).ready(function(){
