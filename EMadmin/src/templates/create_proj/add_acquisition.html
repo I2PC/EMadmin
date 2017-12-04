@@ -4,24 +4,48 @@
 {% load crispy_forms_tags %}
 
 {% block title %}{{ block.super }}Add an Acquisition{% endblock %}
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'site/js/webcomponents/webcomponents-loader.js'%}"></script>
+    <link rel="import" href="{% static 'site/wc/scipion-workflow.html'%}">
+    <script>
+
+        $( document ).ready(function(){
+
+            $("#id_workflow").change(function() {
+                loadWorkflow();
+            });
+
+            loadWorkflow();
+        });
+
+        function loadWorkflow(){
+
+            workflowName = $( "#id_workflow option:selected" ).text();
+
+            $( "#graph" ).attr("src", "/create_proj/getWorkflow/" +workflowName);
+        };
+
+    </script>
+{% endblock %}
 
 {% block navbar-left %}
   {% include "_navbar.html" with active_link="project" %}
 {% endblock %}
 
-<!-- Benefits of the Django application -->
 
 
 
 {% block container %}
 <div id="sec2" class="text-page">
-  <div class="container">
+    <div class="container">
       <div class="col-md-12">
         <h2>Create Project</h2>
         <p class="lead">To create a new project fill the form and press create project.
             If you want to continue a failed project creation select the project
             name and click skip project creation.
       </div>
+      <div class="col-md-6">
         <form id="acquisition_form" method="post"
               action="{% url 'create_proj:add_acquisition' %}">
 
@@ -31,7 +55,7 @@
 
             <input type="submit" name="submit_add_acquisition" value="Create Project" />
         </form>
-<hr>
+        <hr>
         <form id="skip_acquisition_form" method="post"
               action="{% url 'create_proj:add_acquisition' %}">
 
@@ -41,6 +65,10 @@
 
             <input type="submit" name="skip_submit_add_acquisition" value="Skip Project Creation" />
         </form>
+    </div>
+    <div class="col-md-6">
+        <scipion-workflow id="graph" height="400px" width="400px"></scipion-workflow>
+    </div>
  </div>
 </div>
 {% endblock container %}

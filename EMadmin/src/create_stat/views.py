@@ -19,17 +19,12 @@ def create_all_statistics(request):
     acquisitions = Acquisition.objects.filter(noScipionProject=False)
 
     for acquisition in acquisitions:
-        # get a directory that belongs to the project
-        # if it does not exits is time to close the entry
-        #otherwise open a stadistic and compute it
-        out_dir = os.path.join(settings.SCIPIONUSERDATA,
-                               "projects", acquisition.projname, "Logs")
         create_one_statistics(acquisition)
     return HttpResponse("Hi from create_all_statistics")
 
 def create_one_statistics(acquisition):
     out_dir = os.path.join(settings.SCIPIONUSERDATA,
-                           "projects", acquisition.projname, "Logs")
+                           "projects", acquisition.projname, "Tmp")
     if acquisition.noScipionProject == True:
         return None
     elif not os.path.isdir(out_dir):
