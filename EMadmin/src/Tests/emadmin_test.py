@@ -13,13 +13,15 @@ from collections import OrderedDict
 from loremipsum import get_paragraphs, get_sentences
 import sqlite3
 import shutil
+from glob import glob
 
 class onLineShopTester(unittest.TestCase):
-    username    = "testUser1"
-    passwd      = "passwd1"
-    institution = "intitution1"
+    num         = 1
+    username    = "testUser%d"% num
+    passwd      = "passwd%d"% num
+    institution = "intitution%d"% num
     email       = "%s@gmail.com"%username
-    sample      = "sample1"
+    sample      = "sample%d"% num
     base_url    = "http://127.0.0.1:8000/"
     admin_url   = base_url + "admin/"
     database    = "db.sqlite3"
@@ -78,16 +80,20 @@ class onLineShopTester(unittest.TestCase):
     def createProject1(self):
         # Microscope
         self.find_element_by_link_text("Project")
+        self.pullDownMenuById('id_workflow','3')
+        self.pullDownMenuById('id_workflow','2')
+        self.pullDownMenuById('id_workflow','3')
+        print "self.sample",self.sample
         self.find_element_by_id("id_sample",self.sample)
         self.find_element_by_id("id_voltage",200)
         self.find_element_by_id("id_shiftLength",2)
-        self.find_element_by_id("id_backupPath","/run/user/1000")
+        self.find_element_by_id("id_backupPath","/media/roberto")
         self.find_element_by_xpath("//input[@type='submit' and @value='Create Project']")
 
     def createProject2(self):
         #acquisition params
         self.find_element_by_id("id_nominal_magnification", "70000,0")
-        self.find_element_by_id("id_sampling_rate", "1.34")
+        self.find_element_by_id("id_sampling_rate", "1.42")
         self.find_element_by_id("id_spotsize", 2)
         self.find_element_by_id("id_illuminated_area", "1.68")
         # Dose & Fractions
@@ -151,6 +157,39 @@ class onLineShopTester(unittest.TestCase):
                                        "projects", projname))
         except Exception as e:
             print (e)
+
+
+    def simulateAcquisition(self, outputDir='GRID_01/DATA/Images-Disc1/GridSquare_9124395/DATA'):
+        """/home/scipionuser/OffloadData/2017_10_19_fcojavierchichon_qwerty/GRID_01/DATA/Images-Disc1/GridSquare_9124395/DATA"""
+        
+        try:
+            conn = sqlite3.connect(self.database)
+            cur = conn.cursor()
+            sql = """SELECT projname, date 
+                     FROM create_proj_acquisition
+                     WHERE date IN   (SELECT MAX(date) 
+                                      FROM create_proj_acquisition);"""
+            cur.execute(sql)
+            projName = cur.fetchone()[0]
+        except Exception as e:
+            print (e)
+        time.sleep(20)  # wait here until Scipion is started
+        fullProjectPath =  os.path.join("/home/scipionuser/OffloadData", projName,outputDir)
+        print fullProjectPath
+        if os.path.exists(fullProjectPath):
+            shutil.rmtree(fullProjectPath) # clean path
+        os.makedirs(fullProjectPath)  # create output dir
+        INPUTDAT="/home/scipionuser/OffloadData/Data/02/*mrc"
+        inputFiles = glob(INPUTDAT)
+
+        aTime = 90  # 90 sec per movie
+        counter = 0
+        for f in inputFiles:
+            outputPath = os.path.join(fullProjectPath, os.path.basename(f))
+            print "%d) Linking %s -> %s" % (counter, f, outputPath)
+            counter += 1
+            os.symlink(f, outputPath)
+            time.sleep(aTime)
 
     def test_emadmin(self):
         self.deleteProjectFromUser(self.email)
