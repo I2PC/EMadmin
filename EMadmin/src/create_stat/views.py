@@ -56,7 +56,9 @@ def create_one_statistics(acquisition):
         statistic.averageResolution =  d['averageResolution']
         statistic.resolutionData = json.dumps(d['resolutionData'])
         statistic.defocusData = json.dumps(d['defocusData'])
-        statistic.numberMovies = d['numberMovies']
+        statistic.astigmaticData = json.dumps(d['astigmaticData'])
+        statistic.numberMovies = json.dumps(d['numberMovies'])
+        statistic.averageAstigmatism = json.dumps(d['averageAstigmatism'])
         statistic.save()
     return statistic
 
@@ -65,12 +67,15 @@ from datetime import datetime, timedelta
 def create_resolution_plot(request):
     statistics = Statistics.objects.all()
     category=""
-    data=""
+    dataCTF=""
+    dataAstig=""
     for statistic in statistics:
         if statistic.numberMovies > 25:
-            data += str(statistic.averageResolution) + "|"
-            category += str(statistic.acquisition.date.strftime('%Y-%m-%d')) + "|"
-    _zoomline = FusionCharts("zoomline", "ex1" , "800", "550", "chart-1",
+            dataCTF   += str(statistic.averageResolution) + "|"
+            dataAstig += str(statistic.averageAstigmatism) + "|"
+            category  += str(statistic.acquisition.date.strftime('%Y-%m-%d'))\
+                         + "|"
+    _zoomlineCTF = FusionCharts("zoomline", "ex1" , "800", "550", "chart-1",
                              "json",
     # The chart data is passed as a string to the `dataSource` parameter.
     """{
@@ -98,7 +103,38 @@ def create_resolution_plot(request):
             "seriesname": "talos",
             "data": "%s"
         }    ]
-}"""%(category, data))
+}"""%(category, dataCTF))
+    _zoomlineAstig = FusionCharts("zoomline", "ex1" , "800", "550", "chart-1",
+                             "json",
+    # The chart data is passed as a string to the `dataSource` parameter.
+    """{
+    "chart": {
+        "caption": "Resolution vs Time",
+        "subcaption": "Last year",
+        "yaxisname": "Unique Visitors",
+        "xaxisname": "Date",
+        "dynamicAxis": "1",
+        "pixelsPerPoint": "0",
+        "pixelsPerLabel": "30",
+        "lineThickness": "1",
+        "compactdatamode": "1",
+        "dataseparator": "|",
+        "labelHeight": "30",
+        "theme": "fint"
+    },
+    "categories": [
+        {
+            "category": "%s"
+        }
+    ],
+    "dataset": [
+        {
+            "seriesname": "talos",
+            "data": "%s"
+        }    ]
+}"""%(category, dataAstig))
 
-    return  render(request, 'create_stat/chart.html', {'output' :
-                                                      _zoomline.render()})
+    return  render(request, 'create_stat/chart.html', {'outputCTF' :
+                                                      _zoomlineCTF.render(),
+                                                       'outputAstig' :
+                                                      _zoomlineAstig.render()})
