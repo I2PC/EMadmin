@@ -21,9 +21,12 @@
 {% block container %}
 <div class="col-md-12">
         <h2>Report</h2>
-        <p class="lead">Here you may see a plot of the resolution versus time.
+        <p class="lead">Resolution versus time.
       </div>
-    <div id="chart-1">{{ output|safe }}</div>
-
+    <div id="chart-1">{{ outputCTF|safe }}</div>
+<div class="col-md-12">
+        <p class="lead">Average resolution versus time.
+      </div>
+    <div id="chart-2">{{ outputAstig|safe }}</div>
 
 {% endblock container %}

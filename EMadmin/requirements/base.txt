@@ -1,4 +1,4 @@
-ckports.functools-lru-cache==1.4
+#ckports.functools-lru-cache==1.4
 cycler==0.10.0
 Django==1.11.7
 django-admin-bootstrapped==2.5.7
