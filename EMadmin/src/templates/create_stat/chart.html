@@ -20,13 +20,13 @@
 
 {% block container %}
 <div class="col-md-12">
-        <h2>Report</h2>
-        <p class="lead">Resolution versus time.
-      </div>
-    <div id="chart-1">{{ outputCTF|safe }}</div>
+     <h2>Report</h2>
+     <p class="lead">Average Resolution (from CTF) versus time.
+</div>
+<div id="chart-1">{{ outputCTF|safe }}</div>
 <div class="col-md-12">
-        <p class="lead">Average resolution versus time.
-      </div>
-    <div id="chart-2">{{ outputAstig|safe }}</div>
+     <p class="lead">Average Astigmatism versus time.
+</div>
+<div id="chart-2">{{ outputAstig|safe }}</div>
 
 {% endblock container %}

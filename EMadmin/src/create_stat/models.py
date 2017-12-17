@@ -6,7 +6,7 @@ from create_proj.models import Acquisition
 
 
 class Statistics(models.Model):
-    acquisition     = models.OneToOneField()
+    acquisition     = models.OneToOneField(Acquisition)
     numberMovies    = models.IntegerField(default=-1)
     numberFractionsPerMovie = models.IntegerField(default=-1)
     # CTF related data
