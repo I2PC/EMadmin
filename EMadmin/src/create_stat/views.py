@@ -108,7 +108,7 @@ def create_resolution_plot(request):
     # The chart data is passed as a string to the `dataSource` parameter.
     """{
     "chart": {
-        "caption": "Resolution vs Time",
+        "caption": "Astigmatism vs Time",
         "subcaption": "Last year",
         "yaxisname": "Unique Visitors",
         "xaxisname": "Date",
