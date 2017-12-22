@@ -7,18 +7,16 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
     <!-- cytoscape -->
-    <!--<script src="https://wzrd.in/bundle/cytoscape@3.2.4"></script> -->
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>-->
     <!-- dagre layout -->
     <script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>
-    <script src="/static/site/js/cytoscape-dagre.js"></script>
+    <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/master/cytoscape-dagre.js"></script>
     <!-- qtip -->
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.js"></script>
-    <script src="/static/site/js/cytoscape-qtip.js"></script>
+    <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/master/cytoscape-qtip.js"></script>
     <!-- web components -->
-    <script src="/static/site/js/webcomponents/webcomponents-loader.js"></script>
+    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/068cfc90/webcomponents-loader.js"></script>
 
     <title>Scipion workflow</title>
 
@@ -47,7 +45,7 @@
     <script>
 
         function getFormattedJsonStr(dict){
-            var blackList = ['runName', 'runMode'];
+            var blackList = ['runName', 'runMode', 'object.className', 'object.id','object.label'];
             var formattedStr = '<table><th>Param name</th><th>Param value</th>';
             $.each(dict, function(key, value){
                 if (blackList.indexOf(key)===-1){
