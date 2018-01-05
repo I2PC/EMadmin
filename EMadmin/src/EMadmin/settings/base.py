@@ -38,6 +38,7 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+                'django_settings_export.settings_export',
             ],
         },
     },
@@ -179,3 +180,10 @@ LATEX_REPORT_TEMPLATE = join(MEDIA_ROOT, 'TEM_report.tex') # in production overr
                       # to LATEX_REPORT_TEMPLATE = join(STATIC_ROOT, 'TEM_report.tex')
 LATEX_REPORT_TEMPLATE_ICON = join(MEDIA_ROOT, 'mic.jpg')
 LOGIN_REDIRECT_URL = '/'  # after login redirect here
+
+#export variable to template
+HELPURL = 'https://github.com/rmarabini/Talos-User-Guide/wiki/EMserver';
+
+SETTINGS_EXPORT = [
+    'HELPURL',
+]
