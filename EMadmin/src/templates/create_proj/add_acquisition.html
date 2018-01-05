@@ -7,18 +7,20 @@
 {% block js %}
     {{ block.super }}
 
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
     <script>
-        if ( navigator.userAgent.indexOf("Firefox") == -1){
-            var wcomponentsScript = document.createElement('script');
-            wcomponentsScript.setAttribute("src","{% static 'site/js/webcomponents/webcomponents-loader.js'%}");
-            document.head.appendChild(wcomponentsScript);
 
-            var scipionComponent = document.createElement('link');
-            scipionComponent.setAttribute("rel","import");
-            scipionComponent.setAttribute("href","{% static 'site/wc/scipion-workflow.html'%}");
-            document.head.appendChild(scipionComponent);
+        var wcomponentsScript = document.createElement('script');
+        wcomponentsScript.setAttribute("src","https://cdn.rawgit.com/webcomponents/webcomponentsjs/068cfc90/webcomponents-loader.js");
+        document.head.appendChild(wcomponentsScript);
 
-        }
+        var scipionComponent = document.createElement('link');
+        scipionComponent.setAttribute("rel","import");
+        scipionComponent.setAttribute("href","{% static 'site/wc/scipion-workflow.html'%}");
+        document.head.appendChild(scipionComponent);
+
     </script>
     <script>
 
