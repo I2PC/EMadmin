@@ -3,3 +3,4 @@
 <li {% if active_link == "statistics" %}class="active"{% endif %}><a
         href="{% url 'create_stat:create_resolution_plot' %}">Statistics</a></li>
 <li {% if active_link == "about" %}class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
+<li {% if active_link == "about" %}class="active"{% endif %}><a href="{{ settings.HELPURL}}">Help</a></li>
