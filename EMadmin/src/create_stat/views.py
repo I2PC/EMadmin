@@ -63,7 +63,7 @@ def create_one_statistics(acquisition):
 from datetime import datetime, timedelta
 @login_required
 def create_resolution_plot(request):
-    statistics = Statistics.objects.all()
+    statistics = Statistics.objects.all().order_by('acquisition__id')
     category=""
     dataCTF=""
     dataAstig=""
@@ -72,7 +72,7 @@ def create_resolution_plot(request):
         if statistic.numberMovies > 5:
             dataCTF   += str(statistic.averageResolution) + "|"
             dataAstig += str(statistic.averageAstigmatism) + "|"
-            category  += str(statistic.acquisition.date.strftime('%Y-%m-%d'))\
+            category  += "%s (%d)"%(str(statistic.acquisition.date.strftime('%Y-%m-%d')),statistic.acquisition.id)\
                          + "|"
     _zoomlineCTF = FusionCharts("zoomline", "ex1" , "800", "550", "chart-1",
                              "json",
@@ -81,8 +81,8 @@ def create_resolution_plot(request):
     "chart": {
         "caption": "Resolution vs Time",
         "subcaption": "Last year",
-        "yaxisname": "Unique Visitors",
-        "xaxisname": "Date",
+        "yaxisname": "resolution(A)",
+        "xaxisname": "Date (Session ID)",
         "dynamicAxis": "1",
         "pixelsPerPoint": "0",
         "pixelsPerLabel": "30",
@@ -110,8 +110,8 @@ def create_resolution_plot(request):
     "chart": {
         "caption": "Astigmatism vs Time",
         "subcaption": "Last year",
-        "yaxisname": "Unique Visitors",
-        "xaxisname": "Date",
+        "yaxisname": "Astigmatism(A)",
+        "xaxisname": "Date (Session ID)",
         "dynamicAxis": "1",
         "pixelsPerPoint": "0",
         "pixelsPerLabel": "30",
