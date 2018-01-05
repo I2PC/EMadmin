@@ -7,7 +7,7 @@ from django.contrib import admin
 from models import Microscope, Acquisition, Workflow, Acquisition2
 
 class AcquisitionAdmin(admin.ModelAdmin):
-    list_display = ('noScipionProject','user', 'workflow', 'sample',
+    list_display = ('id','noScipionProject','user', 'workflow', 'sample',
                     'date', 'shiftLength', 'projname', 'backupPath', 'microscope')
 
 admin.site.register(Acquisition, AcquisitionAdmin)
