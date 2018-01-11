@@ -17,8 +17,10 @@ This project has the following basic apps:
 To set up a development environment quickly, first install Python 3. It
 comes with virtualenv built-in. So create a virtual env by:
 
-    1. `$ python3 -m venv EMadmin`
+    1. `$ python -m venv EMadmin`
     2. `$ . EMadmin/bin/activate`
+    
+NOTE: your virtualenv needs to be python 2
 
 Install all dependencies:
 
