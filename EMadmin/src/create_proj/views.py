@@ -55,8 +55,8 @@ def launch_backup(acquisition):
         targetPath = os.path.join(acquisition.backupPath, projname)
         args = [settings.TRANSFERTOOL]
         args += settings.TRANSFERTOOLARGS
-        args += [sourcePath]
-        args += [targetPath]
+        args += ["'"+sourcePath+"'"]
+        args += ["'"+targetPath+"'"]
         """The child process receives the same SIGINT as your parent process
          because it's in the same process group. You can put the child in its
           own process group by calling os.setpgrp() in the child process.
