@@ -155,17 +155,17 @@ if hostName == 'linux-bxmv.suse':
 else:
     BACKUPPATH="/"
 BACKUPPATH=os.path.join(BACKUPPATH,"media", user)
-DEFAULTWORKFLOW="defaultWorkflow"
+DEFAULTWORKFLOW="BASIC_Import_Mcorr2_Ctffind4_Summary"
 if user == "scipionuser":
     SCIPIONPATH = os.getenv('SCIPION_PATH','/usr/local/scipion')
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
-    DEFAULTWORKFLOW="xxxxx"
+    DEFAULTWORKFLOW="BASIC_Import_Mcorr2_Ctffind4_Summary"
 else:
     SCIPIONPATH='/home/roberto/Scipion/scipion_box'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'
 
 DEFAULTMIC=1
-DEFAULTWORKFLOW=1
+#DEFAULTWORKFLOW=2
 WORKFLOWFILENAME='workflow.json'
 EMAILFROM="noreply-scipionbox@cnb.csic.es"
 EMAILTO="user@domain"

@@ -11,6 +11,7 @@ django-filebrowser==3.9.1
 django-grappelli==2.10.1
 django-tables2==1.13.0
 django-tables2==1.13.0
+django-settings-export==1.2.1
 dj-static==0.0.6
 easy-thumbnails==2.5
 gunicorn==19.7.1
