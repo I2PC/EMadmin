@@ -240,7 +240,7 @@ rsync.action = function
 
 	if config.delete == true or config.delete == 'running'
 	then
-		delete = { '--delete', '--ignore-errors' }
+		delete = {' '} --{ '--delete', '--ignore-errors' }
 	end
 
 	spawn(
@@ -351,7 +351,7 @@ rsync.init = function
 	if config.delete == true
 	or config.delete == 'startup'
 	then
-		delete = { '--delete', '--ignore-errors' }
+		delete = { ' '} --'--delete', '--ignore-errors' }
 	end
 
 	if #excludes == 0
@@ -672,7 +672,7 @@ rsync.rsync =
 {
 	-- The rsync binary to be called.
 	binary        = '/usr/bin/rsync',
-	links         = true,
+	copy_links    = true,
 	times         = true,
 	protect_args  = true
 }
