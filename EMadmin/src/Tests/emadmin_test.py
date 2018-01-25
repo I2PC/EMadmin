@@ -30,8 +30,10 @@ class onLineShopTester(unittest.TestCase):
     #chromeDriver = "/home/roberto/bin/chromedriver"
 
     def setUp(self):
+        print "setup"
 #        self.driver = webdriver.Firefox()
         self.driver = webdriver.Chrome(self.chromeDriver)
+        print "setupEND"
 
     def find_element_by_id(self,_id,value,waitFor=1):
         self.driver.find_element_by_id(_id).clear()
@@ -179,7 +181,7 @@ class onLineShopTester(unittest.TestCase):
         if os.path.exists(fullProjectPath):
             shutil.rmtree(fullProjectPath) # clean path
         os.makedirs(fullProjectPath)  # create output dir
-        INPUTDAT="/home/scipionuser/OffloadData/Data/02/*mrc"
+        INPUTDAT="/home/OffloadData/2018_01_18_fabrizio_d1_1801_/GRID_??/DATA/Images-Disc1/GridSquare_*/Data/FoilHole_*_Fractions.mrc"
         inputFiles = glob(INPUTDAT)
 
         aTime = 90  # 90 sec per movie
@@ -192,6 +194,7 @@ class onLineShopTester(unittest.TestCase):
             time.sleep(aTime)
 
     def test_emadmin(self):
+        print "Hi"
         self.deleteProjectFromUser(self.email)
         self.deleteUser(self.email)
         self.seeHome(2)
