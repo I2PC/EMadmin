@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ block.super }}Create Invoice{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="report" %}
+{% endblock %}
+
+<!-- Benefits of the Django application -->
+{% block container %}
+<div id="sec2" class="text-page">
+  <div class="container">
+      <div class="col-md-12">
+        <h2>Create Invoice </h2>
+        <p class="lead">.
+      </div>
+
+        <form id="invoice_form" method="post"
+              action="{% url 'invoice:create_invoice' %}">
+
+            {% csrf_token %}
+
+             <table cellpadding="10">{{ form1.as_table }}</table>
+             <table cellpadding="10">{{ form2.as_table }}</table>
+             <table cellpadding="10">{{ form3.as_table }}</table>
+
+            <input type="submit" name="submit" value="Create Invoice" />
+        </form>
+ </div>
+</div>
+{% endblock container %}

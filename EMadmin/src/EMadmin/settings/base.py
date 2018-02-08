@@ -74,6 +74,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    'invoice',
+
     'authtools',
     'crispy_forms',
     'easy_thumbnails',
@@ -187,3 +190,12 @@ HELPURL = 'https://github.com/rmarabini/Talos-User-Guide/wiki/EMserver';
 SETTINGS_EXPORT = [
     'HELPURL',
 ]
+##################
+# INVOICE SETTINGS
+##################
+#SITE_NAME = 'MyWebsite'
+#AUTH_PROFILE_MODULE = 'myapp.Company'
+#INV_MODULE = 'invoice_mod.pdf'
+#INV_CURRENCY = ''
+#INV_CLIENT_MODULE = 'myapp.Company'
+
