@@ -17,9 +17,11 @@ html, body{
 }
 
 .alert {
-    margin-top: 55px;
+    margin-top: 10px;
     margin-bottom: 0;
 }
+
+.narrow-select { width: 10px; }
 
 body>.navbar-transparent {
     background-color: transparent;
