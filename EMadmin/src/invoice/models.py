@@ -17,7 +17,7 @@ class Invoice(models.Model):
                                    help_text='user who sent this order out')
 
     acquisition   = models.OneToOneField(Acquisition)
-    creation_date = models.DateField(blank=True, null=True)   
+    creation_date = models.DateField(blank=True, null=True, auto_now_add=True )
 
     def total(self):
         total = Decimal('0.00')
@@ -34,11 +34,10 @@ class Concept(models.Model):
         return self.name
 
 class InvoiceLine(models.Model):
-    invoice = models.ForeignKey(Invoice, related_name='items', null=True,
-                                blank=True)
-    concept = models.OneToOneField(Concept)
-    quantiy = models.IntegerField()
-    unit_price = models.DecimalField(max_digits=8, decimal_places=2)
+    invoice = models.ForeignKey(Invoice, related_name='items')
+    concept = models.ForeignKey(Concept)
+    quantity = models.IntegerField(null=True)
+    unit_price = models.DecimalField(null=True, max_digits=8, decimal_places=2)
     
     def total(self):
         total = Decimal(str(self.unit_price * self.quantity))
