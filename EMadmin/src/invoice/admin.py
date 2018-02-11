@@ -8,7 +8,7 @@ from models import Concept, Invoice, InvoiceLine
 
 
 class ConceptAdmin(admin.ModelAdmin):
-    list_display = ('name','unit_price')
+    list_display = ('id', 'name', 'unit_price')
 
 admin.site.register(Concept, ConceptAdmin)
 admin.site.register(Invoice)
