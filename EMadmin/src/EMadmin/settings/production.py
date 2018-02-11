@@ -66,3 +66,4 @@ logging.config.dictConfig(LOGGING)
 
 LATEX_REPORT_TEMPLATE = join(STATIC_ROOT, 'TEM_report.tex')
 LATEX_REPORT_TEMPLATE_ICON = join(STATIC_ROOT, 'mic.jpg')
+LATEX_INVOICE_TEMPLATE = join(STATIC_ROOT, 'TEM_invoice.tex')
