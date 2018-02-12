@@ -101,7 +101,7 @@ def create_report_latex(invoice):
 
     for line in invoice.items.all():
         concepts += "%s & %8.2f\\texteuro & %d & %8.2f\\texteuro\\\\"%(
-            line.concept.name,
+            tex_escape(line.concept.name),
                                               line.unit_price,
                                     line.quantity, line.total())
     options['concepts'] = concepts
