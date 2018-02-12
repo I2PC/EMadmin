@@ -19,7 +19,7 @@ class onLineShopTester(unittest.TestCase):
     num         = 1
     username    = "testUser%d"% num
     passwd      = "passwd%d"% num
-    institution = "CNB-CSIC\\C/ Darwin 3\\28049 Madrid\\Espa\~{n}a"
+    institution = "CNB-CSIC\\\\C/ Darwin 3\\\\28049 Madrid\\\\Espa\~{n}a"
     email       = "%s@gmail.com"%username
     sample      = "sample%d"% num
     base_url    = "http://127.0.0.1:8000/"
@@ -29,7 +29,7 @@ class onLineShopTester(unittest.TestCase):
     num          = 100
     usernameA    = "testUser%d"% num
     passwdA      = "passwd%d"% num
-    institutionA = "CNB-CSIC\\C/ Darwin 3\\28049 Madrid\\Espa\~{n}a"
+    institutionA = "CNB-CSIC\\\\C/ Darwin 3\\\\28049 Madrid\\\\Espa\~{n}a"
     emailA       = "%s@gmail.com"%usernameA
 
 
@@ -97,6 +97,7 @@ class onLineShopTester(unittest.TestCase):
         self.find_element_by_xpath("//input[@type='submit' and @value='Create Project']")
 
     def createProject2(self):
+        print "create project2"
         #acquisition params
         self.find_element_by_id("id_nominal_magnification", "70000,0")
         self.find_element_by_id("id_sampling_rate", "1.42")
@@ -131,6 +132,7 @@ class onLineShopTester(unittest.TestCase):
         self.driver.quit()
 
     def deleteUser(self, email):
+        print "execute deleteuser: %s"%email
         try:
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
@@ -142,28 +144,29 @@ class onLineShopTester(unittest.TestCase):
             print (e)
 
 
-    def deleteProjectFromUser(self, email):
+    def deleteProjectFromUser(self, username):
+        print "deleteprojectfrom user: %s"% username
         try:
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
-            sql = """SELECT id FROM authtools_user
-                     WHERE email='%s'"""%email
-            cur.execute(sql)
-            user_id = cur.fetchone()[0]
             sql = """SELECT projname FROM create_proj_acquisition
-                     WHERE user_id=%d"""%user_id
+                         WHERE projname like '%%%s%%'"""%username
             cur.execute(sql)
-            projname = cur.fetchone()[0]
-            sql = """DELETE FROM create_proj_acquisition
-                     WHERE user_id='%d'"""%user_id
-            cur.execute(sql)
-            conn.commit()
-            shutil.rmtree(os.path.join(os.environ['HOME'], "ScipionUserData",
+            projname = cur.fetchone()
+            if projname is not None:
+                projname = projname[0]
+                sql = """DELETE FROM create_proj_acquisition
+                         WHERE projname like '%%%s%%'"""%username
+                cur.execute(sql)
+                conn.commit()
+                shutil.rmtree(os.path.join(os.environ['HOME'], "ScipionUserData",
                                        "projects", projname))
+            
         except Exception as e:
             print (e)
 
     def deleteConcept(self):
+        print "execute deleteconcept"
         try:
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
@@ -174,6 +177,7 @@ class onLineShopTester(unittest.TestCase):
             print (e)
 
     def deleteInvoice(self):
+        print "execute deleteInvoice"
         try:
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
@@ -184,6 +188,7 @@ class onLineShopTester(unittest.TestCase):
             print (e)
 
     def deleteInvoiceLines(self):
+        print "execute deleteInvoiceLines"
         try:
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
@@ -227,21 +232,65 @@ class onLineShopTester(unittest.TestCase):
             time.sleep(aTime)
     
     def createAdminUser(self, username, email, passwd):
+        print "createAdminUser: %s"% passwd
         command = """python ./manage.py createsuperuser2 --name %s --email %s --password %s"""%(username, email, passwd)
         os.system(command)
 
     def createConcept(self, numConcepts):
+        print "execute create concept: %d" % numConcepts
         try:
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
             sql = ''' INSERT INTO invoice_concept(name,unit_price)
               VALUES(?,?) '''
+            cur.execute(sql,('-----', 0.0))
             for i in range (1, numConcepts):
                 cur.execute(sql, ('name_%02d'%i, float(i*1.0)))
             conn.commit()
         except Exception as e:
             print (e)
 
+    def createInvoice(self):
+        driver = self.driver
+        driver.find_element_by_link_text("Report").click()
+        driver.find_element_by_xpath("(//a[contains(text(),'2018_02_12_testuser1_sample1')])[3]").click()
+        driver.find_element_by_name("c_001").click()
+        Select(driver.find_element_by_name("c_002")).select_by_visible_text("name_04")
+        driver.find_element_by_name("c_002").click()
+        Select(driver.find_element_by_name("c_003")).select_by_visible_text("name_07")
+        driver.find_element_by_name("c_003").click()
+        driver.find_element_by_xpath("//form[@id='invoice_form']/table[2]/tbody/tr[5]/td").click()
+        Select(driver.find_element_by_name("c_004")).select_by_visible_text("name_09")
+        driver.find_element_by_name("c_004").click()
+        Select(driver.find_element_by_name("c_005")).select_by_visible_text("name_02")
+        driver.find_element_by_name("c_005").click()
+        driver.find_element_by_name("n_002").click()
+        driver.find_element_by_name("n_001").click()
+        driver.find_element_by_name("n_001").click()
+        # ERROR: Caught exception [ERROR: Unsupported command [doubleClick | name=n_001 | ]]
+        driver.find_element_by_name("n_002").clear()
+        driver.find_element_by_name("n_002").send_keys("22")
+        driver.find_element_by_name("n_003").clear()
+        driver.find_element_by_name("n_003").send_keys("77")
+        driver.find_element_by_name("n_002").click()
+        driver.find_element_by_name("n_002").click()
+        # ERROR: Caught exception [ERROR: Unsupported command [doubleClick | name=n_002 | ]]
+        driver.find_element_by_name("n_002").click()
+        driver.find_element_by_name("n_002").clear()
+        driver.find_element_by_name("n_002").send_keys("44")
+        driver.find_element_by_name("n_004").click()
+        driver.find_element_by_name("n_004").click()
+        # ERROR: Caught exception [ERROR: Unsupported command [doubleClick | name=n_004 | ]]
+        driver.find_element_by_name("n_004").click()
+        driver.find_element_by_name("n_004").clear()
+        driver.find_element_by_name("n_004").send_keys("99")
+        driver.find_element_by_name("n_005").click()
+        driver.find_element_by_name("n_005").click()
+        # ERROR: Caught exception [ERROR: Unsupported command [doubleClick | name=n_005 | ]]
+        driver.find_element_by_name("n_005").click()
+        driver.find_element_by_name("n_005").clear()
+        driver.find_element_by_name("n_005").send_keys("22")
+        driver.find_element_by_name("submit").click()
 
     def test_emadmin(self):
         #clean tables
@@ -257,12 +306,11 @@ class onLineShopTester(unittest.TestCase):
         # create concepts
         self.createConcept(10)
 
-        # create regular user
-        self.deleteProjectFromUser(self.email)
+        # delete regular user and projects
+        self.deleteProjectFromUser(self.username)
         self.deleteUser(self.email)
 
-
-        
+        # login and create project        
         self.seeHome(2)
         self.signUp()  # create user
         self.signOut()  # log out
@@ -274,7 +322,10 @@ class onLineShopTester(unittest.TestCase):
         #create invoice
         self.signOut()  # log out
         self.signIn(self.emailA, self.passwdA)
-        
+        self.seeHome(2)
+	self.createInvoice()
+        time.sleep(60)
+
 #        self.simulateAcquisition()  # link movies
         # create administrative user
 
