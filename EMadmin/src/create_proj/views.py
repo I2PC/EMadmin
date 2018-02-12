@@ -72,15 +72,12 @@ def add_acquisition(request):
     Show first half of the form that is parameters that
     can be set before the microscope is acquiring data
     """
-    print "eeeeeeeeeeeeeeeeeeeeeeeeeeeee0"
     if request.method == 'POST':
         doNotSkip = False
         if u'skip_submit_add_acquisition' in request.POST:
             formP = SkipAcquisitionForm(data=request.POST, user=request.user)
         else:
-            print "eeeeeeeeeeeeeeeeeeeeeeeeeeeee10"
             formP = AcquisitionForm(request.POST)
-            print "eeeeeeeeeeeeeeeeeeeeeeeeeeeee11"
             doNotSkip = True
         if formP.is_valid():
             if doNotSkip:
@@ -115,17 +112,12 @@ def add_acquisition(request):
                   {'form': formP, 'form2': form2})
     else:
         try:
-            print "eeeeeeeeeeeeeeeeeeeeeeeeeeeee5", settings.DEFAULTWORKFLOW
             default_state = Workflow.objects.get(name=settings.DEFAULTWORKFLOW)
-            print "eeeeeeeeeeeeeeeeeeeeeeeeeeeee6"
             form = AcquisitionForm(initial={'workflow':default_state})
-            print "eeeeeeeeeeeeeeeeeeeeeeeeeeeee7"
         except:
             form = AcquisitionForm()  # create a clean form
-        print "eeeeeeeeeeeeeeeeeeeeeeeeeeeee8"
         form2 = SkipAcquisitionForm(user=request.user)  # create a clean form
-        print "eeeeeeeeeeeeeeeeeeeeeeeeeeeee9"
-    
+
     return render(request,
                   'create_proj/add_acquisition.html',
                   {'form': form, 'form2': form2})
