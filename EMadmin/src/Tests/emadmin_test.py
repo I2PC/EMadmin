@@ -30,10 +30,8 @@ class onLineShopTester(unittest.TestCase):
     #chromeDriver = "/home/roberto/bin/chromedriver"
 
     def setUp(self):
-        print "setup"
 #        self.driver = webdriver.Firefox()
         self.driver = webdriver.Chrome(self.chromeDriver)
-        print "setupEND"
 
     def find_element_by_id(self,_id,value,waitFor=1):
         self.driver.find_element_by_id(_id).clear()
@@ -82,9 +80,9 @@ class onLineShopTester(unittest.TestCase):
     def createProject1(self):
         # Microscope
         self.find_element_by_link_text("Project")
-        self.pullDownMenuById('id_workflow','3')
         self.pullDownMenuById('id_workflow','2')
         self.pullDownMenuById('id_workflow','3')
+        self.pullDownMenuById('id_workflow','1')
         print "self.sample",self.sample
         self.find_element_by_id("id_sample",self.sample)
         self.find_element_by_id("id_voltage",200)
