@@ -19,12 +19,19 @@ class onLineShopTester(unittest.TestCase):
     num         = 1
     username    = "testUser%d"% num
     passwd      = "passwd%d"% num
-    institution = "intitution%d"% num
+    institution = "CNB-CSIC\\C/ Darwin 3\\28049 Madrid\\Espa\~{n}a"
     email       = "%s@gmail.com"%username
     sample      = "sample%d"% num
     base_url    = "http://127.0.0.1:8000/"
     admin_url   = base_url + "admin/"
     database    = "db.sqlite3"
+
+    num          = 100
+    usernameA    = "testUser%d"% num
+    passwdA      = "passwd%d"% num
+    institutionA = "CNB-CSIC\\C/ Darwin 3\\28049 Madrid\\Espa\~{n}a"
+    emailA       = "%s@gmail.com"%usernameA
+
 
     chromeDriver = "/usr/local/bin/chromedriver"
     #chromeDriver = "/home/roberto/bin/chromedriver"
@@ -70,11 +77,11 @@ class onLineShopTester(unittest.TestCase):
         # select logout
         self.find_element_by_xpath("//ul[@class='dropdown-menu'][1]")
 
-    def signIn(self):
+    def signIn(self, email, passwd):
         #self.driver.find_element_by_link_text("Log in").click()
         self.find_element_by_xpath("//a[@class='btn btn-default'][1]")
-        self.find_element_by_id("id_username",self.email)
-        self.find_element_by_id("id_password",self.passwd)
+        self.find_element_by_id("id_username", email)
+        self.find_element_by_id("id_password", passwd)
         self.find_element_by_xpath("//input[@type='submit' and @value='Log in']")
 
     def createProject1(self):
@@ -83,7 +90,6 @@ class onLineShopTester(unittest.TestCase):
         self.pullDownMenuById('id_workflow','2')
         self.pullDownMenuById('id_workflow','3')
         self.pullDownMenuById('id_workflow','1')
-        print "self.sample",self.sample
         self.find_element_by_id("id_sample",self.sample)
         self.find_element_by_id("id_voltage",200)
         self.find_element_by_id("id_shiftLength",2)
@@ -134,7 +140,6 @@ class onLineShopTester(unittest.TestCase):
             conn.commit()
         except Exception as e:
             print (e)
-        # delete project
 
 
     def deleteProjectFromUser(self, email):
@@ -155,6 +160,36 @@ class onLineShopTester(unittest.TestCase):
             conn.commit()
             shutil.rmtree(os.path.join(os.environ['HOME'], "ScipionUserData",
                                        "projects", projname))
+        except Exception as e:
+            print (e)
+
+    def deleteConcept(self):
+        try:
+            conn = sqlite3.connect(self.database)
+            cur = conn.cursor()
+            sql = """DELETE FROM invoice_concept"""
+            cur.execute(sql)
+            conn.commit()
+        except Exception as e:
+            print (e)
+
+    def deleteInvoice(self):
+        try:
+            conn = sqlite3.connect(self.database)
+            cur = conn.cursor()
+            sql = """DELETE FROM invoice_invoice"""
+            cur.execute(sql)
+            conn.commit()
+        except Exception as e:
+            print (e)
+
+    def deleteInvoiceLines(self):
+        try:
+            conn = sqlite3.connect(self.database)
+            cur = conn.cursor()
+            sql = """DELETE FROM invoice_invoiceline"""
+            cur.execute(sql)
+            conn.commit()
         except Exception as e:
             print (e)
 
@@ -190,20 +225,58 @@ class onLineShopTester(unittest.TestCase):
             counter += 1
             os.symlink(f, outputPath)
             time.sleep(aTime)
+    
+    def createAdminUser(self, username, email, passwd):
+        command = """python ./manage.py createsuperuser2 --name %s --email %s --password %s"""%(username, email, passwd)
+        os.system(command)
+
+    def createConcept(self, numConcepts):
+        try:
+            conn = sqlite3.connect(self.database)
+            cur = conn.cursor()
+            sql = ''' INSERT INTO invoice_concept(name,unit_price)
+              VALUES(?,?) '''
+            for i in range (1, numConcepts):
+                cur.execute(sql, ('name_%02d'%i, float(i*1.0)))
+            conn.commit()
+        except Exception as e:
+            print (e)
+
 
     def test_emadmin(self):
-        print "Hi"
+        #clean tables
+        self.seeHome(2)
+        self.deleteInvoiceLines
+        self.deleteInvoice()
+        self.deleteConcept()
+        self.deleteUser(self.emailA)
+
+        # create administrative user
+        self.createAdminUser(self.usernameA, self.emailA, self.passwdA)
+        
+        # create concepts
+        self.createConcept(10)
+
+        # create regular user
         self.deleteProjectFromUser(self.email)
         self.deleteUser(self.email)
+
+
+        
         self.seeHome(2)
         self.signUp()  # create user
         self.signOut()  # log out
-        self.signIn()  # log in
+        self.signIn(self.email, self.passwd)  # log in
         #time.sleep(60)
         self.createProject1()  # first form
         self.createProject2()  # first form
-        self.simulateAcquisition()  # link movies
 
+        #create invoice
+        self.signOut()  # log out
+        self.signIn(self.emailA, self.passwdA)
+        
+#        self.simulateAcquisition()  # link movies
+        # create administrative user
 
         #close browser
         self.quit(2)
