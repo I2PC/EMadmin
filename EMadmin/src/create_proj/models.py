@@ -67,7 +67,7 @@ class Acquisition(models.Model):
 
 
 DRIFT_MEASU_CHOICES = [('never', 'never'), ('always', 'always'),('gridsquare','gridsquare')]
-EXPOSURE_HOLE_CHOICES = [(1, '1'), (2, '2'),(3, '3')]
+EXPOSURE_HOLE_CHOICES = [(1, '1'), (2, '2'), (3, '3'), (4,'4'), (5,'5')]
 C2_CHOICES = [(30, '30'), (50, '50'),(70, '70'),(150, '150')]
 O1_HOLE_CHOICES = [(30, '30'), (70, '70')]
 PHP_CHOICES = [(0, '--'), (1, '1'), (2, '2'),(3, '3'), (4, '4'), (5, '5'), (6, '6')]
