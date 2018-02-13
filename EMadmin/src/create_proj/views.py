@@ -117,7 +117,6 @@ def add_acquisition(request):
         except:
             form = AcquisitionForm()  # create a clean form
         form2 = SkipAcquisitionForm(user=request.user)  # create a clean form
-    
     return render(request,
                   'create_proj/add_acquisition.html',
                   {'form': form, 'form2': form2})

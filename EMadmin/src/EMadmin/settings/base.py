@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for EMadmin project.
 
@@ -73,6 +74,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
+    'invoice',
 
     'authtools',
     'crispy_forms',
@@ -163,6 +167,7 @@ if user == "scipionuser":
 else:
     SCIPIONPATH='/home/roberto/Scipion/scipion_box'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'
+NUMBERCONCEPTS=11
 
 DEFAULTMIC=1
 #DEFAULTWORKFLOW=2
@@ -178,12 +183,22 @@ TRANSFERTOOL='/usr/bin/lsyncd'
 TRANSFERTOOLARGS=["-nodaemon", "-delay", "300" , "-rsync"]
 LATEX_REPORT_TEMPLATE = join(MEDIA_ROOT, 'TEM_report.tex') # in production override
                       # to LATEX_REPORT_TEMPLATE = join(STATIC_ROOT, 'TEM_report.tex')
+LATEX_INVOICE_TEMPLATE = join(MEDIA_ROOT, 'TEM_invoice.tex') # override rhis too
 LATEX_REPORT_TEMPLATE_ICON = join(MEDIA_ROOT, 'mic.jpg')
 LOGIN_REDIRECT_URL = '/'  # after login redirect here
-
+COMPNAME = u"Servicio de Crio-Microscop\\'{i}a"
 #export variable to template
 HELPURL = 'https://github.com/rmarabini/Talos-User-Guide/wiki/EMserver';
 
 SETTINGS_EXPORT = [
     'HELPURL',
 ]
+##################
+# INVOICE SETTINGS
+##################
+#SITE_NAME = 'MyWebsite'
+#AUTH_PROFILE_MODULE = 'myapp.Company'
+#INV_MODULE = 'invoice_mod.pdf'
+#INV_CURRENCY = ''
+#INV_CLIENT_MODULE = 'myapp.Company'
+

@@ -8,6 +8,7 @@ import create_proj.urls
 import create_report.urls
 from . import views
 import create_stat.urls
+import invoice.urls
 
 urlpatterns = [
     url(r'^$', views.HomePage.as_view(), name='home'),
@@ -17,6 +18,7 @@ urlpatterns = [
     url(r'^create_proj/', include(create_proj.urls, namespace='create_proj')),
     url(r'^create_stat/', include(create_stat.urls, namespace='create_stat')),
     url(r'^create_report/', include(create_report.urls, namespace='create_report')),
+    url(r'^invoice/', include(invoice.urls, namespace='invoice')),
     url(r'^', include(accounts.urls, namespace='accounts')),
 ]
 

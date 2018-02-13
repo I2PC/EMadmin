@@ -3,6 +3,7 @@ from django.utils.encoding import python_2_unicode_compatible
 import uuid
 from django.db import models
 from django.conf import settings
+#from profiles.models import Profile
 
 
 class BaseProfile(models.Model):

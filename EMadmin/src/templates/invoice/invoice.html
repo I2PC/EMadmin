@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ block.super }}Create Invoice{% endblock %}
+
+{% block navbar-left %}
+  {% include "_navbar.html" with active_link="report" %}
+{% endblock %}
+
+<!-- Benefits of the Django application -->
+{% block container %}
+<div id="sec2" class="text-page">
+  <div class="container">
+      <div class="col-md-12">
+        <h2>Create Invoice for Project: {{ projname }}</h2>
+        <p class="lead">.
+      </div>
+
+        <form id="invoice_form" method="post"
+              action="{% url 'invoice:create_invoice' acquisition%}">
+
+            {% csrf_token %}
+
+             <table cellpadding="10">{{ form1.as_table }}</table>
+        <table>
+            <tr><th> </th><th>Concept</th><th>N. Units</th></tr><tr>
+                {% for field in form2 %}
+                    {% cycle '<th>' '' %}
+                    {% cycle field.label_tag '' %}
+                    {% cycle '</th>' '' %}
+                    <td>{{ field }}{{ attribute_form.field.errors }}</td>
+                    {% if not forloop.last %}
+                         {% cycle '' '</tr><tr>' %}
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+            <input type="submit" name="submit" value="Create Invoice" />
+        </form>
+ </div>
+</div>
+{% endblock container %}
