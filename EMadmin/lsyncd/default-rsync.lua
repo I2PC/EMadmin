@@ -674,7 +674,8 @@ rsync.rsync =
 	binary        = '/usr/bin/rsync',
 	copy_links    = true,
 	times         = true,
-	protect_args  = true
+	protect_args  = true,
+        -- bwlimit       = 500
 }
 
 
