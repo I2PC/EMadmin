@@ -40,9 +40,7 @@ class AcquisitionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         try:
-            print "ffffffffffffffffffffffffff", settings.BACKUPPATH
             if os.path.isdir(settings.BACKUPPATH):
-                print "ffffffffffffffffffffffffff1", settings.BACKUPPATH
                 _dir_list = [os.path.join(settings.BACKUPPATH, o)
                          for o in os.listdir(settings.BACKUPPATH)
                          if os.path.isdir(os.path.join(settings.BACKUPPATH,o))]
@@ -53,7 +51,6 @@ class AcquisitionForm(forms.ModelForm):
 #                    data_list=_dir_list, name='dir-list', size=40)
         except:
             data_list = []  # directory does not exists
-            print "ffffffffffffffffffffffffff2", data_list
 
 #    def clean_backupPath(self):
     def clean(self):
