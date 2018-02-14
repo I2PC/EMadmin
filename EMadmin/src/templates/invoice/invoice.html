@@ -14,12 +14,12 @@
 <div id="sec2" class="text-page">
   <div class="container">
       <div class="col-md-12">
-        <h2>Create Invoice for Project: {{ projname }}</h2>
+        <h2>Create Invoice</h2>
         <p class="lead">.
       </div>
 
         <form id="invoice_form" method="post"
-              action="{% url 'invoice:create_invoice' acquisition%}">
+              action="{% url 'invoice:create_invoice' %}">
 
             {% csrf_token %}
 

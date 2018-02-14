@@ -167,7 +167,7 @@ if user == "scipionuser":
 else:
     SCIPIONPATH='/home/roberto/Scipion/scipion_box'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'
-NUMBERCONCEPTS=11
+NUMBERCONCEPTS=21
 
 DEFAULTMIC=1
 #DEFAULTWORKFLOW=2
