@@ -21,3 +21,17 @@
 ## Details of usage data collection
 You can find them here https://github.com/I2PC/scipion/wiki/Collecting-Usage-Statistics-for-Scipion
 
+--
+
+## Testing EMadmin in Éinstein
+- open a vnc conection with Einstein
+     - connect to Einstein using ssh as scipionuser
+     - start the server:    killall Xvnc4; rm -rf /tmp/.X*-lock; vncserver -geometry 1280x960
+- in your computer opena vnc client; vncviewer einstein:PORTNUMBER (portnumber usually 1)
+- cd /home/scipionuser/webservices/EMadmin/src
+- Start a virtual environment: source ../virEMadmin/bin/activate
+- launch django server: python manage.py runserver
+- open browser and connect to server at URL http://127.0.0.1:8000
+- create new project and lunch scipion
+- execute scipion protocols
+- check html report
