@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-#from datetime import datetime
 from django.utils import timezone
 from django.db import models
 from django.conf import settings
@@ -33,7 +32,7 @@ class Microscope(models.Model):
 class Acquisition(models.Model):
     microscope = models.ForeignKey(Microscope, default=settings.DEFAULTMIC)
     user       = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False)  #
-    workflow   = models.ForeignKey(Workflow, default=settings.DEFAULTWORKFLOW)
+    workflow   = models.ForeignKey(Workflow, default=settings.DEFAULTWORKFLOWID)
     sample     = models.CharField(max_length=128)
     voltage    = models.IntegerField(default=200)
     date       = models.DateTimeField(default=timezone.now, blank=True)  #

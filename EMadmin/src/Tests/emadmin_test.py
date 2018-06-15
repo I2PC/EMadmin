@@ -56,6 +56,7 @@ class onLineShopTester(unittest.TestCase):
         time.sleep(waitFor)
 
     def signUp(self):
+        # /html/body/div[2]/div/div/div[1]/a
         self.find_element_by_xpath("//a[@class='btn btn-primary'][1]")
         self.find_element_by_id("id_email",self.email)
         self.find_element_by_id("id_name",self.username)
@@ -76,13 +77,16 @@ class onLineShopTester(unittest.TestCase):
         self.find_element_by_id("id_username",self.email)
         self.find_element_by_id("id_password",self.passwd)
         self.find_element_by_xpath("//input[@type='submit' and @value='Log in']")
+#2|BASIC_Import_Mcorr2_Ctffind4_Summary
+#4|Phase_Plate_mottioncor_ctffing_gctf_gain
+#5|TOMO_acquisiton_movie
 
     def createProject1(self):
         # Microscope
         self.find_element_by_link_text("Project")
         self.pullDownMenuById('id_workflow','2')
-        self.pullDownMenuById('id_workflow','3')
-        self.pullDownMenuById('id_workflow','1')
+        self.pullDownMenuById('id_workflow','5')
+        self.pullDownMenuById('id_workflow','4')
         print "self.sample",self.sample
         self.find_element_by_id("id_sample",self.sample)
         self.find_element_by_id("id_voltage",200)
@@ -192,14 +196,14 @@ class onLineShopTester(unittest.TestCase):
             time.sleep(aTime)
 
     def test_emadmin(self):
-        print "Hi"
         self.deleteProjectFromUser(self.email)
         self.deleteUser(self.email)
         self.seeHome(2)
         self.signUp()  # create user
+
         self.signOut()  # log out
         self.signIn()  # log in
-        #time.sleep(60)
+
         self.createProject1()  # first form
         self.createProject2()  # first form
         self.simulateAcquisition()  # link movies

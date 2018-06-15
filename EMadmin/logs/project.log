@@ -32,3 +32,13 @@
 [12/Feb/2018 17:12:05] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
 [12/Feb/2018 17:16:10] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser100 <testUser100@gmail.com> created
 [12/Feb/2018 17:16:20] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+[13/Jun/2018 20:30:18] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+[13/Jun/2018 20:31:05] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+[13/Jun/2018 20:37:23] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for foo <foo@gmail.com> created
+[14/Jun/2018 19:27:55] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+[14/Jun/2018 19:31:04] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for foo <foo@gmail.com> created
+[14/Jun/2018 19:34:32] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+[14/Jun/2018 20:09:26] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+[14/Jun/2018 20:11:40] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+[14/Jun/2018 22:32:51] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+[14/Jun/2018 22:36:14] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
