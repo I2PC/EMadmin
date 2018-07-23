@@ -14,7 +14,7 @@ class ProjectsTable(tables.Table):
                                        '{{record.projname}}</a>',
                                        order_by=('projname'))
 
-    produce_invoice = tables.TemplateColumn('<a href={% url "invoice:create_invoice" record.id %}>'
+    produce_invoice = tables.TemplateColumn('<a href={% url "invoice:create_invoice"  %} >'
                                        '{{record.projname}}</a>',
                                        order_by=('projname'))
 

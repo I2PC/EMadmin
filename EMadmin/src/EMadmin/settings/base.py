@@ -60,7 +60,9 @@ if exists(env_file):
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Raises ImproperlyConfigured exception if SECRET_KEY not in os.environ
-SECRET_KEY = env('SECRET_KEY')
+##SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY='i1u*m_g^bqs7o0+dh*-6s+-xfbi+t)&&x26xv+imt52zo)6v90'
+
 
 ALLOWED_HOSTS = []
 
@@ -111,8 +113,13 @@ WSGI_APPLICATION = 'EMadmin.wsgi.application'
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in
     # os.environ
-    'default': env.db(),
+    #'default': env.db(),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
 }
+#DATABASE_URL='sqlite:///db.sqlite3'
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
@@ -160,14 +167,14 @@ else:
     BACKUPPATH="/"
 BACKUPPATH=os.path.join(BACKUPPATH,"media", user)
 DEFAULTWORKFLOW="BASIC_Import_Mcorr2_Ctffind4_Summary"
+DEFAULTWORKFLOWID=2
 if user == "scipionuser":
     SCIPIONPATH = os.getenv('SCIPION_PATH','/usr/local/scipion')
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
-    DEFAULTWORKFLOW="BASIC_Import_Mcorr2_Ctffind4_Summary"
 else:
-    SCIPIONPATH='/home/roberto/Scipion/scipion_box'
+    SCIPIONPATH='/home/roberto/Scipion/scipion_facilities'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'
-NUMBERCONCEPTS=11
+NUMBERCONCEPTS=21
 
 DEFAULTMIC=1
 #DEFAULTWORKFLOW=2

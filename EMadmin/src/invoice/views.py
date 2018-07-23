@@ -11,6 +11,7 @@ import jinja2, os
 from django.conf import settings
 import unidecode
 from django.http import HttpResponse
+from models import Concept, TYPE_CHOICES
 
 User = get_user_model()
 
@@ -84,21 +85,15 @@ def create_report_latex(invoice):
 
     options = {}
     # Header
-    acquisition = invoice.acquisition
-    options['projectName'] = tex_escape(acquisition.projname)
-    options['invoicenum'] = acquisition.id
+    #acquisition = invoice.acquisition
+    options['projectName'] = invoice.startDate.strftime('%d-%m-%Y') + "/" + invoice.endDate.strftime('%d-%m-%Y')
+    options['invoicenum'] = invoice.id
     options['companyname'] = settings.COMPNAME
     orderedBy = invoice.ordered_by.name + "\\\\" + \
                 invoice.ordered_by.profile.institution
     options['orderedby'] = orderedBy
+
     concepts=""
-#%    My product 1 & 15\texteuro & 10 & 150\texteuro\\
-#%    My product 2 & 25\texteuro & 10 & 250\texteuro\\
-#%    My product 3 & 35\texteuro & 10 & 350\texteuro\\
-#%    My product 4 & 45\texteuro & 10 & 450\texteuro\\
-
-
-
     for line in invoice.items.all():
         concepts += "%s & %8.2f\\texteuro & %d & %8.2f\\texteuro\\\\"%(
             tex_escape(line.concept.name),
@@ -109,12 +104,12 @@ def create_report_latex(invoice):
 
     # if project exists compile data in scipionuserdata/project/Logs
     # otherwise use /tmp
-    out_dir=os.path.join(settings.SCIPIONUSERDATA, "projects",
-                         invoice.acquisition.projname, "Tmp")
-    if os.path.isdir(out_dir):
-        pass
-    else:
-        out_dir = "/tmp"
+    # out_dir=os.path.join(settings.SCIPIONUSERDATA, "projects",
+    #                      invoice.acquisition.projname, "Tmp")
+    # if os.path.isdir(out_dir):
+    #     pass
+    # else:
+    out_dir = "/tmp"
     out_file_root=os.path.join(out_dir,"temp")
     renderer_template = template.render(**options)
     with open(out_file_root + ".tex", "w") as f:  # saves tex_code to outpout file
@@ -130,22 +125,25 @@ def create_report_latex(invoice):
 
 
 @staff_member_required
-def create_invoice(request, idacquisition):
-    acquisition = Acquisition.objects.get(pk=idacquisition)
+def create_invoice(request, invoiceid=-1):
+    #acquisition = Acquisition.objects.get(pk=idacquisition)
     if request.method == 'POST':
-        print pretty_request(request)
         form1 = InvoiceForm1(request.POST)
         form2 = InvoiceForm2(request.POST)
         if form1.is_valid() and form2.is_valid():
             # process form1
             data1 = form1.cleaned_data
             user = data1['orderedBy']
+            type = data1['type']
+            startDate = data1['startDate']
+            endDate = data1['endDate']
             # check if there is an invoice for this adquisition
             # if there is update it
-            invoice, created = Invoice.objects.get_or_create(
-                                          acquisition=acquisition
-                                          )
+            invoice, created = Invoice.objects.get_or_create()
             invoice.ordered_by = user
+            invoice.type = TYPE_CHOICES[type]
+            invoice.startDate = startDate
+            invoice.endDate = endDate
             invoice.save()
             # process form2
             data2 = form2.cleaned_data
@@ -163,13 +161,20 @@ def create_invoice(request, idacquisition):
                     if v.name == "-----":
                         continue
                     conceptDict[key] = v
-
+            print "AAAAAAAAAAa", quantityDict, conceptDict
             for k,v in   conceptDict.iteritems():
                 invoiceline, created = InvoiceLine.objects.get_or_create(
                         invoice=invoice,
                         concept=v)
                 invoiceline.quantity = quantityDict[k]
-                invoiceline.unit_price = v.unit_price
+                if type == TYPE_CHOICES['cnb']:
+                    invoiceline.unit_price = v.unit_price_cnb
+                elif type == TYPE_CHOICES['csic']:
+                    invoiceline.unit_price = v.unit_price_csic
+                elif type == TYPE_CHOICES['universidad']:
+                    invoiceline.unit_price = v.unit_price_universidad
+                else:
+                    invoiceline.unit_price = v.unit_price_empresa
                 invoiceline.save()
             return create_report_latex(invoice)
         else:
@@ -178,19 +183,17 @@ def create_invoice(request, idacquisition):
         # check if there is an invoice for this project
         # if it does exists do not allow modifications
         # infor of ID.
-        invoices = Invoice.objects.filter(acquisition=acquisition)
+
+        invoices = Invoice.objects.filter(pk=invoiceid)
         if invoices.exists():
             invoice = invoices[0]
-            orderedBy = invoice.ordered_by.id
+            #orderedBy = invoice.ordered_by.id
         else:
             invoice = None
-            orderedBy = acquisition.user.id
-        form1 = InvoiceForm1(auto_id=False, orderedBy=acquisition.user.id)
+            #orderedBy = acquisition.user.id
+        form1 = InvoiceForm1(auto_id=False)
         form2 = InvoiceForm2(auto_id=False, invoice=invoice)
-    return render(request, 'invoice/invoice.html', {'projname':
-                                                        acquisition.projname,
-                                                    'acquisition':
-                                                        acquisition.id,
+    return render(request, 'invoice/invoice.html', {
                                                     'form1': form1,
                                                     'form2': form2,
                                                     })

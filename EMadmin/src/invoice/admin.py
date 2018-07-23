@@ -8,8 +8,15 @@ from models import Concept, Invoice, InvoiceLine
 
 
 class ConceptAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'unit_price')
+    list_display = ('id', 'name', 'unit_price_cnb',
+                                  'unit_price_csic',
+                                  'unit_price_universidad',
+                                  'unit_price_empresa'
+                    )
+
+class InvoiceAdmin(admin.ModelAdmin):
+    list_display = ('id', 'ordered_by', 'creation_date')
 
 admin.site.register(Concept, ConceptAdmin)
-admin.site.register(Invoice)
+admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(InvoiceLine)
