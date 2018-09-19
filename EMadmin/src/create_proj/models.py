@@ -68,7 +68,7 @@ class Acquisition(models.Model):
 DRIFT_MEASU_CHOICES = [('never', 'never'), ('always', 'always'),('gridsquare','gridsquare')]
 EXPOSURE_HOLE_CHOICES = [(1, '1'), (2, '2'), (3, '3'), (4,'4'), (5,'5')]
 C2_CHOICES = [(30, '30'), (50, '50'),(70, '70'),(150, '150')]
-O1_HOLE_CHOICES = [(30, '30'), (70, '70')]
+O1_HOLE_CHOICES = [(0, '--'), (30, '30'), (70, '70')]
 PHP_CHOICES = [(0, '--'), (1, '1'), (2, '2'),(3, '3'), (4, '4'), (5, '5'), (6, '6')]
 
 class Acquisition2(models.Model):
@@ -99,7 +99,7 @@ class Acquisition2(models.Model):
     o1 = models.IntegerField(choices=O1_HOLE_CHOICES,
                                       default=70)
     php = models.IntegerField(choices=PHP_CHOICES,
-                                      default=3)
+                                      default=0)
 
     def __unicode__(self):  #For Python 2, use __str__ on Python 3
         try:

@@ -32,6 +32,21 @@
 [12/Feb/2018 17:12:05] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
 [12/Feb/2018 17:16:10] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser100 <testUser100@gmail.com> created
 [12/Feb/2018 17:16:20] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+<<<<<<< HEAD
+[14/Feb/2018 09:17:47] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for José Ruiz Castón <jrcaston@cnb.csic.es> created
+[09/Mar/2018 09:32:26] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Pablo Guerra <pglcri@ibmb.csic.es> created
+[15/Mar/2018 09:37:10] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Andres lopez Perrote <aperrote@cnio.es> created
+[04/Apr/2018 10:11:20] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Dunia Asensio Cob <dasensio@isciii.es> created
+[10/Apr/2018 09:29:21] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for marta perez ilalan <marta.perez@cnb.csic.es> created
+[08/May/2018 08:42:40] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Carolina <mcallende@cnb.csic.es> created
+[09/May/2018 09:56:34] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Rafael Fernandez-Leiro <rfleiro@cnio.es> created
+[23/May/2018 09:22:03] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for MercedesHernando <mercedes.hernando@cnb.csic.es> created
+[18/Jun/2018 10:09:35] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Angel <ariverac@cnio.es> created
+[03/Jul/2018 09:13:02] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for dluque <dluque@isciii.es> created
+[04/Jul/2018 10:00:55] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for David Gil Cantero <david.gilcan@gmail.com> created
+[05/Jul/2018 09:54:43] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Alvaro Ortega-Esteban <aortega@cnb.csic.es> created
+[11/Jul/2018 08:57:09] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Anne Stinn <stinn@mpiib-berlin.mpg.de> created
+=======
 [13/Jun/2018 20:30:18] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
 [13/Jun/2018 20:31:05] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
 [13/Jun/2018 20:37:23] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for foo <foo@gmail.com> created
@@ -42,3 +57,7 @@
 [14/Jun/2018 20:11:40] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
 [14/Jun/2018 22:32:51] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
 [14/Jun/2018 22:36:14] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
+>>>>>>> 46d05ac46f6ad5d125b45cba7cbee67d20ca68b3
+[21/Aug/2018 09:03:41] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Jose Gallardo Hernanz <jgallardo@cnb.csic.es> created
+[05/Sep/2018 09:53:41] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Armando Albert <xalbert@iqfr.csic.es> created
+[14/Sep/2018 10:01:02] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Noelia Bernardo Garcia <nbernard@ens-cachan.fr> created
