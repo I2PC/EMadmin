@@ -99,7 +99,7 @@ class Acquisition2(models.Model):
     o1 = models.IntegerField(choices=O1_HOLE_CHOICES,
                                       default=70)
     php = models.IntegerField(choices=PHP_CHOICES,
-                                      default=3)
+                                      default=0)
 
     def __unicode__(self):  #For Python 2, use __str__ on Python 3
         try:

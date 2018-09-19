@@ -58,3 +58,6 @@
 [14/Jun/2018 22:32:51] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
 [14/Jun/2018 22:36:14] INFO [/home/roberto/Scipion/webservices/EMadmin/src/profiles/signals.py:17] New user profile for testUser1 <testUser1@gmail.com> created
 >>>>>>> 46d05ac46f6ad5d125b45cba7cbee67d20ca68b3
+[21/Aug/2018 09:03:41] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Jose Gallardo Hernanz <jgallardo@cnb.csic.es> created
+[05/Sep/2018 09:53:41] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Armando Albert <xalbert@iqfr.csic.es> created
+[14/Sep/2018 10:01:02] INFO [/home/scipionuser/webservices/EMadmin/src/profiles/signals.py:17] New user profile for Noelia Bernardo Garcia <nbernard@ens-cachan.fr> created

@@ -34,7 +34,7 @@ def create_one_statistics(acquisition):
     statistic = Statistics.objects.get_or_create(acquisition=acquisition)[0]
     script = os.path.join(settings.SCIPIONPATH,'scripts/scipionbox_report_statistics.py')
     if not os.path.exists(script):
-        print "HORROR script %d does not exist" % script
+        print "HORROR script %s does not exist" % script
         exit(-1)
     args = ["python"]
     args += [script]
