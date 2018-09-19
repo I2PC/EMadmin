@@ -39,8 +39,10 @@ def getEmails(directoryList):
     where projname='2018_08_24_carolina_e_dyp' AND
           user_id=authtools_user.id;
     """
-    sqlWhereCommand  = 'WHERE user_id=authtools_user.id AND\n'
-    sqlWhereCommand += '    ( (projname = %s)' % directoryList[0]
+    sqlWhereCommand  = '''SELECT projname, email
+FROM create_proj_acquisition join authtools_user\n'''
+    sqlWhereCommand += 'WHERE user_id=authtools_user.id AND\n'
+    sqlWhereCommand += '    ((projname = %s)' % directoryList[0]
     for dir in directoryList[1:]:
         sqlWhereCommand += " OR\n"
         sqlWhereCommand += '     (projname = %s)' % dir
