@@ -8,7 +8,7 @@ from os.path import normpath, basename
 PROJECT_HOME = '/home/scipionuser/OffloadData'
 TABULIST = ['2018_05_25_rmarabini_smalltestdatasetNOBORRAR',
             '2018_09_18_administrator_22']
-DBNAME='/home/scipionuser/webservices/EMadmin/src/db.sqlite3'
+DBNAME='/home/scipionuser/webservices/EMadmin/src/kk.sqlite3'
 # get list of project directories
 
 def _print(list, msg):
@@ -39,11 +39,11 @@ def getEmails(directoryList):
     where projname='2018_08_24_carolina_e_dyp' AND
           user_id=authtools_user.id;
     """
-    sqlWhereCommand = 'WHERE user_id=authtools_user.id'
-    sqlWhereCommand += ' AND ( projname = %s ' % directoryList[0]
+    sqlWhereCommand = 'WHERE user_id=authtools_user.id AND\n'
+    sqlWhereCommand += '( projname = %s ' % directoryList[0]
     for dir in directoryList[1:]:
         sqlWhereCommand += " OR\n"
-        sqlWhereCommand += 'projname = %s)' % dir
+        sqlWhereCommand += '(projname = %s)' % dir
     sqlWhereCommand += ')'
     print 'sqlWhereCommand', sqlWhereCommand
     conn = sqlite3.connect(DBNAME)
