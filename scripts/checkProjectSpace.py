@@ -31,7 +31,7 @@ class Project():
                               self.lastModificationSeconds)
 
     def isOldProject(self):
-        return (time.time - self.lastModificationSeconds) > TWOWEEKS
+        return (time.time() - self.lastModificationSeconds) > TWOWEEKS
 
     def isNotInTabuList(self):
         return self.projectName  not in TABULIST
@@ -51,9 +51,9 @@ def getProjecs():
     # remove new projects
     projectList = [item for item in projectList if item.isOldProject()]
     # remove directories in tabu list
-    directoryList = [item for item in directoryList if item.isNotInTabuList()]
-    _print(directoryList, "remove tabu")
-    return directoryList
+    projectList = [item for item in projectList if item.isNotInTabuList()]
+    _print(projectList, "remove tabu")
+    return projectList
 
 # get emails from database
 def getEmails(directoryList):
@@ -100,5 +100,5 @@ def sendEmails(rows):
 # send email complaining
 
 projectList = getProjecs()
-rows = getEmails(directoryList)
+rows = getEmails(projectList)
 sendEmails(rows)
