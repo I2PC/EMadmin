@@ -14,27 +14,43 @@ TWOWEEKS=1209600
 
 # get list of project directories
 
+class Project():
+    def __init__(self, abspath):
+        self.abspath = abspath
+        self.projectName = basename(normpath(abspath))
+        self.lastModificationSeconds = os.stat(abspath)[stat.ST_MTIME]  # secs
+        self.email = None
+
+    def __str__(self):
+        if self.email is not None:
+            return "%s (%s) %d" % (self.projectName,
+                                   self.email,
+                                   self.lastModificationSeconds)
+        else:
+            return "%s %d" % (self.projectName,
+                              self.lastModificationSeconds)
+
+    def isOldProject(self):
+        return (time.time - self.lastModificationSeconds) > TWOWEEKS
+
+    def isNotInTabuList(self):
+        return self.projectName  not in TABULIST
+
 def _print(list, msg):
     # uncomment for testing
     for item in list:
-        print msg, item
+        print item
     return
 
-
-def file_age_in_seconds(pathname):  # since last modificacion
-    return (time.time() - os.stat(pathname)[stat.ST_MTIME] > TWOWEEKS)
-
-def getProjectDirectory():
+def getProjecs():
+    # get project list
     directoryList = glob("%s/2???_??_??_*/" % PROJECT_HOME)
-    _print(directoryList, "input")
-    #remove new directories
-    directoryList = [item for item in directoryList if file_age_in_seconds(item)]
-    _print(directoryList, "remove new dir")
-    #remove directory path
-    directoryList = [basename(normpath(item)) for item in directoryList]
-    _print(directoryList, "remove path")
+    projectList = [Project(item) for item in directoryList]
+    directoryList = None  # free memory
+    # remove new projects
+    projectList = [item for item in projectList if item.isOldProject()]
     # remove directories in tabu list
-    directoryList = [item for item in directoryList if item not in TABULIST]
+    directoryList = [item for item in directoryList if item.isNotInTabuList()]
     _print(directoryList, "remove tabu")
     return directoryList
 
@@ -82,6 +98,6 @@ def sendEmails(rows):
 
 # send email complaining
 
-directoryList = getProjectDirectory()
+projectList = getProjecs()
 rows = getEmails(directoryList)
 sendEmails(rows)
