@@ -90,14 +90,14 @@ def sendEmails(rows):
 
     I am writting you regarding the project named %s
     created on %s. The data files related with this project
-    and stored in the CryoEM facility will be deleted on %s.
+    that stored in the CryoEM facility will be deleted on %s.
 
     Yours faithfully.
 
         CNB CryoEM Facility Staff"""
 
     for row in rows:
-        print msg % (row[0], row[2], str(today + week))
+        print msg % (row[0], row[2], (today + week).strftime("%d %B  %Y"))
 
 
 # send email complaining
