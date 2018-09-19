@@ -47,11 +47,17 @@ FROM create_proj_acquisition join authtools_user\n'''
         sqlWhereCommand += " OR\n"
         sqlWhereCommand += "     (projname = '%s')" % dir
     sqlWhereCommand += ')'
-    print 'sqlWhereCommand', sqlWhereCommand
-    conn = sqlite3.connect(DBNAME)
+
+    try:
+        conn = sqlite3.connect(DBNAME)
+    except:
+        print "Can not connect to database %s"%DBNAME
+
     c = conn.cursor()
-    c.execute('SELECT 1')
-    all_rows = c.fetchall()
+    c.execute(sqlWhereCommand)
+    rows = c.fetchall()
+    for row in rows:
+        print(row)
     conn.close()
 
 
