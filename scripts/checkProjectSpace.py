@@ -39,11 +39,11 @@ def getEmails(directoryList):
     where projname='2018_08_24_carolina_e_dyp' AND
           user_id=authtools_user.id;
     """
-    sqlWhereCommand = 'WHERE user_id=authtools_user.id AND\n'
-    sqlWhereCommand += '( projname = %s ' % directoryList[0]
+    sqlWhereCommand  = 'WHERE user_id=authtools_user.id AND\n'
+    sqlWhereCommand += '    ( (projname = %s)' % directoryList[0]
     for dir in directoryList[1:]:
         sqlWhereCommand += " OR\n"
-        sqlWhereCommand += '(projname = %s)' % dir
+        sqlWhereCommand += '     (projname = %s)' % dir
     sqlWhereCommand += ')'
     print 'sqlWhereCommand', sqlWhereCommand
     conn = sqlite3.connect(DBNAME)
