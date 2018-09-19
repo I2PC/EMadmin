@@ -16,6 +16,7 @@ def applyTabuDirectory(directoryList):
 
 # get emails from database
 def getEmails(directoryList):
+    pass
 
 # send email complaining
 
