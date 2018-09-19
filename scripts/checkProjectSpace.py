@@ -64,7 +64,7 @@ def getEmails(directoryList):
     where projname='2018_08_24_carolina_e_dyp' AND
           user_id=authtools_user.id;
     """
-    sqlWhereCommand  = '''SELECT projname, email
+    sqlWhereCommand  = '''SELECT projname, email, date(date) as date
 FROM create_proj_acquisition join authtools_user\n'''
     sqlWhereCommand += 'WHERE user_id=authtools_user.id AND\n'
     sqlWhereCommand += "    ((projname = '%s')" % directoryList[0].projectName
@@ -81,21 +81,24 @@ FROM create_proj_acquisition join authtools_user\n'''
     c.execute(sqlWhereCommand)
     rows = c.fetchall()
     conn.close()
-    return rows
+    for row in rows:
+        print row
 
 def sendEmails(rows):
-    now = datetime.datetime.now()
+    today = datetime.date.today()
     week = datetime.timedelta(days=7)
     msg = """Dear user,
-    The data files related with your project %s have been stored
-    in the CNB CryoEM facility for %f days. Data will be deleted on %s.
+
+    I am writting you regarding the project named %s
+    created on %s. The data files related with this project
+    and stored in the CryoEM facility will be deleted on %s.
+
     Yours faithfully.
 
         CNB CryoEM Facility Staff"""
 
     for row in rows:
-        print row
-        #msg % (row[0],str(now + week))
+        print msg % (row[0], row[2], str(today + week))
 
 
 # send email complaining
