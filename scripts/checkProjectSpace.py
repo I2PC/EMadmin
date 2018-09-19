@@ -38,6 +38,7 @@ class Project():
 
 def _print(list, msg):
     # uncomment for testing
+    print msg
     for item in list:
         print item
     return
