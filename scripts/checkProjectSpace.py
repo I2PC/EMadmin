@@ -26,12 +26,16 @@ def file_age_in_seconds(pathname):  # since last modificacion
 
 def getProjectDirectory():
     directoryList = glob("%s/2???_??_??_*/" % PROJECT_HOME)
+    _print(directoryList, "input")
     #remove new directories
     directoryList = [item for item in directoryList if file_age_in_seconds(item)]
+    _print(directoryList, "remove new dir")
     #remove directory path
     directoryList = [basename(normpath(item)) for item in directoryList]
+    _print(directoryList, "remove path")
     # remove directories in tabu list
     directoryList = [item for item in directoryList if item not in TABULIST]
+    _print(directoryList, "remove tabu")
 
     _print(directoryList, "checkProjectDirectory")
     return directoryList
