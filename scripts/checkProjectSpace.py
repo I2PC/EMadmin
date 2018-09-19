@@ -58,3 +58,4 @@ def getEmails(directoryList):
 
 directoryList = checkProjectDirectory()
 applyTabuDirectory(directoryList)
+getEmails(directoryList)
