@@ -48,11 +48,12 @@ def getProjecs():
     directoryList = glob("%s/2???_??_??_*/" % PROJECT_HOME)
     projectList = [Project(item) for item in directoryList]
     directoryList = None  # free memory
+    _print(projectList, "initial list")
     # remove new projects
     projectList = [item for item in projectList if item.isOldProject()]
     # remove directories in tabu list
     projectList = [item for item in projectList if item.isNotInTabuList()]
-    _print(projectList, "remove tabu")
+    _print(projectList, "final list")
     return projectList
 
 # get emails from database
@@ -66,12 +67,12 @@ def getEmails(directoryList):
     sqlWhereCommand  = '''SELECT projname, email
 FROM create_proj_acquisition join authtools_user\n'''
     sqlWhereCommand += 'WHERE user_id=authtools_user.id AND\n'
-    sqlWhereCommand += "    ((projname = '%s')" % directoryList[0]
+    sqlWhereCommand += "    ((projname = '%s')" % directoryList[0].projectName
     for dir in directoryList[1:]:
         sqlWhereCommand += " OR\n"
-        sqlWhereCommand += "     (projname = '%s')" % dir
+        sqlWhereCommand += "     (projname = '%s')" % dir.projectName
     sqlWhereCommand += ')'
-
+    print sqlWhereCommand
     try:
         conn = sqlite3.connect(DBNAME)
     except:
