@@ -48,8 +48,7 @@ def getEmails(directoryList):
     print 'sqlWhereCommand', sqlWhereCommand
     conn = sqlite3.connect(DBNAME)
     c = conn.cursor()
-    c.execute('SELECT * FROM {tn} WHERE {cn}="Hi World"'. \
-              format(tn=table_name, cn=column_2))
+    c.execute('SELECT 1')
     all_rows = c.fetchall()
     conn.close()
 
