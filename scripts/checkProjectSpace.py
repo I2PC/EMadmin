@@ -81,8 +81,7 @@ FROM create_proj_acquisition join authtools_user\n'''
     c.execute(sqlWhereCommand)
     rows = c.fetchall()
     conn.close()
-    for row in rows:
-        print row
+    return  rows
 
 def sendEmails(rows):
     today = datetime.date.today()
