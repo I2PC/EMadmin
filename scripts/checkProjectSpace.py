@@ -1,7 +1,7 @@
 # send email to owners of projects
 # Microscope operator if you have been lazy and did not open an account
 # you are in trouble
-import sqlite3, time, os,stat
+import sqlite3, time, os, stat, datetime
 
 from glob import glob
 from os.path import normpath, basename
@@ -36,8 +36,6 @@ def getProjectDirectory():
     # remove directories in tabu list
     directoryList = [item for item in directoryList if item not in TABULIST]
     _print(directoryList, "remove tabu")
-
-    _print(directoryList, "checkProjectDirectory")
     return directoryList
 
 # get emails from database
@@ -69,7 +67,17 @@ FROM create_proj_acquisition join authtools_user\n'''
     return rows
 
 def sendEmails(rows):
-    pass #for row in rows:
+    now = datetime.datetime.now()
+    week = datetime.timedelta(days=7)
+    msg = """Dear user,
+    The data files related with your project %s have been stored
+    in the CNB CryoEM facility for %f days. Data will be deleted on %s.
+    Yours faithfully.
+
+        CNB CryoEM Facility Staff"""
+
+    for row in rows:
+        print msg % (row[0],str(now + week))
 
 
 # send email complaining
