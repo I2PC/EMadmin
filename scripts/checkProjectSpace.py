@@ -19,7 +19,7 @@ def checkProjectDirectory():
 # filter through tabu
 def applyTabuDirectory(directoryList):
     directoryList = [item for item in directoryList if item not in TABULIST]
-    _print(applyTabuDirectory, "checkProjectDirectory")
+    _print(directoryList, "applyTabuDirectory")
     return directoryList
 
 # get emails from database
