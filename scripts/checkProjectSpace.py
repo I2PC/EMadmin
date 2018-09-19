@@ -85,7 +85,7 @@ FROM create_proj_acquisition join authtools_user\n'''
 
 def sendEmails(rows):
     today = datetime.date.today()
-    week = datetime.timedelta(days=7)
+    twoweek = datetime.timedelta(days=14)
     msg = """Dear user,
 
     I am writting you regarding the project named %s
@@ -97,7 +97,7 @@ def sendEmails(rows):
         CNB CryoEM Facility Staff"""
 
     for row in rows:
-        print msg % (row[0], row[2], (today + week).strftime("%d %B  %Y"))
+        print msg % (row[0], row[2], str(today + twoweek))
 
 
 # send email complaining
