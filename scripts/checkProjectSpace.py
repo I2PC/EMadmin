@@ -72,7 +72,6 @@ FROM create_proj_acquisition join authtools_user\n'''
         sqlWhereCommand += " OR\n"
         sqlWhereCommand += "     (projname = '%s')" % dir.projectName
     sqlWhereCommand += ')'
-    print sqlWhereCommand
     try:
         conn = sqlite3.connect(DBNAME)
     except:
@@ -95,7 +94,8 @@ def sendEmails(rows):
         CNB CryoEM Facility Staff"""
 
     for row in rows:
-        print msg % (row[0],str(now + week))
+        print row
+        #msg % (row[0],str(now + week))
 
 
 # send email complaining
