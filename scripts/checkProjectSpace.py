@@ -3,7 +3,8 @@
 # you are in trouble
 from glob import glob
 PROJECT_HOME = '/home/scipionuser/OffloadData'
-TABULIST = ['2018_06_25_foo_wwqeqweqw/', '2018_06_18_foo_ribosome/']
+TABULIST = ['/home/scipionuser/OffloadData/2018_05_25_rmarabini_smalltestdatasetNOBORRAR/',
+            '/home/scipionuser/OffloadData/2018_09_18_administrator_22']
 DBNAME=''
 # get list of project directories
 def _print(list, msg):
@@ -27,4 +28,5 @@ def getEmails(directoryList):
 
 # send email complaining
 
-checkProjectDirectory()
+directoryList = checkProjectDirectory()
+applyTabuDirectory(directoryList)
