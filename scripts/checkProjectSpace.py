@@ -90,7 +90,7 @@ def sendEmails(rows):
 
     I am writting you regarding the project named %s
     created on %s. The data files related with this project
-    that stored in the CryoEM facility will be deleted on %s.
+    that are stored in the CryoEM facility will be deleted on %s.
 
     Yours faithfully.
 
