@@ -1,7 +1,8 @@
 # send email to owners of projects
 # Microscope operator if you have been lazy and did not open an account
 # you are in trouble
-import sqlite3
+import sqlite3, time, os,stat
+
 from glob import glob
 from os.path import normpath, basename
 
@@ -9,6 +10,8 @@ PROJECT_HOME = '/home/scipionuser/OffloadData'
 TABULIST = ['2018_05_25_rmarabini_smalltestdatasetNOBORRAR',
             '2018_09_18_administrator_22']
 DBNAME='/home/scipionuser/webservices/EMadmin/src/kk.sqlite3'
+TWOWEEKS=1209600
+
 # get list of project directories
 
 def _print(list, msg):
@@ -17,18 +20,20 @@ def _print(list, msg):
         print msg, item
     return
 
-def checkProjectDirectory():
+
+def file_age_in_seconds(pathname):  # since last modificacion
+    return (time.time() - os.stat(pathname)[stat.ST_MTIME] > TWOWEEKS)
+
+def getProjectDirectory():
     directoryList = glob("%s/2???_??_??_*/" % PROJECT_HOME)
-    directoryList = [basename(normpath(item))
-                     for item in directoryList if item not in TABULIST]
+    #remove new directories
+    directoryList = [item for item in directoryList if file_age_in_seconds(item)]
+    #remove directory path
+    directoryList = [basename(normpath(item)) for item in directoryList]
+    # remove directories in tabu list
+    directoryList = [item for item in directoryList if item not in TABULIST]
 
     _print(directoryList, "checkProjectDirectory")
-    return directoryList
-
-# filter through tabu
-def applyTabuDirectory(directoryList):
-    directoryList = [item for item in directoryList if item not in TABULIST]
-    _print(directoryList, "applyTabuDirectory")
     return directoryList
 
 # get emails from database
@@ -56,13 +61,15 @@ FROM create_proj_acquisition join authtools_user\n'''
     c = conn.cursor()
     c.execute(sqlWhereCommand)
     rows = c.fetchall()
-    for row in rows:
-        print(row)
     conn.close()
+    return rows
+
+def sendEmails(rows):
+    pass #for row in rows:
 
 
 # send email complaining
 
-directoryList = checkProjectDirectory()
-applyTabuDirectory(directoryList)
-getEmails(directoryList)
+directoryList = getProjectDirectory()
+rows = getEmails(directoryList)
+sendEmails(rows)
