@@ -33,10 +33,19 @@ def applyTabuDirectory(directoryList):
 
 # get emails from database
 def getEmails(directoryList):
-    sqlWhereCommand = 'WHERE '
-    for dir in directoryList:
-        sqlWhereCommand
-
+    """
+    select projname, email
+    from create_proj_acquisition join authtools_user
+    where projname='2018_08_24_carolina_e_dyp' AND
+          user_id=authtools_user.id;
+    """
+    sqlWhereCommand = 'WHERE user_id=authtools_user.id'
+    sqlWhereCommand += ' AND ( projname = %s ' % directoryList[0]
+    for dir in directoryList[1:]:
+        sqlWhereCommand += " OR\n"
+        sqlWhereCommand += 'projname = %s)' % dir
+    sqlWhereCommand += ')'
+    print 'sqlWhereCommand', sqlWhereCommand
     conn = sqlite3.connect(DBNAME)
     c = conn.cursor()
     c.execute('SELECT * FROM {tn} WHERE {cn}="Hi World"'. \
