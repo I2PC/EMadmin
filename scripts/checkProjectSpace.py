@@ -1,18 +1,27 @@
 # send email to owners of projects
 # Microscope operator if you have been lazy and did not open an account
 # you are in trouble
+import sqlite3
 from glob import glob
+from os.path import normpath, basename
+
 PROJECT_HOME = '/home/scipionuser/OffloadData'
-TABULIST = ['/home/scipionuser/OffloadData/2018_05_25_rmarabini_smalltestdatasetNOBORRAR/',
-            '/home/scipionuser/OffloadData/2018_09_18_administrator_22']
-DBNAME=''
+TABULIST = ['2018_05_25_rmarabini_smalltestdatasetNOBORRAR',
+            '2018_09_18_administrator_22']
+DBNAME='/home/scipionuser/webservices/EMadmin/src/db.sqlite3'
 # get list of project directories
+
 def _print(list, msg):
+    # uncomment for testing
     for item in list:
         print msg, item
+    return
 
 def checkProjectDirectory():
     directoryList = glob("%s/2???_??_??_*/" % PROJECT_HOME)
+    directoryList = [basename(normpath(item))
+                     for item in directoryList if item not in TABULIST]
+
     _print(directoryList, "checkProjectDirectory")
     return directoryList
 
@@ -24,7 +33,17 @@ def applyTabuDirectory(directoryList):
 
 # get emails from database
 def getEmails(directoryList):
-    pass
+    sqlWhereCommand = 'WHERE '
+    for dir in directoryList:
+        sqlWhereCommand
+
+    conn = sqlite3.connect(DBNAME)
+    c = conn.cursor()
+    c.execute('SELECT * FROM {tn} WHERE {cn}="Hi World"'. \
+              format(tn=table_name, cn=column_2))
+    all_rows = c.fetchall()
+    conn.close()
+
 
 # send email complaining
 
