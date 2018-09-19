@@ -83,9 +83,27 @@ FROM create_proj_acquisition join authtools_user\n'''
     conn.close()
     return  rows
 
+def sendEMail(emailTo, emailSubject, emailMessage):
+    # Import smtplib for the actual sending function
+    import smtplib
+    # Import the email modules we'll need
+    from email.mime.text import MIMEText
+
+    msg = MIMEText(emailMessage)
+
+    msg['Subject'] = emailSubject
+    msg['From'] = 'user@domamin1.es'
+    msg['To'] = emailTo
+
+    # Send the message via our own SMTP server, but don't include the
+    # envelope header.
+    s = smtplib.SMTP('localhost')
+    s.sendmail(msg['From'], [msg['To']], msg.as_string())
+    s.quit()
+
 def sendEmails(rows):
     today = datetime.date.today()
-    twoweek = datetime.timedelta(days=14)
+    week = datetime.timedelta(days=14)
     msg = """Dear user,
 
     I am writting you regarding the project named %s
@@ -97,7 +115,9 @@ def sendEmails(rows):
         CNB CryoEM Facility Staff"""
 
     for row in rows:
-        print msg % (row[0], row[2], str(today + twoweek))
+        print msg % (row[0], row[2], str(today + week))
+        #sendEMail(row[1], 'project %s' % row[0], msg % (row[0], row[2], str(today + week)) )
+        sendEMail('locwiki@gmail.com', 'project %s' % row[0], msg % (row[0], row[2], str(today + week)))
 
 
 # send email complaining
