@@ -64,7 +64,8 @@ def getEmails(directoryList):
     where projname='2018_08_24_carolina_e_dyp' AND
           user_id=authtools_user.id;
     """
-    sqlWhereCommand  = '''SELECT projname, email, date(date) as date
+    sqlWhereCommand  = '''SELECT projname, email, date(date) as date,
+    julianday('now') - julianday(date) as interval
 FROM create_proj_acquisition join authtools_user\n'''
     sqlWhereCommand += 'WHERE user_id=authtools_user.id AND\n'
     sqlWhereCommand += "    ((projname = '%s')" % directoryList[0].projectName
@@ -103,25 +104,46 @@ def sendEMail(emailTo, emailSubject, emailMessage):
 
 def sendEmails(rows):
     today = datetime.date.today()
-    week = datetime.timedelta(days=14)
-    msg = """Dear user,
+    week = datetime.timedelta(days=7)
+    day  = datetime.timedelta(days=1)
+    msg1 = """Dear user,
 
     I am writting you regarding the project named %s
     created on %s. The data files related with this project
     that are stored in the CryoEM facility will be deleted on %s.
+    We would appreciate if you replay this email letting
+    us know that your file are already transfered.
+
+    Yours faithfully.
+
+        CNB CryoEM Facility Staff"""
+
+    msg2 = """Dear user,
+
+    I am writting you regarding the project named %s
+    created on %s. The data files related with this project
+    that are stored in the CryoEM facility will be deleted 
+    tomorrow.
 
     Yours faithfully.
 
         CNB CryoEM Facility Staff"""
 
     for row in rows:
-        print msg % (row[0], row[2], str(today + week))
+
+        if float(row[3]) > 14.0:
+            msg = msg2
+            date = str(today + week)
+        else:
+            msg = msg1
+            date = str(today + day)
+        print msg % (row[0], row[2], date, row[3])
         #sendEMail(row[1], 'project %s' % row[0], msg % (row[0], row[2], str(today + week)) )
-        sendEMail('locwiki@gmail.com', 'project %s' % row[0], msg % (row[0], row[2], str(today + week)))
+        sendEMail('locwiki@gmail.com', 'project %s' % row[0], msg % (row[0], row[2], date))
 
 
 # send email complaining
 
-projectList = getProjecs()
+projectListless2w, projectlistmore2w = getProjecs()
 rows = getEmails(projectList)
 sendEmails(rows)
