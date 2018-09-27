@@ -37,6 +37,7 @@ class Project():
         return self.projectName  not in TABULIST
 
 def _print(list, msg):
+    return 
     # uncomment for testing
     print msg
     for item in list:
