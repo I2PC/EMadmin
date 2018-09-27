@@ -137,7 +137,7 @@ def sendEmails(rows):
         else:
             msg = msg1
             date = str(today + day)
-        print msg % (row[0], row[2], date, row[3])
+        print msg % (row[0], row[2], date), row[3]
         #sendEMail(row[1], 'project %s' % row[0], msg % (row[0], row[2], str(today + week)) )
         sendEMail('locwiki@gmail.com', 'project %s' % row[0], msg % (row[0], row[2], date))
 
