@@ -144,6 +144,6 @@ def sendEmails(rows):
 
 # send email complaining
 
-projectListless2w, projectlistmore2w = getProjecs()
+projectList = getProjecs()
 rows = getEmails(projectList)
 sendEmails(rows)
