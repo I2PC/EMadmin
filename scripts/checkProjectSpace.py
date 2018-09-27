@@ -72,7 +72,7 @@ FROM create_proj_acquisition join authtools_user\n'''
     for dir in directoryList[1:]:
         sqlWhereCommand += " OR\n"
         sqlWhereCommand += "     (projname = '%s')" % dir.projectName
-    sqlWhereCommand += ')'
+    sqlWhereCommand += ') ORDER BY projname'
     try:
         conn = sqlite3.connect(DBNAME)
     except:
