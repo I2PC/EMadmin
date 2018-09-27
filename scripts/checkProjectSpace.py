@@ -46,7 +46,10 @@ def _print(list, msg):
 
 def getProjecs():
     # get project list
+    #    last modification
     directoryList = glob("%s/2???_??_??_*/" % PROJECT_HOME)
+    #      creation grid_01 dir
+    #directoryList = glob("%s/2???_??_??_*/GRID_01/" % PROJECT_HOME)
     projectList = [Project(item) for item in directoryList]
     directoryList = None  # free memory
     _print(projectList, "initial list")
