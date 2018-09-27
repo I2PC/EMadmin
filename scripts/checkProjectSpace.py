@@ -132,10 +132,11 @@ def sendEmails(rows):
 
         if float(row[3]) > 14.0:
             msg = msg2
-            date = str(today + week)
+            date = str(today + day)
         else:
             msg = msg1
-            date = str(today + day)
+            date = str(today + week)
+
         print msg % (row[0], row[2], date), row[3]
         #sendEMail(row[1], 'project %s' % row[0], msg % (row[0], row[2], str(today + week)) )
         sendEMail('locwiki@gmail.com', 'project %s' % row[0], msg % (row[0], row[2], date))
