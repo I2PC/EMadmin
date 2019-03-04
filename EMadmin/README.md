@@ -51,6 +51,14 @@ python manage.py collectstatic
 
 ### Detailed instructions
 
+start django
+
+    python manage,py runserver
+    
+connect to server
+
+   http://localhost:8000
+
 DROP
  create_proj_adquisition2
    dose_per_frame
