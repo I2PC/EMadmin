@@ -30,3 +30,61 @@
  </div>
 </div>
 {% endblock container %}
+{% block scripts %}
+    <script>
+        function computeDose(){
+            dr = getDoseRate();
+            tetPerMovie = getTETperMovie();
+            sr = getSamplingRate();
+
+            result = dr * tetPerMovie /(sr*sr);
+
+            setFormValue("id_total_dose_per_movie", result);
+
+        }
+        function computeTime(){
+            dr = getDoseRate();
+            dosePerMovie = getDoseperMovie();
+            sr = getSamplingRate();
+
+            result = (dosePerMovie/ dr) * sr * sr;
+
+            setFormValue("id_total_exposure_time", result);
+
+        }
+        function setFormValue(id, value) {
+            $("#" + id).val(value)
+
+        }
+        function getDoseRate(){
+            return getValueFromForm("id_dose_rate")
+        }
+
+        function getSamplingRate(){
+            return getValueFromForm("id_sampling_rate")
+        }
+        function getTETperMovie(){
+            return getValueFromForm("id_total_exposure_time")
+        }
+        function getDoseperMovie() {
+            return getValueFromForm("id_total_dose_per_movie")
+        }
+        function getValueFromForm(id){
+            return $("#" + id).val();
+        }
+
+        function cleanTotals(){
+            setFormValue("id_total_exposure_time", "")
+            setFormValue("id_total_dose_per_movie", "")
+
+        }
+        // Listen to onblur events on field above to trigger calculation
+        $("#id_dose_rate" ).blur(cleanTotals)
+        $("#id_sampling_rate" ).blur(cleanTotals)
+        $("#id_total_exposure_time" ).blur(computeDose)
+        $("#id_total_dose_per_movie" ).blur(computeTime)
+
+    </script>
+
+{% endblock scripts %}
+

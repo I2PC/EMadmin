@@ -30,13 +30,15 @@ class SkipAcquisitionForm(forms.Form):
 class AcquisitionForm(forms.ModelForm):
     shiftLength = forms.FloatField(initial=3, label="Turn length (days)")
     backupPath = forms.CharField(required=False,
-                                 label="Backup (double click to see disks)")
+                                 label="Backup (double click to see disks)",
+                                 widget=forms.HiddenInput())
     schedule = forms.BooleanField(widget= forms.CheckboxInput(),initial=False,
                                   label="Run scipion in batch mode (schedule)",
                                   required=False)
     multiple_backup = forms.BooleanField(initial=False,
                                   label="Ignore backup warning",
-                                  required=False)
+                                  required=False,
+                                  widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
         try:
@@ -91,9 +93,12 @@ class AcquisitionForm2(forms.ModelForm):
     # An inline class to provide additional information on the form.
     sampling_rate = forms.FloatField(label="Sampling rate (A/px)")
     illuminated_area = forms.FloatField(label="Illuminated area (m)")
-    dose_per_fraction = forms.FloatField(label="Dose per fraction (e/A^2)")
-    #dose_rate = forms.FloatField(label="Dose rate (e/(px*sec))")
-    total_exposure_time = forms.FloatField(label="Total exposure time (sec)")
+    #dose_per_fraction = forms.FloatField(label="Dose per fraction (e/A^2)")
+    dose_rate = forms.FloatField(label="Dose rate (e/(px*sec))", initial=0)
+    total_exposure_time = forms.FloatField(label="Total exposure time per movie (sec)", initial=0)
+    total_dose_per_movie = forms.FloatField(label="Total dose per movie(e/A^2)", initial=0)
+
+    field_order = ['sampling_rate', 'number_of_fractions', 'dose_rate', 'total_exposure_time', 'total_dose_per_movie']
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Acquisition2

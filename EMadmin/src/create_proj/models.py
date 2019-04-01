@@ -68,7 +68,7 @@ class Acquisition(models.Model):
 DRIFT_MEASU_CHOICES = [('never', 'never'), ('always', 'always'),('gridsquare','gridsquare')]
 EXPOSURE_HOLE_CHOICES = [(1, '1'), (2, '2'), (3, '3'), (4,'4'), (5,'5')]
 C2_CHOICES = [(30, '30'), (50, '50'),(70, '70'),(150, '150')]
-O1_HOLE_CHOICES = [(0, '--'), (30, '30'), (70, '70')]
+O1_HOLE_CHOICES = [(0, '--'), (30, '30'), (70, '70'), (100, '100')]
 PHP_CHOICES = [(0, '--'), (1, '1'), (2, '2'),(3, '3'), (4, '4'), (5, '5'), (6, '6')]
 
 class Acquisition2(models.Model):
@@ -78,12 +78,12 @@ class Acquisition2(models.Model):
     spotsize = models.FloatField(blank=False)
     illuminated_area = models.FloatField(blank=True, default=1.68) #microns OK
 
-    dose_per_fraction = models.FloatField(blank=False)  # e/A^2 y fraction--> change frame by fraction, OK
-    #dose_rate = models.FloatField(blank=False)  # e/px*sec
+    #dose_per_fraction = models.FloatField(blank=False)  # e/A^2 y fraction--> change frame by fraction, OK
+    dose_rate = models.FloatField(blank=False)  # e/px*sec
     total_exposure_time = models.FloatField(blank=False) # seconds
     number_of_fractions = models.PositiveIntegerField(blank=False)
     frames_in_fraction = models.PositiveIntegerField(blank=False)
-
+    total_dose_per_movie = models.FloatField(blank=False)
     nominal_defocus_range = models.CharField(max_length=128, blank=False, default="array of floats") # array the floats microns
     autofocus_distance = models.FloatField(blank=False)
     drift_meassurement = models.CharField(max_length=16, choices=DRIFT_MEASU_CHOICES,
