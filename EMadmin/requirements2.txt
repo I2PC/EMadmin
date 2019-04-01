@@ -1,4 +1,4 @@
-Django==1.11.6
+django>=1.11.19
 django-admin-bootstrapped==2.5.7
 django-authtools==1.6.0
 django-braces==1.11.0
