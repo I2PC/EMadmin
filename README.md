@@ -1,37 +1,80 @@
-## See Scipion Usage site
-> http://calm-shelf-73264.herokuapp.com
 
-## Activate
- Add the following two lines to Config ($HOME/.config/scipion/scipion.conf), section VARIABLES:
 
-> SCIPION_NOTIFY = True<br>
+# EMadmin
 
-## Shortcut to this page
- > http://tinyurl.com/scipion-readme
+EMadmin is a _short description_. It is built with [Python][0] using the [Django Web Framework][1].
 
-## Test: Query from command line:
 
-> curl http://calm-shelf-73264.herokuapp.com/report_protocols/api/workflow/protocol/?name=ProtMonitorSystem<br>
-> curl http://calm-shelf-73264.herokuapp.com/report_protocols/api/workflow/workflow/?project_uuid=b9a2d873-53d2-42fb-aa69-a5002f2f08e9
+## Installation
 
-##Admin interface (requires password)
+### Quick start
 
-> http://calm-shelf-73264.herokuapp.com/admin/
+Start virtual enviroment (if developement) or just default python (production)
 
-## Details of usage data collection
-You can find them here https://github.com/I2PC/scipion/wiki/Collecting-Usage-Statistics-for-Scipion
+alias vir_emadmin='source /home/roberto/Scipion/webservices/EMadminVirt/bin/activate'
+cd /home/roberto/Scipion/webservices/EMadmin
+rm -rf */migrations
+rm db.sqlite3 
 
---
 
-## Testing EMadmin in Éinstein
-- open a vnc conection with Einstein
-     - connect to Einstein using ssh as scipionuser
-     - start the server:    killall Xvnc4; rm -rf /tmp/.X*-lock; vncserver -geometry 1280x960
-- in your computer opena vnc client; vncviewer einstein:PORTNUMBER (portnumber usually 1)
-- cd /home/scipionuser/webservices/EMadmin/src
-- Start a virtual environment: source ../virEMadmin/bin/activate
-- launch django server: python manage.py runserver
-- open browser and connect to server at URL http://127.0.0.1:8000
-- create new project and lunch scipion
-- execute scipion protocols
-- check html report
+for APPLICATION in */models.py
+   do 
+        echo $APPLICATION
+        rm -rf $(dirname $APPLICATION)/migrations
+   done
+for APPLICATION in */models.py
+   do 
+        echo $APPLICATION
+        python manage.py makemigrations $(dirname $APPLICATION)
+   done
+
+python manage.py makemigrations accounts create_proj create_report create_stat invoice profiles
+python manage.py migrate
+python manage.py runserver
+
+To set up a development environment quickly, first install Python 3. It
+comes with virtualenv built-in. So create a virtual env by:
+
+    1. `$ python -m venv EMadmin`
+    2. `$ . EMadmin/bin/activate`
+    
+NOTE: your virtualenv needs to be python 2
+
+Install all dependencies:
+
+    pip install -r requirements.txt
+
+Run migrations:
+
+    python manage.py migrate
+python manage.py collectstatic
+
+### Detailed instructions
+
+start django
+
+    python manage,py runserver
+    
+connect to server
+
+   http://localhost:8000
+
+DROP
+ create_proj_adquisition2
+   dose_per_frame
+   dose_rate
+   nominal_defocus
+ create_proj_microscope
+   dose_per_fraction
+ invoce_concept
+   * unit_proce_university
+   * unitprice_empresa
+ invoice_invoice
+  * startDate
+  * endDate
+  * type
+  * concept
+
+
+
+   
