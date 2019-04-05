@@ -97,10 +97,18 @@ class AcquisitionForm2(forms.ModelForm):
     dose_rate = forms.FloatField(label="Dose rate (e/(px*sec))", initial=0)
     total_exposure_time = forms.FloatField(label="Total exposure time per movie (sec)", initial=0)
     total_dose_per_movie = forms.FloatField(label="Total dose per movie(e/A^2)", initial=0)
+    # help = c
+    autofocus_distance = forms.FloatField(label='Autofocus periodicity',
+                                          help_text = '0 -> always')
 
-    field_order = ['sampling_rate', 'number_of_fractions', 'dose_rate', 'total_exposure_time', 'total_dose_per_movie']
+    field_order = ['sampling_rate', 'dose_rate', 'total_exposure_time',
+                   'total_dose_per_movie', 'number_of_fractions',
+                   'frames_in_fraction']
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Acquisition2
+        #labels = {
+        #    "video": "Embed"
+        #}
         #fields = ('pixelsize','dose')
-        exclude = ('acquisition',)
+        exclude = ('acquisition', 'dose_per_fraction')

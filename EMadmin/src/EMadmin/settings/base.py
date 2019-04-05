@@ -172,7 +172,7 @@ if user == "scipionuser":
     SCIPIONPATH = os.getenv('SCIPION_PATH','/usr/local/scipion')
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
 else:
-    SCIPIONPATH='/home/roberto/Scipion/scipion_facilities'
+    SCIPIONPATH='/home/roberto/Software/scipion'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'
 NUMBERCONCEPTS=21
 

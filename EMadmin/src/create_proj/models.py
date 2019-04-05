@@ -68,7 +68,7 @@ class Acquisition(models.Model):
 DRIFT_MEASU_CHOICES = [('never', 'never'), ('always', 'always'),('gridsquare','gridsquare')]
 EXPOSURE_HOLE_CHOICES = [(1, '1'), (2, '2'), (3, '3'), (4,'4'), (5,'5')]
 C2_CHOICES = [(30, '30'), (50, '50'),(70, '70'),(150, '150')]
-O1_HOLE_CHOICES = [(0, '--'), (30, '30'), (70, '70'), (100, '100')]
+O1_HOLE_CHOICES = [(0, '--'), (70, '70'), (100, '100')]
 PHP_CHOICES = [(0, '--'), (1, '1'), (2, '2'),(3, '3'), (4, '4'), (5, '5'), (6, '6')]
 
 class Acquisition2(models.Model):
@@ -78,28 +78,51 @@ class Acquisition2(models.Model):
     spotsize = models.FloatField(blank=False)
     illuminated_area = models.FloatField(blank=True, default=1.68) #microns OK
 
-    #dose_per_fraction = models.FloatField(blank=False)  # e/A^2 y fraction--> change frame by fraction, OK
+    # DOSE IN FRACTION NOT FOR FORM
+    dose_per_fraction = models.FloatField(blank=False, default=0)
+    # e/A^2 y fraction--> change frame by fraction, OK
     dose_rate = models.FloatField(blank=False)  # e/px*sec
     total_exposure_time = models.FloatField(blank=False) # seconds
     number_of_fractions = models.PositiveIntegerField(blank=False)
     frames_in_fraction = models.PositiveIntegerField(blank=False)
     total_dose_per_movie = models.FloatField(blank=False)
-    nominal_defocus_range = models.CharField(max_length=128, blank=False, default="array of floats") # array the floats microns
+    nominal_defocus_range = \
+        models.CharField(
+            max_length=128, blank=False, default="min, max, step")  # array the floats microns
     autofocus_distance = models.FloatField(blank=False)
-    drift_meassurement = models.CharField(max_length=16, choices=DRIFT_MEASU_CHOICES,
+
+    #
+    drift_meassurement = models.CharField(max_length=16,
+                                          choices=DRIFT_MEASU_CHOICES,
                                           default='never')
+    # wait this seconds before taken a new movie
     delay_after_stage_shift = models.IntegerField(default=5)
     delay_after_image_shift = models.IntegerField(default=5)
+
+    # max defocus distance (unit microns)
     max_image_shift = models.IntegerField(default=5)
+
     exposure_hole = models.IntegerField(choices=EXPOSURE_HOLE_CHOICES,
                                       default=1)
-
+    # condenser lens
     c2 = models.IntegerField(choices=C2_CHOICES,
                                       default=50)
+    # objective aperture
     o1 = models.IntegerField(choices=O1_HOLE_CHOICES,
                                       default=70)
+    # which phae plate are we using
     php = models.IntegerField(choices=PHP_CHOICES,
                                       default=0)
+    # phase plate starting position
+    php_position_start = models.IntegerField(default=-1)
+
+    # movies per phase plate position
+    php_periodicity    = models.IntegerField(default=-1)
+
+    def save(self, *args, **kwargs):
+        #create project name
+        self.dose_per_fraction = self.total_dose_per_movie /self.number_of_fractions
+        super(Acquisition2, self).save(*args, **kwargs)
 
     def __unicode__(self):  #For Python 2, use __str__ on Python 3
         try:
