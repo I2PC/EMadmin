@@ -11,6 +11,7 @@ EMadmin is a _short description_. It is built with [Python][0] using the [Django
 
 Start virtual enviroment (if developement) or just default python (production)
 
+```
 alias vir_emadmin='source /home/roberto/Scipion/webservices/EMadminVirt/bin/activate'
 cd /home/roberto/Scipion/webservices/EMadmin
 rm -rf */migrations
@@ -22,6 +23,7 @@ for APPLICATION in */models.py
         echo $APPLICATION
         rm -rf $(dirname $APPLICATION)/migrations
    done
+   
 for APPLICATION in */models.py
    do 
         echo $APPLICATION
@@ -30,7 +32,9 @@ for APPLICATION in */models.py
 
 python manage.py makemigrations accounts create_proj create_report create_stat invoice profiles
 python manage.py migrate
+python manage.py createsuperuser
 python manage.py runserver
+``` 
 
 To set up a development environment quickly, first install Python 3. It
 comes with virtualenv built-in. So create a virtual env by:
