@@ -32,6 +32,7 @@ for APPLICATION in */models.py
 
 python manage.py makemigrations accounts create_proj create_report create_stat invoice profiles
 python manage.py migrate
+python manage.py createsuperuser
 python manage.py runserver
 ``` 
 
