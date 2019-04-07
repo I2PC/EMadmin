@@ -179,7 +179,7 @@ class onLineShopTester(unittest.TestCase):
             print (e)
         time.sleep(20)  # wait here until Scipion is started
         fullProjectPath =  os.path.join("/home/scipionuser/OffloadData", projName,outputDir)
-        print fullProjectPath
+        print (fullProjectPath)
         if os.path.exists(fullProjectPath):
             shutil.rmtree(fullProjectPath) # clean path
         os.makedirs(fullProjectPath)  # create output dir
@@ -190,7 +190,7 @@ class onLineShopTester(unittest.TestCase):
         counter = 0
         for f in inputFiles:
             outputPath = os.path.join(fullProjectPath, os.path.basename(f))
-            print "%d) Linking %s -> %s" % (counter, f, outputPath)
+            print ("%d) Linking %s -> %s" % (counter, f, outputPath))
             counter += 1
             os.symlink(f, outputPath)
             time.sleep(aTime)
