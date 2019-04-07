@@ -87,7 +87,7 @@ class onLineShopTester(unittest.TestCase):
         self.pullDownMenuById('id_workflow','2')
         self.pullDownMenuById('id_workflow','5')
         self.pullDownMenuById('id_workflow','4')
-        print "self.sample",self.sample
+        print ("self.sample",self.sample)
         self.find_element_by_id("id_sample",self.sample)
         self.find_element_by_id("id_voltage",200)
         self.find_element_by_id("id_shiftLength",2)
