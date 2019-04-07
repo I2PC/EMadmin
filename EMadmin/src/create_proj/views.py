@@ -4,14 +4,14 @@ from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from forms import AcquisitionForm, SkipAcquisitionForm, AcquisitionForm2
-from models import Acquisition, Workflow
+from create_proj.forms import AcquisitionForm, SkipAcquisitionForm, AcquisitionForm2
+from create_proj.models import Acquisition, Workflow
 import os, sys
 from django.shortcuts import redirect
 from django.conf import settings
 from django.db import IntegrityError
 import json
-from parse_protocol import parse_protocol
+from create_proj.parse_protocol import parse_protocol
 import subprocess
 from django.http import JsonResponse
 
@@ -62,7 +62,6 @@ def launch_backup(acquisition):
           own process group by calling os.setpgrp() in the child process.
           Popen's preexec_fn argument is useful here:
         """
-        print args
         s = subprocess.Popen(["nohup"] +  args,
                              preexec_fn=os.setpgrp)
 

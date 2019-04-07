@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from create_proj.models import Acquisition
+#from create_proj.models import Acquisition
 from django.conf import settings
 from decimal import Decimal
 import datetime
@@ -14,7 +14,7 @@ TYPE_CHOICES = {'cnb': 'cnb',
            'universidad': 'universidad',
            'empresa': 'empresa'}
 TYPE_CHOICES_SET = []
-for k, v in TYPE_CHOICES.iteritems():
+for k, v in TYPE_CHOICES.items():
     TYPE_CHOICES_SET.append((v, k))
 
 CONCEPT_CHOICES = {'presupuesto': 'presupuesto',
@@ -22,13 +22,14 @@ CONCEPT_CHOICES = {'presupuesto': 'presupuesto',
                    'cargo': 'cargo'
 }
 CONCEPT_CHOICES_SET = []
-for k, v in CONCEPT_CHOICES.iteritems():
+for k, v in CONCEPT_CHOICES.items():
     CONCEPT_CHOICES_SET.append((v, k))
 
 class Invoice(models.Model):
 
     ordered_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    null=True, blank=True, db_index=True,
+                                   on_delete=models.CASCADE,
                                    verbose_name='ordered by', 
                                    related_name='orders', 
                                    help_text='user who sent this order out')
@@ -59,10 +60,12 @@ class Concept(models.Model):
         return self.name
 
 class InvoiceLine(models.Model):
-    invoice = models.ForeignKey(Invoice, related_name='items')
-    concept = models.ForeignKey(Concept)
+    invoice = models.ForeignKey(Invoice, related_name='items',
+                                on_delete=models.CASCADE)
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=True)
-    unit_price = models.DecimalField(null=True, max_digits=8, decimal_places=2)
+    unit_price = \
+        models.DecimalField(null=True, max_digits=8, decimal_places=2)
     
     def total(self):
         total = Decimal(str(self.unit_price * self.quantity))

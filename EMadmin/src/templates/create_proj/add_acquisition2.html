@@ -22,8 +22,18 @@
               action="{% url 'create_proj:add_acquisition2' %}">
 
             {% csrf_token %}
-
-             <table cellpadding="10">{{ form.as_table }}</table>
+            <table cellpadding="10">
+            {% for field in form %}
+                <tr>
+                <div class="fieldWrapper">
+                    <td>{{ field.errors }}</td>
+                    <td><a title="{{ field.help_text|safe }}">{{ field.label_tag }}</a></td>
+                    <td>{{ field }}</td>
+                </div>
+                </tr>
+            {% endfor %}
+            </table>
+<!--             <table cellpadding="10">{{ form.as_table }}</table> -->
 
             <input type="submit" name="submit" value="Launch Scipion" />
         </form>

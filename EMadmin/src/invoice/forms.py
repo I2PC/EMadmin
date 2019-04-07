@@ -1,7 +1,7 @@
 from django import forms
-from create_proj.models import Acquisition
-from datetime import datetime, timedelta
-from models import Concept, TYPE_CHOICES_SET
+# from create_proj.models import Acquisition
+# from datetime import datetime, timedelta
+from invoice.models import Concept, TYPE_CHOICES_SET
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.conf import settings

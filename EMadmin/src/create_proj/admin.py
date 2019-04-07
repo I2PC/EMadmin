@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 # Register your models here.
 from django.contrib import admin
-from models import Microscope, Acquisition, Workflow, Acquisition2
+from create_proj.models import Microscope, Acquisition, Workflow, Acquisition2
 
 class AcquisitionAdmin(admin.ModelAdmin):
     list_display = ('id','noScipionProject','user', 'workflow', 'sample',

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.utils import timezone
 from django.db import models
-from django.conf import settings
 from django.utils.text import slugify
 from django.conf import settings
 
@@ -30,9 +30,12 @@ class Microscope(models.Model):
         return self.name
 
 class Acquisition(models.Model):
-    microscope = models.ForeignKey(Microscope, default=settings.DEFAULTMIC)
-    user       = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False)  #
-    workflow   = models.ForeignKey(Workflow, default=settings.DEFAULTWORKFLOWID)
+    microscope = models.ForeignKey(Microscope, default=settings.DEFAULTMIC,
+                                   on_delete=models.CASCADE)
+    user       = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False,
+                                   on_delete=models.CASCADE)
+    workflow   = models.ForeignKey(Workflow, default=settings.DEFAULTWORKFLOWID,
+                                   on_delete=models.CASCADE)
     sample     = models.CharField(max_length=128)
     voltage    = models.IntegerField(default=200)
     date       = models.DateTimeField(default=timezone.now, blank=True)  #
@@ -72,7 +75,7 @@ O1_HOLE_CHOICES = [(0, '--'), (70, '70'), (100, '100')]
 PHP_CHOICES = [(0, '--'), (1, '1'), (2, '2'),(3, '3'), (4, '4'), (5, '5'), (6, '6')]
 
 class Acquisition2(models.Model):
-    acquisition = models.OneToOneField(Acquisition)
+    acquisition = models.OneToOneField(Acquisition, on_delete=models.CASCADE)
     nominal_magnification = models.FloatField(blank=False)
     sampling_rate = models.FloatField(blank=False)  # A/px OK
     spotsize = models.FloatField(blank=False)
@@ -110,7 +113,7 @@ class Acquisition2(models.Model):
     # objective aperture
     o1 = models.IntegerField(choices=O1_HOLE_CHOICES,
                                       default=70)
-    # which phae plate are we using
+    # which phase plate are we using
     php = models.IntegerField(choices=PHP_CHOICES,
                                       default=0)
     # phase plate starting position

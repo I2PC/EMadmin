@@ -1,5 +1,7 @@
 from django.conf.urls import url
-import views
+import invoice.views as views
+
+app_name = 'create_invoice'
 
 urlpatterns = [
     url(r'^create_invoice/(?P<invoiceid>[\w\-]+)/$', views.create_invoice,

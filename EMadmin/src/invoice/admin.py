@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from models import Concept, Invoice, InvoiceLine
+from invoice.models import Concept, Invoice, InvoiceLine
 # Register your models here.
 
 

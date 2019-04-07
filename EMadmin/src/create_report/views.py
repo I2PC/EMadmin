@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 from django.shortcuts import render, reverse
 from create_proj.models import Acquisition
-from tables import ProjectsTable
+from create_report.tables import ProjectsTable
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 import jinja2
@@ -13,7 +13,7 @@ import jinja2
 import os
 from create_stat.views import create_one_statistics
 from create_stat.models import  Statistics
-from plot import doPlot
+from create_report.plot import doPlot
 import json
 import numpy as np
 import unidecode
@@ -163,10 +163,10 @@ def create_report_latex(request, idacquisition):
                "no Movies",
                out_file_root+"staDef")
         options['pgfDefocusFile'] = pgfDefocus
-        print "RES DEF", pgfResolution, pgfDefocus
+        print("RES DEF", pgfResolution, pgfDefocus)
         options['dataavailable'] = '\longtrue'
     else:
-        print "No micrographs to process"
+        print("No micrographs to process")
         options['dataavailable'] = '\longfalse'
     renderer_template = template.render(**options)
     with open(out_file_root + ".tex", "w") as f:  # saves tex_code to outpout file

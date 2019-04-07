@@ -14,11 +14,11 @@ urlpatterns = [
     url(r'^$', views.HomePage.as_view(), name='home'),
     url(r'^about/$', views.AboutPage.as_view(), name='about'),
     url(r'^users/', include(profiles.urls, namespace='profiles')),
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^create_proj/', include(create_proj.urls, namespace='create_proj')),
     url(r'^create_stat/', include(create_stat.urls, namespace='create_stat')),
     url(r'^create_report/', include(create_report.urls, namespace='create_report')),
     url(r'^invoice/', include(invoice.urls, namespace='invoice')),
+    url(r'^admin/', admin.site.urls),
     url(r'^', include(accounts.urls, namespace='accounts')),
 ]
 

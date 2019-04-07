@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from create_proj.models import Acquisition
 import os
 from django.conf import settings
-from models import Statistics
+from create_stat.models import Statistics
 import subprocess
 from django.http import HttpResponse
 from fusioncharts import FusionCharts
@@ -31,10 +31,13 @@ def create_one_statistics(acquisition):
         acquisition.noScipionProject = True
         acquisition.save()
         return None
-    statistic = Statistics.objects.get_or_create(acquisition=acquisition)[0]
-    script = os.path.join(settings.SCIPIONPATH,'scripts/scipionbox_report_statistics.py')
+    statistic = \
+        Statistics.objects.get_or_create(acquisition=acquisition)[0]
+    script = \
+        os.path.join(settings.SCIPIONPATH,
+                     'scripts/scipionbox_report_statistics.py')
     if not os.path.exists(script):
-        print "HORROR script %s does not exist" % script
+        print("HORROR script %s does not exist" % script())
         exit(-1)
     args = ["python"]
     args += [script]

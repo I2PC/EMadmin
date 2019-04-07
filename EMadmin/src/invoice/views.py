@@ -2,16 +2,16 @@
 from __future__ import unicode_literals
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
-from forms import InvoiceForm1, InvoiceForm2
+from invoice.forms import InvoiceForm1, InvoiceForm2
 from django.contrib.auth import get_user_model
 # Create your views here.
 from create_proj.models import Acquisition
-from models import Invoice, InvoiceLine, Concept
+from invoice.models import Invoice, InvoiceLine, Concept
 import jinja2, os
 from django.conf import settings
 import unidecode
 from django.http import HttpResponse
-from models import Concept, TYPE_CHOICES
+from invoice.models import Concept, TYPE_CHOICES
 
 User = get_user_model()
 
@@ -161,7 +161,7 @@ def create_invoice(request, invoiceid=-1):
                     if v.name == "-----":
                         continue
                     conceptDict[key] = v
-            print "AAAAAAAAAAa", quantityDict, conceptDict
+
             for k,v in   conceptDict.iteritems():
                 invoiceline, created = InvoiceLine.objects.get_or_create(
                         invoice=invoice,

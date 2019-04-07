@@ -1,13 +1,13 @@
 from django import forms
 from create_proj.models import Acquisition, Acquisition2
-from fields import ListTextWidget
+#from create_proj.fields import ListTextWidget
 import os
 from django.conf import settings
 import subprocess
-import re
-from models import Acquisition
+#import re
+from create_proj.models import Acquisition
 from datetime import datetime, timedelta
-import psutil
+
 #kill port sudo lsof -t -i tcp:8000 | xargs kill -9
 class SkipAcquisitionForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -91,19 +91,63 @@ class AcquisitionForm(forms.ModelForm):
 
 class AcquisitionForm2(forms.ModelForm):
     # An inline class to provide additional information on the form.
-    sampling_rate = forms.FloatField(label="Sampling rate (A/px)")
-    illuminated_area = forms.FloatField(label="Illuminated area (m)")
-    #dose_per_fraction = forms.FloatField(label="Dose per fraction (e/A^2)")
-    dose_rate = forms.FloatField(label="Dose rate (e/(px*sec))", initial=0)
-    total_exposure_time = forms.FloatField(label="Total exposure time per movie (sec)", initial=0)
-    total_dose_per_movie = forms.FloatField(label="Total dose per movie(e/A^2)", initial=0)
-    # help = c
+    sampling_rate =\
+        forms.FloatField(label="Sampling rate (A/px)",
+                         help_text="Movie pixel rate in Angstroms per pixel")
+    dose_rate =\
+        forms.FloatField(label="Dose rate (e/(px*sec)) ",
+                         help_text = "Dose rate in electrons per pixels"
+                                     " and per second",
+                         initial=0)
+    total_exposure_time =\
+        forms.FloatField(label="Total exposure time per movie (sec)",
+                         help_text='If you fill this field Total Dose per '
+                                   'Movie will be automatically filled in',
+                         initial=0)
+    total_dose_per_movie =\
+        forms.FloatField(label="Total dose per movie(e/A^2)",
+                         help_text='If you fill this field Total Exposure '
+                                   'Time per Movie will be automatically '
+                                   'filled in',
+                         initial=0)
+    illuminated_area =\
+        forms.FloatField(label="Illuminated area (m)",
+                         help_text = 'Electron Beam Diameter at the specimen'
+                                     ' surface, defined by the settings of the'
+                                     ' Condenser lenses (mainly C1).'
+                                     ' Units: microns')
+
     autofocus_distance = forms.FloatField(label='Autofocus periodicity',
                                           help_text = '0 -> always')
 
     field_order = ['sampling_rate', 'dose_rate', 'total_exposure_time',
                    'total_dose_per_movie', 'number_of_fractions',
-                   'frames_in_fraction']
+                   'frames_in_fraction','nominal_magnification',
+                   'spotsize', 'illuminated_area', 'nominal_defocus_range'
+                   ]
+
+    def __init__(self, *args, **kwargs):
+        super(AcquisitionForm2, self).__init__(*args, **kwargs)
+        self.fields['frames_in_fraction'].help_text = \
+            'Fractions are an average of a few frames computed by ' \
+            'the microscope software'
+        self.fields['number_of_fractions'].help_text = \
+            'Number of images in a movie'
+        self.fields['nominal_magnification'].help_text = \
+            'Ratio between the length of a test object and the length of the ' \
+            'same object in the detector.'
+        self.fields['spotsize'].help_text =\
+            'Value of spotsize knot -Electron Beam Diameter after C1 lens-'
+        self.fields['nominal_defocus_range'].help_text = \
+            'Minimum, maximun and step in defocus range.'
+        self.fields['c2'].help_text = 'condenser lens'
+        self.fields['o1'].help_text = 'objective aperture'
+        self.fields['php'].help_text = 'which phase plate are we using'
+        self.fields['php_position_start'].help_text = \
+            'phase plate starting position'
+        self.fields['php_periodicity'].help_text = \
+            'movies taken at each phase plate position'
+
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Acquisition2
