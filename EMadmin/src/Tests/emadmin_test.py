@@ -3,54 +3,57 @@
 # cd /home/scipionuser/webservices/EMadmin/src
 # python manage.py runserver
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, os
-from collections import OrderedDict
-from loremipsum import get_paragraphs, get_sentences
+# from selenium.common.exceptions import NoSuchElementException
+# from selenium.common.exceptions import NoAlertPresentException
+import unittest
+import time
+import os
+# from collections import OrderedDict
+# from loremipsum import get_paragraphs, get_sentences
 import sqlite3
 import shutil
 from glob import glob
 
+
 class onLineShopTester(unittest.TestCase):
-    num         = 1
-    username    = "testUser%d"% num
-    passwd      = "passwd%d"% num
-    institution = "intitution%d"% num
-    email       = "%s@gmail.com"%username
-    sample      = "sample%d"% num
-    base_url    = "http://127.0.0.1:8000/"
-    admin_url   = base_url + "admin/"
-    database    = "db.sqlite3"
+    num = 1
+    username = "testUser%d" % num
+    passwd = "passwd%d" % num
+    institution = "intitution%d" % num
+    email = "%s@gmail.com" % username
+    sample = "sample%d" % num
+    base_url = "http://127.0.0.1:8000/"
+    admin_url = base_url + "admin/"
+    database = "db.sqlite3"
 
     chromeDriver = "/usr/local/bin/chromedriver"
-    #chromeDriver = "/home/roberto/bin/chromedriver"
+    # chromeDriver = "/home/roberto/bin/chromedriver"
 
     def setUp(self):
-#        self.driver = webdriver.Firefox()
+        # self.driver = webdriver.Firefox()
         self.driver = webdriver.Chrome(self.chromeDriver)
 
-    def find_element_by_id(self,_id,value,waitFor=1):
+    def find_element_by_id(self, _id, value, waitFor=1):
         self.driver.find_element_by_id(_id).clear()
         self.driver.find_element_by_id(_id).send_keys(value)
         time.sleep(waitFor)
 
-    def find_element_by_xpath(self,_xpath,waitFor=1):
+    def find_element_by_xpath(self, _xpath, waitFor=1):
         self.driver.find_element_by_xpath(_xpath).click()
         time.sleep(waitFor)
 
-    def find_element_by_name(self,_name,waitFor=1):
+    def find_element_by_name(self, _name, waitFor=1):
         self.driver.find_element_by_name(_name).click()
         time.sleep(waitFor)
 
-    def find_element_by_link_text(self,_name,waitFor=1):
+    def find_element_by_link_text(self, _name, waitFor=1):
         self.driver.find_element_by_link_text(_name).click()
         time.sleep(waitFor)
 
-    def pullDownMenuById(self,id, value, waitFor=1):
+    def pullDownMenuById(self, id, value, waitFor=1):
         select = Select(self.driver.find_element_by_id(id))
         select.select_by_value(value)
         time.sleep(waitFor)
@@ -58,45 +61,50 @@ class onLineShopTester(unittest.TestCase):
     def signUp(self):
         # /html/body/div[2]/div/div/div[1]/a
         self.find_element_by_xpath("//a[@class='btn btn-primary'][1]")
-        self.find_element_by_id("id_email",self.email)
-        self.find_element_by_id("id_name",self.username)
-        self.find_element_by_id("id_password1",self.passwd)
-        self.find_element_by_id("id_password2",self.passwd)
-        self.find_element_by_id("id_institution",self.institution)
-        self.find_element_by_xpath("//input[@type='submit' and @value='Sign up']")
+        self.find_element_by_id("id_email", self.email)
+        self.find_element_by_id("id_name", self.username)
+        self.find_element_by_id("id_password1", self.passwd)
+        self.find_element_by_id("id_password2", self.passwd)
+        self.find_element_by_id("id_institution", self.institution)
+        self.find_element_by_xpath("//input[@type='submit' and "
+                                   " @value='Sign up']")
 
     def signOut(self):
         # open pull down menu
-        self.find_element_by_xpath("//ul[@class='nav navbar-nav navbar-right'][1]")
+        self.find_element_by_xpath("//ul[@class='nav navbar-nav"
+                                   "navbar-right'][1]")
         # select logout
         self.find_element_by_xpath("//ul[@class='dropdown-menu'][1]")
 
     def signIn(self):
-        #self.driver.find_element_by_link_text("Log in").click()
+        # self.driver.find_element_by_link_text("Log in").click()
         self.find_element_by_xpath("//a[@class='btn btn-default'][1]")
-        self.find_element_by_id("id_username",self.email)
-        self.find_element_by_id("id_password",self.passwd)
-        self.find_element_by_xpath("//input[@type='submit' and @value='Log in']")
-#2|BASIC_Import_Mcorr2_Ctffind4_Summary
-#4|Phase_Plate_mottioncor_ctffing_gctf_gain
-#5|TOMO_acquisiton_movie
+        self.find_element_by_id("id_username", self.email)
+        self.find_element_by_id("id_password", self.passwd)
+        self.find_element_by_xpath("//input[@type='submit' and"
+                                   " @value='Log in']")
+# 2|BASIC_Import_Mcorr2_Ctffind4_Summary
+# 4|Phase_Plate_mottioncor_ctffing_gctf_gain
+# 5|TOMO_acquisiton_movie
 
     def createProject1(self):
         # Microscope
         self.find_element_by_link_text("Project")
-        self.pullDownMenuById('id_workflow','2')
-        self.pullDownMenuById('id_workflow','5')
-        self.pullDownMenuById('id_workflow','4')
-        print ("self.sample",self.sample)
-        self.find_element_by_id("id_sample",self.sample)
-        self.find_element_by_id("id_voltage",200)
-        self.find_element_by_id("id_shiftLength",2)
-        self.find_element_by_id("id_backupPath","/media/roberto")
-        self.find_element_by_xpath("//input[@type='submit' and @value='Create Project']")
+        self.pullDownMenuById('id_workflow', '2')
+        self.pullDownMenuById('id_workflow', '5')
+        self.pullDownMenuById('id_workflow', '4')
+        print("self.sample", self.sample)
+        self.find_element_by_id("id_sample", self.sample)
+        self.find_element_by_id("id_voltage", 200)
+        self.find_element_by_id("id_shiftLength", 2)
+        self.find_element_by_id("id_backupPath", "/media/roberto")
+        self.find_element_by_xpath("//input[@type='submit'"
+                                   " and @value='Create Project']")
 
     def createProject2(self):
-        #acquisition params
-        self.find_element_by_id("id_nominal_magnification", "70000,0")
+        # acquisition params
+        self.find_element_by_id("id_nominal_magnification",
+                                "70000,0")
         self.find_element_by_id("id_sampling_rate", "1.42")
         self.find_element_by_id("id_spotsize", 2)
         self.find_element_by_id("id_illuminated_area", "1.68")
@@ -108,19 +116,21 @@ class onLineShopTester(unittest.TestCase):
         # EPU parameters
         self.find_element_by_id("id_nominal_defocus_range", "1 2 3")
         self.find_element_by_id("id_autofocus_distance", 5)
-        self.pullDownMenuById('id_drift_meassurement','always')
+        self.pullDownMenuById('id_drift_meassurement', 'always')
         self.find_element_by_id("id_delay_after_stage_shift", 5)
         self.find_element_by_id("id_delay_after_image_shift", 5)
         self.find_element_by_id("id_max_image_shift", 5)
-        self.pullDownMenuById('id_exposure_hole','2')
-        self.pullDownMenuById('id_c2','50')
-        self.pullDownMenuById('id_o1','70')
-        self.pullDownMenuById('id_php','3')
-        #PRESS BOTTON
-        self.find_element_by_xpath("//input[@type='submit' and @value='Launch Scipion']")
+        self.pullDownMenuById('id_exposure_hole', '2')
+        self.pullDownMenuById('id_c2', '50')
+        self.pullDownMenuById('id_o1', '70')
+        self.pullDownMenuById('id_php', '3')
+        # PRESS BOTTON
+        self.find_element_by_xpath(
+                                   "//input[@type='submit' and"
+                                   " @value='Launch Scipion']")
 
     def seeHome(self, waitFor=1):
-        #print "self.base_url", self.base_url
+
         self.driver.get(self.base_url)
         time.sleep(waitFor)
 
@@ -133,64 +143,72 @@ class onLineShopTester(unittest.TestCase):
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
             sql = """DELETE FROM authtools_user
-                     WHERE email='%s'"""%email
+                     WHERE email='%s'""" % email
             cur.execute(sql)
             conn.commit()
         except Exception as e:
-            print (e)
+            print(e)
         # delete project
-
 
     def deleteProjectFromUser(self, email):
         try:
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
             sql = """SELECT id FROM authtools_user
-                     WHERE email='%s'"""%email
+                     WHERE email='%s'""" % email
             cur.execute(sql)
             user_id = cur.fetchone()[0]
             sql = """SELECT projname FROM create_proj_acquisition
-                     WHERE user_id=%d"""%user_id
+                     WHERE user_id=%d""" % user_id
             cur.execute(sql)
             projname = cur.fetchone()[0]
             sql = """DELETE FROM create_proj_acquisition
-                     WHERE user_id='%d'"""%user_id
+                     WHERE user_id='%d'""" % user_id
             cur.execute(sql)
             conn.commit()
             shutil.rmtree(os.path.join(os.environ['HOME'], "ScipionUserData",
                                        "projects", projname))
         except Exception as e:
-            print (e)
+            print(e)
 
+    def simulateAcquisition(
+            self, outputDir='GRID_01/DATA/Images-Disc1/'
+                            'GridSquare_9124395/DATA'):
 
-    def simulateAcquisition(self, outputDir='GRID_01/DATA/Images-Disc1/GridSquare_9124395/DATA'):
-        """/home/scipionuser/OffloadData/2017_10_19_fcojavierchichon_qwerty/GRID_01/DATA/Images-Disc1/GridSquare_9124395/DATA"""
-        
+        """/home/scipionuser/OffloadData/
+2017_10_19_fcojavierchichon_qwerty/GRID_01/DATA/Images-Disc1/
+GridSquare_9124395/DATA"""
+
         try:
             conn = sqlite3.connect(self.database)
             cur = conn.cursor()
-            sql = """SELECT projname, date 
+            sql = """SELECT projname, date
                      FROM create_proj_acquisition
-                     WHERE date IN   (SELECT MAX(date) 
+                     WHERE date IN   (SELECT MAX(date)
                                       FROM create_proj_acquisition);"""
             cur.execute(sql)
             projName = cur.fetchone()[0]
         except Exception as e:
-            print (e)
+            print(e)
         time.sleep(20)  # wait here until Scipion is started
-        fullProjectPath =  os.path.join("/home/scipionuser/OffloadData", projName,outputDir)
-        print (fullProjectPath)
+        fullProjectPath =\
+            os.path.join("/home/scipionuser/OffloadData",
+                         projName, outputDir)
+        print(fullProjectPath)
         if os.path.exists(fullProjectPath):
-            shutil.rmtree(fullProjectPath) # clean path
+            shutil.rmtree(fullProjectPath)  # clean path
         os.makedirs(fullProjectPath)  # create output dir
-        INPUTDAT="/home/OffloadData/2018_01_18_fabrizio_d1_1801_/GRID_??/DATA/Images-Disc1/GridSquare_*/Data/FoilHole_*_Fractions.mrc"
+        INPUTDAT = "/home/scipionuser/OffloadData/"\
+                   "2018_05_25_rmarabini_smalltestdatasetNOBORRAR"\
+                   "/GRID_??/DATA/Images-Disc1/GridSquare_*/Data/"\
+                   "FoilHole_*_Fractions.mrc"
         inputFiles = glob(INPUTDAT)
 
         aTime = 90  # 90 sec per movie
         counter = 0
         for f in inputFiles:
-            outputPath = os.path.join(fullProjectPath, os.path.basename(f))
-            print ("%d) Linking %s -> %s" % (counter, f, outputPath))
+            outputPath = os.path.join(fullProjectPath,  os.path.basename(f))
+            print("%d) Linking %s -> %s" % (counter, f,  outputPath))
             counter += 1
             os.symlink(f, outputPath)
             time.sleep(aTime)
@@ -208,10 +226,9 @@ class onLineShopTester(unittest.TestCase):
         self.createProject2()  # first form
         self.simulateAcquisition()  # link movies
 
-
-        #close browser
+        # close browser
         self.quit(2)
+
 
 if __name__ == "__main__":
     unittest.main()
-
