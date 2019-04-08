@@ -18,7 +18,7 @@ import shutil
 from glob import glob
 
 
-class onLineShopTester(unittest.TestCase):
+class onEMadminTester(unittest.TestCase):
     num = 1
     username = "testUser%d" % num
     passwd = "passwd%d" % num
@@ -71,10 +71,12 @@ class onLineShopTester(unittest.TestCase):
 
     def signOut(self):
         # open pull down menu
-        self.find_element_by_xpath("//ul[@class='nav navbar-nav"
-                                   "navbar-right'][1]")
+        #self.find_element_by_xpath("//ul[@class='nav navbar-nav"
+        #                           "navbar-right'][1]")
+        self.find_element_by_xpath("/html/body/div[1]/div[2]/ul[2]/li/a")
         # select logout
-        self.find_element_by_xpath("//ul[@class='dropdown-menu'][1]")
+        #self.find_element_by_xpath("//ul[@class='dropdown-menu'][1]")
+        self.find_element_by_xpath("/html/body/div[1]/div[2]/ul[2]/li/ul/li[2]/a")
 
     def signIn(self):
         # self.driver.find_element_by_link_text("Log in").click()
@@ -97,24 +99,35 @@ class onLineShopTester(unittest.TestCase):
         self.find_element_by_id("id_sample", self.sample)
         self.find_element_by_id("id_voltage", 200)
         self.find_element_by_id("id_shiftLength", 2)
-        self.find_element_by_id("id_backupPath", "/media/roberto")
+        #self.find_element_by_id("id_backupPath", "/media/roberto")
         self.find_element_by_xpath("//input[@type='submit'"
                                    " and @value='Create Project']")
+        #self.find_element_by_xpath('//*[@id="acquisition_form"]/input[2]')
 
     def createProject2(self):
-        # acquisition params
+        # acquisition params -1
+        self.find_element_by_id("id_sampling_rate", "1.42")
+        self.find_element_by_id("id_dose_rate","30")
+        self.find_element_by_id("id_total_exposure_time","15")
+        self.find_element_by_id("id_number_of_fractions", 15)
+        #wait and check total dose per movie change
+        time.sleep(2)
+        # acquisition params-2
+        self.find_element_by_id("id_sampling_rate", "1.42")
+        self.find_element_by_id("id_dose_rate","30")
+        self.find_element_by_id("id_total_dose_per_movie","30")
+        self.find_element_by_id("id_number_of_fractions", 15)
+        time.sleep(2)
+
+        self.find_element_by_id("id_frames_in_fraction", 3)        
         self.find_element_by_id("id_nominal_magnification",
                                 "70000,0")
-        self.find_element_by_id("id_sampling_rate", "1.42")
         self.find_element_by_id("id_spotsize", 2)
         self.find_element_by_id("id_illuminated_area", "1.68")
-        # Dose & Fractions
-        self.find_element_by_id("id_dose_per_fraction", 2)
-        self.find_element_by_id("id_total_exposure_time", 15)
-        self.find_element_by_id("id_number_of_fractions", 15)
-        self.find_element_by_id("id_frames_in_fraction", 3)
+
+
         # EPU parameters
-        self.find_element_by_id("id_nominal_defocus_range", "1 2 3")
+        self.find_element_by_id("id_nominal_defocus_range", "1, 7, 2")
         self.find_element_by_id("id_autofocus_distance", 5)
         self.pullDownMenuById('id_drift_meassurement', 'always')
         self.find_element_by_id("id_delay_after_stage_shift", 5)
@@ -124,6 +137,9 @@ class onLineShopTester(unittest.TestCase):
         self.pullDownMenuById('id_c2', '50')
         self.pullDownMenuById('id_o1', '70')
         self.pullDownMenuById('id_php', '3')
+        self.find_element_by_id("id_php_position_start", 2)
+        self.find_element_by_id("id_php_periodicity", 5)
+
         # PRESS BOTTON
         self.find_element_by_xpath(
                                    "//input[@type='submit' and"
@@ -218,10 +234,8 @@ GridSquare_9124395/DATA"""
         self.deleteUser(self.email)
         self.seeHome(2)
         self.signUp()  # create user
-
         self.signOut()  # log out
         self.signIn()  # log in
-
         self.createProject1()  # first form
         self.createProject2()  # first form
         self.simulateAcquisition()  # link movies

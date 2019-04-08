@@ -146,7 +146,7 @@ class AcquisitionForm2(forms.ModelForm):
         self.fields['php_position_start'].help_text = \
             'phase plate starting position'
         self.fields['php_periodicity'].help_text = \
-            'movies taken at each phase plate position'
+            'number movies taken at each phase plate position'
 
     class Meta:
         # Provide an association between the ModelForm and a model

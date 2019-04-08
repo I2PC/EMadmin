@@ -12,7 +12,7 @@ class Workflow(models.Model):
     workflow = models.TextField(unique=True, blank=False)
     date = models.DateTimeField(default=timezone.now, blank=True)
 
-    def __unicode__(self):  #For Python 2, use __str__ on Python 3
+    def __str__(self):  #For Python 2, use __str__ on Python 3
         return self.name
 
 # Create your models here.
@@ -26,7 +26,7 @@ class Microscope(models.Model):
     dataFolder = models.CharField(max_length=256,
                                   default='/home/scipionuser/OffloadData')
 
-    def __unicode__(self):  #For Python 2, use __str__ on Python 3
+    def __str__(self):  #For Python 2, use __str__ on Python 3
         return self.name
 
 class Acquisition(models.Model):
@@ -56,7 +56,7 @@ class Acquisition(models.Model):
                                     user_name, sample_name)
         super(Acquisition, self).save(*args, **kwargs)
 
-    def __unicode__(self):  #For Python 2, use __str__ on Python 3
+    def __str__(self):  #For Python 2, use __str__ on Python 3
         try:
             return "user=%s, sample=%s, date=%s"%(self.user,
                                                   self.sample,
@@ -127,7 +127,7 @@ class Acquisition2(models.Model):
         self.dose_per_fraction = self.total_dose_per_movie /self.number_of_fractions
         super(Acquisition2, self).save(*args, **kwargs)
 
-    def __unicode__(self):  #For Python 2, use __str__ on Python 3
+    def __str__(self):  #For Python 2, use __str__ on Python 3
         try:
             return "user=%s, sample=%s, date=%s" % \
                    (self.acquisition.user,
