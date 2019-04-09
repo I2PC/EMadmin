@@ -43,16 +43,19 @@ def create_one_statistics(acquisition):
     args += [script]
     args += ['-p', acquisition.projname]
     scipion = os.path.join(settings.SCIPIONPATH,'scipion')
-
     p = subprocess.Popen([scipion] +  args, stdin=subprocess.PIPE,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     output, err = p.communicate()
     # if err contains something else (in addition to the dict)
     # remove it
+    print("QQQQQQQQQQQQQ1", err)
+    err = str(err)
     err = err[err.find("{"):err.find("}")+1]
     rc = p.returncode
+    print("QQQQQQQQQQQQQ2", err)
     d = json.loads(err)
+    print("WWWWWWWWWWWWWWW", d, "WWWWWWWWWWW")
     if d:
         statistic.averageResolution =  d['averageResolution']
         statistic.resolutionData = json.dumps(d['resolutionData'])

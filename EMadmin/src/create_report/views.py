@@ -52,7 +52,7 @@ def tex_escape(text):
         '<': r'\textless ',
         '>': r'\textgreater ',
     }
-    regex = re.compile('|'.join(re.escape(unicode(key)) for key in sorted(conv.keys(), key = lambda item: - len(item))))
+    regex = re.compile('|'.join(re.escape(str(key)) for key in sorted(conv.keys(), key = lambda item: - len(item))))
     return regex.sub(lambda match: conv[match.group()], text)
 
 @login_required
@@ -75,11 +75,11 @@ def create_report_latex(request, idacquisition):
     # fill statistics entry
     statistic = create_one_statistics(acquisition)
     if statistic:
-        numberMicrographs = statistic.numberMovies
+        numberMicrographs = int(statistic.numberMovies)
     else:
         try:
             statistic = Statistics.objects.get(acquisition=acquisition)
-            numberMicrographs = statistic.numberMovies
+            numberMicrographs = int(statistic.numberMovies)
         except Statistics.DoesNotExist:
             numberMicrographs = -1
 
@@ -173,7 +173,7 @@ def create_report_latex(request, idacquisition):
         f.write(unidecode.unidecode(renderer_template)) 
 
     os.system('pdflatex -output-directory %s %s'%(out_dir, out_file_root))
-    with open(os.path.join(out_dir, out_file_root + ".pdf"), 'r') as pdf:
+    with open(os.path.join(out_dir, out_file_root + ".pdf"), 'rb') as pdf:
         response = HttpResponse(pdf.read(), content_type='application/pdf')
         response['Content-Disposition'] = 'inline;filename=some_file.pdf'
         return response
