@@ -92,10 +92,10 @@ class AcquisitionForm(forms.ModelForm):
 class AcquisitionForm2(forms.ModelForm):
     # An inline class to provide additional information on the form.
     sampling_rate =\
-        forms.FloatField(label="Sampling rate (A/px)",
+        forms.FloatField(label="Sampling rate (A/px^2)",
                          help_text="Movie pixel rate in Angstroms per pixel")
     dose_rate =\
-        forms.FloatField(label="Dose rate (e/(px*sec)) ",
+        forms.FloatField(label="Dose rate (e/(px^2*sec)) ",
                          help_text = "Dose rate in electrons per pixels"
                                      " and per second",
                          initial=0)
@@ -111,7 +111,7 @@ class AcquisitionForm2(forms.ModelForm):
                                    'filled in',
                          initial=0)
     illuminated_area =\
-        forms.FloatField(label="Illuminated area (m)",
+        forms.FloatField(label="Illuminated area (microns)",
                          help_text = 'Electron Beam Diameter at the specimen'
                                      ' surface, defined by the settings of the'
                                      ' Condenser lenses (mainly C1).'
@@ -121,13 +121,17 @@ class AcquisitionForm2(forms.ModelForm):
                                           help_text = '0 -> always')
 
     field_order = ['sampling_rate', 'dose_rate', 'total_exposure_time',
-                   'total_dose_per_movie', 'number_of_fractions',
-                   'frames_in_fraction','nominal_magnification',
-                   'spotsize', 'illuminated_area', 'nominal_defocus_range'
+                   'total_dose_per_movie', 'dose_last_fraction',
+                   'number_of_fractions',  'frames_in_fraction',
+                   'nominal_magnification', 'spotsize',
+                   'illuminated_area', 'nominal_defocus_range'
                    ]
 
     def __init__(self, *args, **kwargs):
         super(AcquisitionForm2, self).__init__(*args, **kwargs)
+        self.fields['dose_in_last_fraction'].help_text = \
+            'Set to -1 if the rate is equal to the other fractions.' \
+            'Units e/A^2 (TODO: CHECK UNIST)'
         self.fields['frames_in_fraction'].help_text = \
             'Fractions are an average of a few frames computed by ' \
             'the microscope software'

@@ -83,6 +83,7 @@ class Acquisition2(models.Model):
 
     # DOSE IN FRACTION NOT FOR FORM
     dose_per_fraction = models.FloatField(blank=False, default=0)
+    dose_in_last_fraction = models.FloatField(blank=False, default=-1)
     # e/A^2 y fraction--> change frame by fraction, OK
     dose_rate = models.FloatField(blank=False)  # e/px*sec
     total_exposure_time = models.FloatField(blank=False) # seconds
@@ -124,7 +125,15 @@ class Acquisition2(models.Model):
 
     def save(self, *args, **kwargs):
         #create project name
-        self.dose_per_fraction = self.total_dose_per_movie /self.number_of_fractions
+        if self.dose_last_fraction == -1:
+            self.dose_per_fraction = \
+                (self.total_dose_per_movie) / self.number_of_fractions
+        else:
+            # if input in e/px
+            # self.number_of_fractions * self.sampling_rate * self.samplig_rate
+            self.dose_per_fraction = \
+                (self.total_dose_per_movie - self.dose_last_fraction)\
+                /(self.number_of_fractions -1)
         super(Acquisition2, self).save(*args, **kwargs)
 
     def __str__(self):  #For Python 2, use __str__ on Python 3

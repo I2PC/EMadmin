@@ -17,6 +17,9 @@
 \usepackage{color}
 \usepackage{pgf}
 \newif\iflong
+\usepackage{longtable}
+\newcounter{notesCounter}
+\setcounter{notesCounter}{1}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HEADER
@@ -52,6 +55,7 @@
   Physical Pixel Size ($\mu$) & \VAR{acquisitiondetectorPixelSize}\\\hline
   Voltage ($kV$)& \VAR{acquisitionVoltage}\\\hline
   Spheric Aberration ($mm$)& \VAR{microscopeCs}\\\hline
+  & \\
 \end{tabulary}
 %
   \hspace{1cm}
@@ -64,8 +68,13 @@
   Sampling Rate ($\AA/px$)& \VAR{acquisitionSamplingRate}\\\hline
   Spot Size & \VAR{acquisitionSpotSize} \\\hline
   Illuminated Area ($\mu$)& \VAR{aquisitionIlluminatedArea}\\\hline
-   & \\
-   & \\
+  Dose Rate ($e/px^2$) &
+      \VAR{acquisitionDoseRate} \\\hline
+  Total Exposure Time ($s$)&
+      \VAR{acquisitionTotalExptime} \\\hline
+  Total Dose per Movie ($e/\AA^2$)&
+      \VAR{acquisitionTotalDosePerMovie} \\\hline
+
 \end{tabulary}\\\\
 % DOSE
    \newline
@@ -73,18 +82,18 @@
 \begin{tabulary}{\linewidth}{L L}
   \\\hline
   \cellcolor{blue!25}Dose \& Fractions & \cellcolor{blue!25} \\\hline
-  Dose per Fraction ($e/\AA^2$) & 
-      \VAR{acquisitionDosePerFraction} \\\hline
-  Total Exposure Time ($s$)& 
-      \VAR{acquisitionTotalExptime} \\\hline
   Number Fractions & 
-      \VAR{acquisitionNumFrames} \\\hline
+      \VAR{acquisitionNumFractions} \\\hline
   Frames per Fraction & 
       \VAR{acquisitionFramesPerFrac}\\\hline
+  Dose per Fraction ($e/\AA^2$)$^1$&
+      \VAR{acquisitionDosePerFraction} \\\hline
+  Dose in Last Fraction ($e/\AA^2$)$^2$ &
+      \VAR{acquisitionDoseInLastFraction} \\\hline
   \cellcolor{blue!25}Apertures & \cellcolor{blue!25} \\\hline
   C2  & \VAR{acquisitionC2} \\\hline
   O1  & \VAR{acquisitionO1} \\\hline
-  PhP & \VAR{acquisitionPhP} \\\hline
+  PhP (id, posit, \#movies)$^4$ & \VAR{acquisitionPhP} \\\hline
 \end{tabulary}
 %
   \hspace{1cm}
@@ -93,8 +102,8 @@
 \begin{tabulary}{\linewidth}{L p{3cm}}
   \\\hline
   \cellcolor{blue!25}EPU parameters & \cellcolor{blue!25} \\\hline
-  Defocus Range ($\mu$)& \VAR{acquisitionNominalDefocusRange} \\\hline
-  Autofocus Distance ($\mu$) & 
+  Defocus Range (min, max, step)($\mu$)& \VAR{acquisitionNominalDefocusRange} \\\hline
+  Autofocus Periodicity ($\mu$)$^3$ &
       \VAR{acquisitionAutoDefocusDistance} \\\hline
   Drift Meassurement  &
       \VAR{acquisitionDriftMeassurement} \\\hline % TODO: ($nm/s$)
@@ -130,4 +139,17 @@ Numer of Movies = \VAR{statisticsNumberMovies}
 \else
 No data available
 \fi
+
+% send footnotes to page bottom
+\vspace{\fill}
+%\hline
+\rule{5cm}{1px}
+{\footnotesize
+\begin{enumerate}
+\item {Last fraction may have a different dose}
+\item {$Value = -1$ implies last fraction has the same dose than the rest}
+\item Former autofocus distance
+\item Phase Plate identifier, position in phase plate, number of movies acquired in each position.
+\end{enumerate}
+}
 \end{document}                             % The required last line

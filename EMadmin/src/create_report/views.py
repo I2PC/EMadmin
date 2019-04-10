@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+#from __future__ import unicode_literals
 from django_tables2 import RequestConfig
 from django.http import HttpResponse
 
@@ -108,16 +108,21 @@ def create_report_latex(request, idacquisition):
     # Acquisition Params
     options['acquisitionWorkflow'] = tex_escape(acquisition.workflow.name)
     options['acquisitionVoltage'] = acquisition.voltage
+
     options['acquisitionNominalMagnification'] = acquisition2.nominal_magnification
     options['acquisitionSamplingRate'] = acquisition2.sampling_rate
     options['acquisitionSpotSize'] = acquisition2.spotsize
     options['aquisitionIlluminatedArea'] = acquisition2.illuminated_area
+    options['acquisitionDoseRate'] = acquisition2.dose_rate
+    options['acquisitionTotalExptime'] = acquisition2.total_exposure_time
+    options['acquisitionTotalDosePerMovie'] = acquisition2.total_dose_per_movie
 
     # Dose & Fractions
-    options['acquisitionDosePerFraction'] = acquisition2.dose_per_fraction
-    options['acquisitionTotalExptime'] = acquisition2.total_exposure_time
-    options['acquisitionNumFrames'] = acquisition2.number_of_fractions
+    options['acquisitionNumFractions'] = acquisition2.number_of_fractions
     options['acquisitionFramesPerFrac'] = acquisition2.frames_in_fraction
+    options['acquisitionDosePerFraction'] = "{:.2f}".format(acquisition2.dose_per_fraction)
+    options['acquisitionDoseInLastFraction'] = \
+        "{:.2f}".format(acquisition2.dose_in_last_fraction)
 
     # EPU parameters  acquisitionDefocusDistance
     options['acquisitionNominalDefocusRange'] = acquisition2.nominal_defocus_range
@@ -131,7 +136,9 @@ def create_report_latex(request, idacquisition):
     # Apertures
     options['acquisitionC2'] = acquisition2.c2
     options['acquisitionO1'] = acquisition2.o1
-    options['acquisitionPhP'] = acquisition2.php
+    options['acquisitionPhP'] = "%d, %d, %d" % (acquisition2.php,
+                                                acquisition2.php_position_start,
+                                                acquisition2.php_periodicity)
 
     #logo
     options['mic_jpg'] = latexLogoFile
