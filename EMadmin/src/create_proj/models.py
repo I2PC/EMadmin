@@ -83,13 +83,13 @@ class Acquisition2(models.Model):
 
     # DOSE IN FRACTION NOT FOR FORM
     dose_per_fraction = models.FloatField(blank=False, default=0)
-    dose_in_last_fraction = models.FloatField(blank=False, default=-1)
+    dose_in_last_fraction = models.FloatField(blank=False, default=-1, null=True)
     # e/A^2 y fraction--> change frame by fraction, OK
     dose_rate = models.FloatField(blank=False)  # e/px*sec
     total_exposure_time = models.FloatField(blank=False) # seconds
     number_of_fractions = models.PositiveIntegerField(blank=False)
     frames_in_fraction = models.PositiveIntegerField(blank=False)
-    total_dose_per_movie = models.FloatField(blank=False)
+    total_dose_per_movie = models.FloatField(blank=False, default=-1, null=True)
     nominal_defocus_range = \
         models.CharField(
             max_length=128, blank=False, default="min, max, step")  # array the floats microns
@@ -118,10 +118,10 @@ class Acquisition2(models.Model):
     php = models.IntegerField(choices=PHP_CHOICES,
                                       default=0)
     # phase plate starting position
-    php_position_start = models.IntegerField(default=-1)
+    php_position_start = models.IntegerField(default=-1, null=True)
 
     # movies per phase plate position
-    php_periodicity    = models.IntegerField(default=-1)
+    php_periodicity    = models.IntegerField(default=-1, null=True)
 
     def save(self, *args, **kwargs):
         #create project name
