@@ -121,9 +121,12 @@ def create_report_latex(request, idacquisition):
     options['acquisitionNumFractions'] = acquisition2.number_of_fractions
     options['acquisitionFramesPerFrac'] = acquisition2.frames_in_fraction
     options['acquisitionDosePerFraction'] = "{:.2f}".format(acquisition2.dose_per_fraction)
-    options['acquisitionDoseInLastFraction'] = \
-        "{:.2f}".format(acquisition2.dose_in_last_fraction)
-
+    # compatibility old version
+    try:
+        options['acquisitionDoseInLastFraction'] = \
+            "{:.2f}".format(acquisition2.dose_in_last_fraction)
+    except:
+        options['acquisitionDoseInLastFraction'] = -1
     # EPU parameters  acquisitionDefocusDistance
     options['acquisitionNominalDefocusRange'] = acquisition2.nominal_defocus_range
     options['acquisitionAutoDefocusDistance'] = acquisition2.autofocus_distance
@@ -136,10 +139,13 @@ def create_report_latex(request, idacquisition):
     # Apertures
     options['acquisitionC2'] = acquisition2.c2
     options['acquisitionO1'] = acquisition2.o1
-    options['acquisitionPhP'] = "%d, %d, %d" % (acquisition2.php,
-                                                acquisition2.php_position_start,
-                                                acquisition2.php_periodicity)
-
+    # compatibility
+    try:
+        options['acquisitionPhP'] = "%d, %d, %d" % (acquisition2.php,
+                                                    acquisition2.php_position_start,
+                                                    acquisition2.php_periodicity)
+    except:
+        options['acquisitionPhP'] = "%d" % acquisition2.php
     #logo
     options['mic_jpg'] = latexLogoFile
 

@@ -125,14 +125,14 @@ class Acquisition2(models.Model):
 
     def save(self, *args, **kwargs):
         #create project name
-        if self.dose_last_fraction == -1:
+        if self.dose_in_last_fraction == -1:
             self.dose_per_fraction = \
                 (self.total_dose_per_movie) / self.number_of_fractions
         else:
             # if input in e/px
             # self.number_of_fractions * self.sampling_rate * self.samplig_rate
             self.dose_per_fraction = \
-                (self.total_dose_per_movie - self.dose_last_fraction)\
+                (self.total_dose_per_movie - self.dose_in_last_fraction)\
                 /(self.number_of_fractions -1)
         super(Acquisition2, self).save(*args, **kwargs)
 

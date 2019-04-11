@@ -121,7 +121,7 @@ class AcquisitionForm2(forms.ModelForm):
                                           help_text = '0 -> always')
 
     field_order = ['sampling_rate', 'dose_rate', 'total_exposure_time',
-                   'total_dose_per_movie', 'dose_last_fraction',
+                   'total_dose_per_movie', 'dose_in_last_fraction',
                    'number_of_fractions',  'frames_in_fraction',
                    'nominal_magnification', 'spotsize',
                    'illuminated_area', 'nominal_defocus_range'

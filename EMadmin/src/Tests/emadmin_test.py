@@ -92,9 +92,14 @@ class onEMadminTester(unittest.TestCase):
     def createProject1(self):
         # Microscope
         self.find_element_by_link_text("Project")
-        self.pullDownMenuById('id_workflow', '2')
+        # EINSTEIN
+        # self.pullDownMenuById('id_workflow', '3')
+        # self.pullDownMenuById('id_workflow', '2')
+        # self.pullDownMenuById('id_workflow', '4')
+        # SCIPIONBOX
+        self.pullDownMenuById('id_workflow', '6')
         self.pullDownMenuById('id_workflow', '5')
-        self.pullDownMenuById('id_workflow', '4')
+        self.pullDownMenuById('id_workflow', '8')
         print("self.sample", self.sample)
         self.find_element_by_id("id_sample", self.sample)
         self.find_element_by_id("id_voltage", 200)
@@ -226,7 +231,12 @@ GridSquare_9124395/DATA"""
             outputPath = os.path.join(fullProjectPath,  os.path.basename(f))
             print("%d) Linking %s -> %s" % (counter, f,  outputPath))
             counter += 1
-            os.symlink(f, outputPath)
+            # einstein
+            # os.symlink(f, outputPath)
+            # scipionbox
+            from shutil import copyfile
+            copyfile(f, outputPath)
+            ####
             time.sleep(aTime)
 
     def test_emadmin(self):
