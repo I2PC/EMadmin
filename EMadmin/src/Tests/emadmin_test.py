@@ -2,6 +2,7 @@
 # source ~/webservices/EMadmin/virEMadmin/bin/activate
 # cd /home/scipionuser/webservices/EMadmin/src
 # python manage.py runserver
+# python Test/emadmin_test.py
 from selenium import webdriver
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.common.keys import Keys
@@ -247,7 +248,7 @@ GridSquare_9124395/DATA"""
         self.signOut()  # log out
         self.signIn()  # log in
         self.createProject1()  # first form
-        self.createProject2()  # first form
+        self.createProject2()  # second form
         self.simulateAcquisition()  # link movies
 
         # close browser
