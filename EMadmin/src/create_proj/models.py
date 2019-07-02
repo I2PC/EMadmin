@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
+from django.db.models.signals import post_save
 
 # workflow
 class Workflow(models.Model):
@@ -51,9 +52,16 @@ class Acquisition(models.Model):
     def save(self, *args, **kwargs):
         #create project name
         user_name = slugify(self.user.name)
-        sample_name = slugify(self.sample)
-        self.projname = "%s_%s_%s"%(self.date.strftime('%Y_%m_%d'),
-                                    user_name, sample_name)
+        self.projname = 'temporal'
+
+        # create ID
+        super(Acquisition, self).save(*args, **kwargs)
+
+        # sample_name = slugify(self.sample)
+        self.projname = "%s_%s_%06d"%(self.date.strftime('%Y_%m_%d'),
+                                    user_name, self.id)
+
+        # resave using ID in projectname
         super(Acquisition, self).save(*args, **kwargs)
 
     def __str__(self):  #For Python 2, use __str__ on Python 3
