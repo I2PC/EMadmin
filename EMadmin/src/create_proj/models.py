@@ -78,8 +78,8 @@ class Acquisition(models.Model):
 
 DRIFT_MEASU_CHOICES = [('never', 'never'), ('always', 'always'),('gridsquare','gridsquare')]
 EXPOSURE_HOLE_CHOICES = [(1, '1'), (2, '2'), (3, '3'), (4,'4'), (5,'5')]
-C2_CHOICES = [(30, '30'), (50, '50'),(70, '70'),(150, '150')]
-O1_HOLE_CHOICES = [(0, '--'), (70, '70'), (100, '100')]
+C2_CHOICES = [(10, '10'), (30, '30'), (50, '50'), (70, '70'), (100, '100'), (150, '150')]
+O1_HOLE_CHOICES = [(0, '--'), (70, '70'), (100, '100'), (150, '150')]
 PHP_CHOICES = [(0, '--'), (1, '1'), (2, '2'),(3, '3'), (4, '4'), (5, '5'), (6, '6')]
 
 class Acquisition2(models.Model):
@@ -96,7 +96,7 @@ class Acquisition2(models.Model):
     dose_rate = models.FloatField(blank=False)  # e/px*sec
     total_exposure_time = models.FloatField(blank=False) # seconds
     number_of_fractions = models.PositiveIntegerField(blank=False)
-    frames_in_fraction = models.PositiveIntegerField(blank=False)
+    frames_in_fraction = models.PositiveIntegerField(blank=False, default=0, null=True)
     total_dose_per_movie = models.FloatField(blank=False, default=-1, null=True)
     nominal_defocus_range = \
         models.CharField(
@@ -124,7 +124,7 @@ class Acquisition2(models.Model):
                                       default=70)
     # which phase plate are we using
     php = models.IntegerField(choices=PHP_CHOICES,
-                                      default=0)
+                                      default=0, null=True)
     # phase plate starting position
     php_position_start = models.IntegerField(default=-1, null=True)
 
