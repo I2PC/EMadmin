@@ -14,7 +14,7 @@ class UserProfileInline(admin.StackedInline):
 
 class NewUserAdmin(NamedUserAdmin):
     inlines = [UserProfileInline]
-    list_display = ('is_active', 'email', 'name', 'permalink',
+    list_display = ('id', 'is_active', 'email', 'name', 'permalink',
                     'is_superuser', 'is_staff',)
 
     # 'View on site' didn't work since the original User model needs to
