@@ -15,6 +15,7 @@ from create_proj.parse_protocol import parse_protocol
 import subprocess
 from django.http import JsonResponse
 
+SCIPIONNAME='scipion3'
 @login_required
 def index(request):
     return HttpResponse("Rango says hey there world!")
@@ -149,7 +150,7 @@ def create_project(acquisition2):
     """create project from workflow file"""
     acquisition = acquisition2.acquisition
     # get root directory
-    scipion = os.path.join(settings.SCIPIONPATH,'scipion')
+    scipion = os.path.join(settings.SCIPIONPATH,SCIPIONNAME)
     script = os.path.join(settings.SCIPIONPATH,'scripts/create_project.py')
     projname = acquisition.projname
     dataPath = acquisition.microscope.dataFolder
@@ -170,7 +171,7 @@ def call_scipion_last(acquisition2):
     """ start scipion """
 
     # get root directory
-    scipion = os.path.join(settings.SCIPIONPATH,'scipion')
+    scipion = os.path.join(settings.SCIPIONPATH,SCIPIONNAME)
     #run command
     args = [scipion]
     args += ["last"]
@@ -185,7 +186,7 @@ def schedule_protocol(acquisition2):
     if acquisition.schedule is False:
         return
     # get root directory
-    scipion = os.path.join(settings.SCIPIONPATH,'scipion')
+    scipion = os.path.join(settings.SCIPIONPATH,SCIPIONNAME)
     script = os.path.join(settings.SCIPIONPATH,'scripts/schedule_project.py')
     projname = acquisition.projname
     # dataPath = acquisition.microscope.dataFolder
