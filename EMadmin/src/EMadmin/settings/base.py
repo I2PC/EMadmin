@@ -64,7 +64,7 @@ if exists(env_file):
 SECRET_KEY='i1u*m_g^bqs7o0+dh*-6s+-xfbi+t)&&x26xv+imt52zo)6v90'
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '150.244.87.212/21', '192.168.10.212/32']
 
 # Application definition
 
@@ -117,6 +117,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3',
+        #'NAME': '/home/scipionuser/Database/db.sqlite3',
     }
 }
 #DATABASE_URL='sqlite:///db.sqlite3'
@@ -139,7 +140,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-ALLOWED_HOSTS = []
+##ALLOWED_HOSTS = []
 
 # Crispy Form Theme - Bootstrap 3
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -168,8 +169,10 @@ else:
 BACKUPPATH=os.path.join(BACKUPPATH,"media", user)
 DEFAULTWORKFLOW="BASIC_Import_Mcorr2_Ctffind4_Summary"
 DEFAULTWORKFLOWID=2
-if user == "scipionuser":
-    SCIPIONPATH = os.getenv('SCIPION_PATH','/usr/local/scipion')
+import socket
+hostname = socket.gethostname()
+if hostname == 'galileo.cnb.csic.es' or hostname == 'galileo-dos.cnb.csic.es':
+    SCIPIONPATH = '/usr/local/scipion3'
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
 else:
     SCIPIONPATH='/home/roberto/Software/scipion'
@@ -182,7 +185,7 @@ WORKFLOWFILENAME='workflow.json'
 EMAILFROM="noreply-scipionbox@cnb.csic.es"
 EMAILTO="user@domain"
 SMTP="localhost"
-PUBLISHURL="nolan.cnb.csic.es"
+PUBLISHURL="nolan.cnb.csic.es/grafana/d/oYW5BSeWz/summary"
 PUBLISHUSER="scipionbox"
 PUBLISHCMD="rsync -Lav %(REPORT_FOLDER)s " + "%s@%s:public_html/"%(PUBLISHUSER,PUBLISHURL)
 #BACKUPMESSAGE='delete and double click to see mounted disks'
