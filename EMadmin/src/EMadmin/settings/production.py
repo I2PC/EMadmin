@@ -8,7 +8,7 @@ DEBUG = True
 TEMPLATE_DEBUG = False
 
 # Must mention ALLOWED_HOSTS in production!
-ALLOWED_HOSTS = ["127.0.0.1",]
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost']
 
 # Cache the templates in memory for speed-up
 loaders = [
@@ -25,7 +25,8 @@ TEMPLATES[0].update({"APP_DIRS": False})
 STATIC_ROOT = join(BASE_DIR, '..', 'site', 'staticfiles')
 
 # Log everything to the logs directory at the top
-LOGFILE_ROOT = join(dirname(BASE_DIR), 'logs')
+#ROB: LOGFILE_ROOT = join(dirname(BASE_DIR), 'logs')
+LOGFILE_ROOT = '/home/scipionuser/logs'
 
 # Reset logging
 LOGGING_CONFIG = None
