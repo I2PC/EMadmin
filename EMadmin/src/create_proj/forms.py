@@ -55,11 +55,15 @@ class AcquisitionForm(forms.ModelForm):
             data_list = []  # directory does not exists
 
 #    def clean_backupPath(self):
-    def clean(self):
+    def cleanXXXXXXX(self):
         def is_running(process):
             from subprocess import check_output
             try:
-                pidList = check_output(["pidof",process])
+                f = open("/tmp/kk.txt", "w")
+                f.write("pidof= %s" % str(process))
+                f.flush()
+                pidList = check_output(["pidof", process])
+                f.close()
             except subprocess.CalledProcessError:
                 pidList = [0]
             return pidList
