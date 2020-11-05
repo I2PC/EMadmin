@@ -171,12 +171,19 @@ DEFAULTWORKFLOW="BASIC_Import_Mcorr2_Ctffind4_Summary"
 DEFAULTWORKFLOWID=2
 import socket
 hostname = socket.gethostname()
-if hostname == 'galileo.cnb.csic.es' or hostname == 'galileo-dos.cnb.csic.es':
+if hostname == 'galileo.cnb.csic.es':
     SCIPIONPATH = '/usr/local/scipion3'
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
+    VOLTAGE = 200
+elif hostname == 'galileo-dos.cnb.csic.es':
+    SCIPIONPATH = '/usr/local/scipion3'
+    SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
+    VOLTAGE = 300
 else:
     SCIPIONPATH='/home/roberto/Software/scipion'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'
+    VOLTAGE=200
+
 NUMBERCONCEPTS=21
 
 DEFAULTMIC=1
