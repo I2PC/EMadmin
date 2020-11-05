@@ -6,9 +6,9 @@ from django.conf import settings
 class ProjectsTable(tables.Table):
     session_id = tables.TemplateColumn( '{{record.id}}', order_by=('projname'))
 
-    go_to_Html_Summary = tables.TemplateColumn('<a href="http://%s/%s/{{record.projname}}">'
+    go_to_Html_Summary = tables.TemplateColumn('<a href="https://%s?orgId=1&refresh=1m&var-project={{record.projname}}">'
                                      '{{record.projname}}</a>'%
-                                     (settings.PUBLISHURL, settings.PUBLISHUSER), order_by=('projname'))
+                                     (settings.PUBLISHURL), order_by=('projname'))
 
     get_Report = tables.TemplateColumn('<a href={% url "create_report:create_report_latex" record.id %}>'
                                        '{{record.projname}}</a>',
