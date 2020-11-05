@@ -35,6 +35,13 @@
         };
 
     </script>
+      <script>
+          function increaseVolt(){
+            setFormValue("id_voltage", {{ voltage}} )
+        }
+         // Listen to onblur events on field above to trigger calculation
+         $("#id_microscope" ).blur(increaseVolt)
+      </script>
 {% endblock %}
 
 {% block navbar-left %}
