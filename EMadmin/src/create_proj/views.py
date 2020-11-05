@@ -93,7 +93,7 @@ def add_acquisition(request):
                                                  "Please change Sample field"]
                         return render(request,
                                   'create_proj/add_acquisition.html',
-                                  {'form': formP})
+                                  {'form': formP, 'voltage':settings.VOLTAGE})
                     else:
                         formP.errors['microscope'] = e.args[0]
                 # create directories for data (in mic storage disk)
@@ -109,7 +109,7 @@ def add_acquisition(request):
             form2 = SkipAcquisitionForm(user=request.user)
             return render(request,
                   'create_proj/add_acquisition.html',
-                  {'form': formP, 'form2': form2})
+                  {'form': formP, 'form2': form2, 'voltae': settings.VOLTAGE})
     else:
         try:
             default_state = Workflow.objects.get(name=settings.DEFAULTWORKFLOW)
@@ -119,7 +119,7 @@ def add_acquisition(request):
         form2 = SkipAcquisitionForm(user=request.user)  # create a clean form
     return render(request,
                   'create_proj/add_acquisition.html',
-                  {'form': form, 'form2': form2})
+                  {'form': form, 'form2': form2, 'voltage': settings.VOLTAGE})
 
 # AUX FUNCTION FOR ACQUISITION2
 def save_workflow(acquisition2):
