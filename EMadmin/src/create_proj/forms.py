@@ -95,6 +95,11 @@ class AcquisitionForm(forms.ModelForm):
 
 class AcquisitionForm2(forms.ModelForm):
     # An inline class to provide additional information on the form.
+    total_exposure_time =\
+        forms.FloatField(label="Total exposure time per movie (sec)",
+                         help_text='If you fill this field Total Dose per '
+                                   'Movie will be automatically filled in',
+                         initial=0)
     sampling_rate =\
         forms.FloatField(label="Sampling rate (A/px^2)",
                          help_text="Movie pixel rate in Angstroms per pixel")
@@ -102,11 +107,6 @@ class AcquisitionForm2(forms.ModelForm):
         forms.FloatField(label="Dose rate (e/(px^2*sec)) ",
                          help_text = "Dose rate in electrons per pixels"
                                      " and per second",
-                         initial=0)
-    total_exposure_time =\
-        forms.FloatField(label="Total exposure time per movie (sec)",
-                         help_text='If you fill this field Total Dose per '
-                                   'Movie will be automatically filled in',
                          initial=0)
     total_dose_per_movie =\
         forms.FloatField(label="Total dose per movie(e/A^2)",
@@ -124,7 +124,7 @@ class AcquisitionForm2(forms.ModelForm):
     autofocus_distance = forms.FloatField(label='Autofocus periodicity',
                                           help_text = '0 -> always')
 
-    field_order = ['sampling_rate', 'dose_rate', 'total_exposure_time',
+    field_order = ['total_exposure_time','sampling_rate', 'dose_rate',
                    'total_dose_per_movie', 'dose_in_last_fraction',
                    'number_of_fractions',  'frames_in_fraction',
                    'nominal_magnification', 'spotsize',
