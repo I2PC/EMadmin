@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.conf import settings
 from django.db.models.signals import post_save
+from django.conf import settings
 
 # workflow
 class Workflow(models.Model):
@@ -38,7 +39,7 @@ class Acquisition(models.Model):
     workflow   = models.ForeignKey(Workflow, default=settings.DEFAULTWORKFLOWID,
                                    on_delete=models.CASCADE)
     sample     = models.CharField(max_length=128)
-    voltage    = models.IntegerField(default=200)
+    voltage    = models.IntegerField(default=settings.VOLTAGE)
     date       = models.DateTimeField(default=timezone.now, blank=True)  #
     shiftLength = models.FloatField(default=3)
     projname   = models.CharField(max_length=128, blank=True, unique=True)  #
