@@ -14,8 +14,9 @@ import json
 from create_proj.parse_protocol import parse_protocol
 import subprocess
 from django.http import JsonResponse
+from django.conf import settings
 
-SCIPIONNAME='scipion3'
+SCIPIONNAME=settings.SCIPIONNAME
 @login_required
 def index(request):
     return HttpResponse("Rango says hey there world!")

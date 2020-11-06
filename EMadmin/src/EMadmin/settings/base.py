@@ -174,14 +174,17 @@ hostname = socket.gethostname()
 if hostname == 'galileo.cnb.csic.es':
     SCIPIONPATH = '/usr/local/scipion3'
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
+    SCIPIONNAME='scipion3'
     VOLTAGE = 200
 elif hostname == 'galileo-dos.cnb.csic.es':
     SCIPIONPATH = '/usr/local/scipion3'
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
+    SCIPIONNAME='scipion3'
     VOLTAGE = 300
 else:
     SCIPIONPATH='/home/roberto/Software/scipion'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'
+    SCIPIONNAME='scipion3'
     VOLTAGE=200
 
 NUMBERCONCEPTS=21
