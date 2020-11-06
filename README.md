@@ -16,6 +16,7 @@ alias vir_emadmin='source /home/roberto/Scipion/webservices/EMadminVirt/bin/acti
 cd /home/roberto/Scipion/webservices/EMadmin
 rm -rf */migrations
 rm db.sqlite3 
+cd Src
 
 
 for APPLICATION in */models.py
@@ -57,7 +58,7 @@ python manage.py collectstatic
 
 start django
 
-    python manage,py runserver
+    python manage.py runserver
     
 connect to server
 
