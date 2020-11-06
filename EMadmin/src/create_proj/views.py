@@ -243,7 +243,7 @@ def add_acquisition2(request):
         projname = acquisition2.acquisition.projname
         username = settings.PUBLISHUSER
         _url = settings.PUBLISHURL
-        _dict["URL"]="http://%s/%s/%s"%(_url, username, projname)
+        _dict["URL"]="http://%s?orgId=1&refresh=1m&var-project=%s"%(_url,  projname)
         return render(request,'create_proj/done.html',_dict)
     else:
         form = AcquisitionForm2()
