@@ -1,6 +1,6 @@
 cycler==0.10.0
 dj-static==0.0.6
-Django==2.2
+Django==2.2.13
 django-admin-bootstrapped==2.5.7
 django-authtools==1.6.0
 django-braces==1.13.0
