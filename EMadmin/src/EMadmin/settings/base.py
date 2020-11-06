@@ -172,24 +172,35 @@ DEFAULTWORKFLOWID=2
 import socket
 hostname = socket.gethostname()
 if hostname == 'galileo.cnb.csic.es':
+    DEFAULTMIC=1
     SCIPIONPATH = '/usr/local/scipion3'
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
     SCIPIONNAME='scipion3'
     VOLTAGE = 200
+    MICNAME='Talos'
+    MICMODEL='Talos Artica'
+    CAMARA='Falcon III'
 elif hostname == 'galileo-dos.cnb.csic.es':
+    DEFAULTMIC=2
     SCIPIONPATH = '/usr/local/scipion3'
     SCIPIONUSERDATA='/home/scipionuser/ScipionUserData'
     SCIPIONNAME='scipion3'
     VOLTAGE = 300
+    MICNAME='CryoARM'
+    MICMODEL='JEOL CryoARM'
+    CAMARA='K3'   
 else:
+    DEFAULTMIC=1
     SCIPIONPATH='/home/roberto/Software/scipion'
     SCIPIONUSERDATA='/home/roberto/ScipionUserData'
     SCIPIONNAME='scipion3'
     VOLTAGE=200
+    MICNAME='Talos'
+    MICMODEL='Talos Artica'
+    CAMARA='Falcon III'
 
 NUMBERCONCEPTS=21
 
-DEFAULTMIC=1
 #DEFAULTWORKFLOW=2
 WORKFLOWFILENAME='workflow.json'
 EMAILFROM="noreply-scipionbox@cnb.csic.es"
