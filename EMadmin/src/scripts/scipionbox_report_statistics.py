@@ -39,7 +39,8 @@ import sys
 # from pyworkflow.manager import Manager
 from pyworkflow.project import Manager
 import pyworkflow.utils as pwutils
-from pyworkflow.em.data import SetOfCTF
+from pwem.objects.data import SetOfCTF
+#from pyworkflow.em.data import SetOfCTF
 import json
 import argparse
 
