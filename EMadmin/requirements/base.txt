@@ -10,8 +10,8 @@ django-environ
 django-filebrowser
 django-grappelli
 django-tables2
-django-tables2
 django-settings-export
+django-urls
 dj-static
 easy-thumbnails
 gunicorn

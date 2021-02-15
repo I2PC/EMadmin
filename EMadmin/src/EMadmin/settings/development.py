@@ -16,7 +16,7 @@ INSTALLED_APPS += (
     'debug_toolbar',)
 
 # Additional middleware introduced by debug toolbar
-MIDDLEWARE_CLASSES += (
+MIDDLEWARE += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 # Show emails to console in DEBUG mode
@@ -33,11 +33,12 @@ INTERNAL_IPS = [
 
 # Log everything to the logs directory at the top
 #ROB: LOGFILE_ROOT = join(dirname(BASE_DIR), 'logs')
-LOGFILE_ROOT = '/home/scipionuser/logs'
+LOGFILE_ROOT = os.environ.get('LOGFILE_ROOT', '/home/scipionuser/logs')
 
 # Reset logging
 # (see http://www.caktusgroup.com/blog/2015/01/27/Django-Logging-Configuration-logging_config-default-settings-logger/)
 
+import logging
 LOGGING_CONFIG = None
 LOGGING = {
     'version': 1,

@@ -188,7 +188,16 @@ elif hostname == 'galileo-dos.cnb.csic.es':
     VOLTAGE = 300
     MICNAME='CryoARM'
     MICMODEL='JEOL CryoARM'
-    CAMARA='K3'   
+    CAMARA='K3'
+elif hostname == 'euclides':
+    DEFAULTMIC = 1
+    SCIPIONPATH = '/home/danieldh/i2pc'
+    SCIPIONUSERDATA = '/home/danieldh/ScipionUserData'
+    SCIPIONNAME = 'scipion3'
+    VOLTAGE = 200
+    MICNAME = 'Talos200'
+    MICMODEL = 'Talos'
+    CAMARA = 'Falcon III'
 else:
     DEFAULTMIC=1
     SCIPIONPATH='/home/roberto/Software/scipion'

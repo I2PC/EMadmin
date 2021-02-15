@@ -152,7 +152,7 @@ def create_project(acquisition2):
     acquisition = acquisition2.acquisition
     # get root directory
     scipion = os.path.join(settings.SCIPIONPATH,SCIPIONNAME)
-    script = os.path.join(settings.SCIPIONPATH,'scripts/create_project.py')
+    script = ' -m pyworkflow.project.scripts.create'
     projname = acquisition.projname
     dataPath = acquisition.microscope.dataFolder
     workflowPath = os.path.join(dataPath,projname,settings.WORKFLOWFILENAME)
@@ -161,6 +161,7 @@ def create_project(acquisition2):
     args += [script]
     args += [projname]
     args += [workflowPath]
+    #TODO: check if project is deleted from database when error
     proc = subprocess.Popen([scipion] +  args)
     proc.wait() # wait untill process finish
 
@@ -188,7 +189,8 @@ def schedule_protocol(acquisition2):
         return
     # get root directory
     scipion = os.path.join(settings.SCIPIONPATH,SCIPIONNAME)
-    script = os.path.join(settings.SCIPIONPATH,'scripts/schedule_project.py')
+    #script = os.path.join(settings.SCIPIONPATH,'scripts/schedule_project.py')
+    script = ' -m pyworkflow.project.scripts.schedule'
     projname = acquisition.projname
     # dataPath = acquisition.microscope.dataFolder
     # workfowPath = os.path.join(dataPath,projname,settings.WORKFLOWFILENAME)
