@@ -1,6 +1,5 @@
-#ckports.functools-lru-cache==1.4
 cycler
-Django
+Django==2.2
 django-admin-bootstrapped
 django-authtools
 django-braces
