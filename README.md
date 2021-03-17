@@ -2,84 +2,29 @@
 
 # EMadmin
 
-EMadmin is a _short description_. It is built with [Python][0] using the [Django Web Framework][1].
-
+EMadmin is a web tool designed to use scipion software at microscopy facilities. It is built with Python using the Django Web Framework.
 
 ## Installation
 
-### Quick start
-
-Start virtual enviroment (if developement) or just default python (production)
+Create a Python 3 virtual environment, activate it and install all dependencies (make sure your pip installation is upgraded):
 
 ```
-alias vir_emadmin='source /home/roberto/Scipion/webservices/EMadminVirt/bin/activate'
-cd /home/roberto/Scipion/webservices/EMadmin
-rm -rf */migrations
-rm db.sqlite3 
-cd Src
+cd EMadmin
+python3 -m venv ./venv
+source venv/bin/activate
+cd EMadmin
+pip install --upgrade pip
+pip install -r requirements.txt
+```
 
+Then, make and run migrations, create a superuser and launch the server on a free port:
 
-for APPLICATION in */models.py
-   do 
-        echo $APPLICATION
-        rm -rf $(dirname $APPLICATION)/migrations
-   done
-   
-for APPLICATION in */models.py
-   do 
-        echo $APPLICATION
-        python manage.py makemigrations $(dirname $APPLICATION)
-   done
-
+```
+cd src
 python manage.py makemigrations accounts create_proj create_report create_stat invoice profiles
 python manage.py migrate
 python manage.py createsuperuser
-python manage.py runserver
-``` 
+python manage.py runserver 8000
+```
 
-To set up a development environment quickly, first install Python 3. It
-comes with virtualenv built-in. So create a virtual env by:
-
-    1. `$ python -m venv EMadmin`
-    2. `$ . EMadmin/bin/activate`
-    
-NOTE: your virtualenv needs to be python 2
-
-Install all dependencies:
-
-    pip install -r requirements.txt
-
-Run migrations:
-
-    python manage.py migrate
-python manage.py collectstatic
-
-### Detailed instructions
-
-start django
-
-    python manage.py runserver
-    
-connect to server
-
-   http://localhost:8000
-
-DROP
- create_proj_adquisition2
-   dose_per_frame
-   dose_rate
-   nominal_defocus
- create_proj_microscope
-   dose_per_fraction
- invoce_concept
-   * unit_proce_university
-   * unitprice_empresa
- invoice_invoice
-  * startDate
-  * endDate
-  * type
-  * concept
-
-
-
-   
+Finally, you can connect to the server at http://localhost:8000
