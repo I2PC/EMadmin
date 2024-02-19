@@ -26,7 +26,7 @@ STATIC_ROOT = join(BASE_DIR, '..', 'site', 'staticfiles')
 
 # Log everything to the logs directory at the top
 #ROB: LOGFILE_ROOT = join(dirname(BASE_DIR), 'logs')
-LOGFILE_ROOT = '/home/scipionuser/logs'
+LOGFILE_ROOT = '/home/irene/logs'
 
 # Reset logging
 LOGGING_CONFIG = None

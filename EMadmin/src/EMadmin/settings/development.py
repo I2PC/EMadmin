@@ -33,7 +33,7 @@ INTERNAL_IPS = [
 
 # Log everything to the logs directory at the top
 #ROB: LOGFILE_ROOT = join(dirname(BASE_DIR), 'logs')
-LOGFILE_ROOT = os.environ.get('LOGFILE_ROOT', '/home/scipionuser/logs')
+LOGFILE_ROOT = os.environ.get('LOGFILE_ROOT', '/home/irene/logs')
 
 # Reset logging
 # (see http://www.caktusgroup.com/blog/2015/01/27/Django-Logging-Configuration-logging_config-default-settings-logger/)

@@ -30,18 +30,30 @@ def create_directory_three(acquisition):
         if not os.path.exists(p):
             os.makedirs(p)
 
-    # get root directory
-    dataPath = acquisition.microscope.dataFolder
-    projname = acquisition.projname
-    projPath = os.path.join(dataPath,projname)
-    sys.stdout.write("Creating directories at path '%s' ... " % projPath)
-    _createPath(projPath)
 
-    #create GRIDS
-    for i in range(12):
-        gridFolder = os.path.join(projPath, 'GRID_%02d' % (i + 1))
-        _createPath(os.path.join(gridFolder, 'ATLAS'))
-        _createPath(os.path.join(gridFolder, 'DATA'))
+    if settings.CAMARA != 'Falcon IV':
+        # get root directory
+        dataPath = acquisition.microscope.dataFolder
+        projname = acquisition.projname
+        projPath = os.path.join(dataPath,projname)
+        sys.stdout.write("Creating directories at path '%s' ... " % projPath)
+        _createPath(projPath)
+
+        #create GRIDS
+        for i in range(12):
+            gridFolder = os.path.join(projPath, 'GRID_%02d' % (i + 1))
+            _createPath(os.path.join(gridFolder, 'ATLAS'))
+            _createPath(os.path.join(gridFolder, 'DATA'))
+    else:
+        dataPath = acquisition.microscope.dataFolder
+        projname = acquisition.projname
+        atlasPath = os.path.join(dataPath,projname + '_ATLAS')
+        moviesPath = os.path.join(dataPath,projname + '_DATA')
+        alignedMoviesPath = os.path.join(dataPath, 'exportData', 'Athena_Exported_Datasets', projname + '_ALIGNED_DATA')
+        sys.stdout.write("Creating directories at paths '%s', '%s' and '%s' ... " % (atlasPath, moviesPath, alignedMoviesPath))
+        _createPath(atlasPath)
+        _createPath(moviesPath)
+        _createPath(alignedMoviesPath)
 
 def launch_backup(acquisition):
     """backup using lsyncd
@@ -131,7 +143,10 @@ def save_workflow(acquisition2):
     # get root directory
     dataPath = acquisition.microscope.dataFolder
     projname = acquisition.projname
-    projectPath = os.path.join(dataPath, projname)
+    if settings.CAMARA != 'Falcon IV':
+        projectPath = os.path.join(dataPath, projname)
+    else:
+        projectPath = os.path.join(dataPath, projname + '_DATA')
     workflow = acquisition.workflow.workflow
     workflowPath = os.path.join(projectPath, settings.WORKFLOWFILENAME)
     # PARSE PROTOCOLS
@@ -155,7 +170,10 @@ def create_project(acquisition2):
     script = ' -m pyworkflow.project.scripts.create'
     projname = acquisition.projname
     dataPath = acquisition.microscope.dataFolder
-    workflowPath = os.path.join(dataPath,projname,settings.WORKFLOWFILENAME)
+    if settings.CAMARA != 'Falcon IV':
+        workflowPath = os.path.join(dataPath,projname,settings.WORKFLOWFILENAME)
+    else:
+        workflowPath = os.path.join(dataPath,projname + '_DATA',settings.WORKFLOWFILENAME)
     #run command
     args = ["python"]
     args += [script]

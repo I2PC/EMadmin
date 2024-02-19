@@ -198,6 +198,15 @@ elif hostname == 'euclides':
     MICNAME = 'Talos200'
     MICMODEL = 'Talos'
     CAMARA = 'Falcon III'
+elif hostname == 'galileo-tres':
+    DEFAULTMIC = 1
+    SCIPIONPATH = '/usr/local/scipion3'
+    SCIPIONUSERDATA = '/home/scipionuser/ScipionUserData'
+    SCIPIONNAME = 'scipion3'
+    VOLTAGE = 200
+    MICNAME = 'Talos'
+    MICMODEL = 'Talos Artica'
+    CAMARA = 'Falcon IV'
 else:
     DEFAULTMIC=1
     SCIPIONPATH='/home/roberto/Software/scipion'

@@ -7,8 +7,25 @@ def parse_ProtImportMovies(protocol, acquisition2):
     dataPath = acquisition.microscope.dataFolder
     projname = acquisition.projname
     projectPath = os.path.join(dataPath, projname)
-    protocol['filesPath'] = projectPath + \
-                                    '/GRID_??/DATA/Images-Disc1/GridSquare_*/DATA/'
+
+    if settings.CAMARA != 'Falcon IV':
+        protocol['filesPath'] = projectPath + \
+                                        '/GRID_??/DATA/Images-Disc1/GridSquare_*/DATA/'
+    else:
+        protocol['filesPath'] = projectPath + '/Images-Disc1/GridSquare_*/Data/'
+    protocol['voltage'] = acquisition.voltage
+    protocol["sphericalAberration"] = acquisition.microscope.cs
+    protocol["magnification"] = acquisition2.nominal_magnification
+    protocol["samplingRate"] = acquisition2.sampling_rate
+    protocol["dosePerFrame"] = acquisition2.dose_per_fraction
+
+def parse_ProtImportMicrographs(protocol, acquisition2):
+    acquisition = acquisition2.acquisition
+    # get root directory
+    dataPath = acquisition.microscope.dataFolder
+    projname = acquisition.projname
+    alignedMoviesPath = os.path.join(dataPath, 'exportData', 'Athena_Exported_Datasets', projname + '_ALIGNED_DATA')
+    protocol['filesPath'] = alignedMoviesPath + '_*/*/'
     protocol['voltage'] = acquisition.voltage
     protocol["sphericalAberration"] = acquisition.microscope.cs
     protocol["magnification"] = acquisition2.nominal_magnification
@@ -31,3 +48,6 @@ def parse_protocol(protocol, acquisition2):
         pass
     elif key=="ProtMonitorSummary":
         parse_ProtMonitorSummary(protocol, acquisition2)
+    elif key=="ProtImportMicrographs":
+        if settings.CAMARA == 'Falcon IV':
+            parse_ProtImportMicrographs(protocol, acquisition2)
