@@ -49,11 +49,9 @@ def create_directory_three(acquisition):
         projname = acquisition.projname
         atlasPath = os.path.join(dataPath,projname + '_ATLAS')
         moviesPath = os.path.join(dataPath,projname + '_DATA')
-        alignedMoviesPath = os.path.join(dataPath, 'exportData', 'Athena_Exported_Datasets', projname + '_ALIGNED_DATA')
-        sys.stdout.write("Creating directories at paths '%s', '%s' and '%s' ... " % (atlasPath, moviesPath, alignedMoviesPath))
+        sys.stdout.write("Creating directories at paths '%s' and '%s' ... " % (atlasPath, moviesPath))
         _createPath(atlasPath)
         _createPath(moviesPath)
-        _createPath(alignedMoviesPath)
 
 def launch_backup(acquisition):
     """backup using lsyncd

@@ -12,7 +12,7 @@ def parse_ProtImportMovies(protocol, acquisition2):
         protocol['filesPath'] = projectPath + \
                                         '/GRID_??/DATA/Images-Disc1/GridSquare_*/DATA/'
     else:
-        protocol['filesPath'] = projectPath + '/Images-Disc1/GridSquare_*/Data/'
+        protocol['filesPath'] = projectPath + '_DATA/Images-Disc1/GridSquare_*/Data/'
     protocol['voltage'] = acquisition.voltage
     protocol["sphericalAberration"] = acquisition.microscope.cs
     protocol["magnification"] = acquisition2.nominal_magnification
@@ -24,7 +24,7 @@ def parse_ProtImportMicrographs(protocol, acquisition2):
     # get root directory
     dataPath = acquisition.microscope.dataFolder
     projname = acquisition.projname
-    alignedMoviesPath = os.path.join(dataPath, 'exportData', 'Athena_Exported_Datasets', projname + '_ALIGNED_DATA')
+    alignedMoviesPath = os.path.join(dataPath, 'exportData', 'Athena_Exported_Datasets', projname)
     protocol['filesPath'] = alignedMoviesPath + '_*/*/'
     protocol['voltage'] = acquisition.voltage
     protocol["sphericalAberration"] = acquisition.microscope.cs
