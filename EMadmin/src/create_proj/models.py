@@ -45,6 +45,7 @@ class Acquisition(models.Model):
     projname   = models.CharField(max_length=128, blank=True, unique=True)  #
     backupPath = models.CharField(max_length=128,
                                   default='NOBACKUP',blank=True)
+    nOfDataFolders = models.FloatField(default=1)
     multiple_backup = models.BooleanField(default=False)
     schedule = models.BooleanField(default=False)
     noScipionProject = models.BooleanField(default=False)  # scipion project

@@ -48,10 +48,11 @@ def create_directory_three(acquisition):
         dataPath = acquisition.microscope.dataFolder
         projname = acquisition.projname
         atlasPath = os.path.join(dataPath,projname + '_ATLAS')
-        moviesPath = os.path.join(dataPath,projname + '_DATA')
-        sys.stdout.write("Creating directories at paths '%s' and '%s' ... " % (atlasPath, moviesPath))
+        moviesPaths = [os.path.join(dataPath, projname + '_DATA_' + str(i)) for i in range(1, int(acquisition.nOfDataFolders+1))]
+        sys.stdout.write("Creating directories at paths '%s' and '%s' ... " % (atlasPath, moviesPaths))
         _createPath(atlasPath)
-        _createPath(moviesPath)
+        for moviesPath in moviesPaths:
+            _createPath(moviesPath)
 
 def launch_backup(acquisition):
     """backup using lsyncd
@@ -144,7 +145,7 @@ def save_workflow(acquisition2):
     if settings.CAMARA != 'Falcon IV':
         projectPath = os.path.join(dataPath, projname)
     else:
-        projectPath = os.path.join(dataPath, projname + '_DATA')
+        projectPath = os.path.join(dataPath, projname + '_DATA_1')
     workflow = acquisition.workflow.workflow
     workflowPath = os.path.join(projectPath, settings.WORKFLOWFILENAME)
     # PARSE PROTOCOLS
@@ -171,7 +172,7 @@ def create_project(acquisition2):
     if settings.CAMARA != 'Falcon IV':
         workflowPath = os.path.join(dataPath,projname,settings.WORKFLOWFILENAME)
     else:
-        workflowPath = os.path.join(dataPath,projname + '_DATA',settings.WORKFLOWFILENAME)
+        workflowPath = os.path.join(dataPath,projname + '_DATA_1',settings.WORKFLOWFILENAME)
     #run command
     args = ["python"]
     args += [script]

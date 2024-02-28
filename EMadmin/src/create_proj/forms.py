@@ -32,6 +32,7 @@ class AcquisitionForm(forms.ModelForm):
     backupPath = forms.CharField(required=False,
                                  label="Backup (double click to see disks)",
                                  widget=forms.HiddenInput())
+    nOfDataFolders = forms.FloatField(initial=1, label="Number of data folders") # for multigrid cases
     schedule = forms.BooleanField(widget= forms.CheckboxInput(),initial=False,
                                   label="Run scipion in batch mode (schedule)",
                                   required=False)
