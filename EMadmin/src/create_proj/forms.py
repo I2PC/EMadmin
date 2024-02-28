@@ -32,7 +32,6 @@ class AcquisitionForm(forms.ModelForm):
     backupPath = forms.CharField(required=False,
                                  label="Backup (double click to see disks)",
                                  widget=forms.HiddenInput())
-    nOfDataFolders = forms.FloatField(initial=1, label="Number of data folders") # for multigrid cases
     schedule = forms.BooleanField(widget= forms.CheckboxInput(),initial=False,
                                   label="Run scipion in batch mode (schedule)",
                                   required=False)
@@ -96,6 +95,7 @@ class AcquisitionForm(forms.ModelForm):
 
 class AcquisitionForm2(forms.ModelForm):
     # An inline class to provide additional information on the form.
+    nOfDataFolders = forms.FloatField(initial=1, label="Number of data folders") # for multigrid cases
     total_exposure_time =\
         forms.FloatField(label="Total exposure time per movie (sec)",
                          help_text='If you fill this field Total Dose per '

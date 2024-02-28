@@ -45,7 +45,6 @@ class Acquisition(models.Model):
     projname   = models.CharField(max_length=128, blank=True, unique=True)  #
     backupPath = models.CharField(max_length=128,
                                   default='NOBACKUP',blank=True)
-    nOfDataFolders = models.FloatField(default=1)
     multiple_backup = models.BooleanField(default=False)
     schedule = models.BooleanField(default=False)
     noScipionProject = models.BooleanField(default=False)  # scipion project
@@ -90,6 +89,8 @@ class Acquisition2(models.Model):
     sampling_rate = models.FloatField(blank=False)  # A/px OK
     spotsize = models.FloatField(blank=False)
     illuminated_area = models.FloatField(blank=True, default=1.68) #microns OK
+
+    nOfDataFolders = models.FloatField(default=1)
 
     # DOSE IN FRACTION NOT FOR FORM
     dose_per_fraction = models.FloatField(blank=False, default=0)

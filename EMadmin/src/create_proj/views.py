@@ -22,7 +22,7 @@ def index(request):
     return HttpResponse("Rango says hey there world!")
 
 #ACQUISITION AUX FUNCTION
-def create_directory_three(acquisition):
+def create_directory_three(dataPath, projname, atlas=True, movies=True, ngrids=1):
     """ Create directories to store movies
     """
     def _createPath(p):
@@ -30,29 +30,29 @@ def create_directory_three(acquisition):
         if not os.path.exists(p):
             os.makedirs(p)
 
-
     if settings.CAMARA != 'Falcon IV':
-        # get root directory
-        dataPath = acquisition.microscope.dataFolder
-        projname = acquisition.projname
         projPath = os.path.join(dataPath,projname)
         sys.stdout.write("Creating directories at path '%s' ... " % projPath)
         _createPath(projPath)
-
         #create GRIDS
         for i in range(12):
             gridFolder = os.path.join(projPath, 'GRID_%02d' % (i + 1))
-            _createPath(os.path.join(gridFolder, 'ATLAS'))
-            _createPath(os.path.join(gridFolder, 'DATA'))
+            if atlas:
+                sys.stdout.write("Creating ATLAS folder at path '%s' ... " % os.path.join(gridFolder, 'ATLAS'))
+                _createPath(os.path.join(gridFolder, 'ATLAS'))
+            if movies:
+                sys.stdout.write("Creating movies folder at path '%s' ... " % os.path.join(gridFolder, 'DATA'))
+                _createPath(os.path.join(gridFolder, 'DATA'))
     else:
-        dataPath = acquisition.microscope.dataFolder
-        projname = acquisition.projname
-        atlasPath = os.path.join(dataPath,projname + '_ATLAS')
-        moviesPaths = [os.path.join(dataPath, projname + '_DATA_' + str(i)) for i in range(1, int(acquisition.nOfDataFolders+1))]
-        sys.stdout.write("Creating directories at paths '%s' and '%s' ... " % (atlasPath, moviesPaths))
-        _createPath(atlasPath)
-        for moviesPath in moviesPaths:
-            _createPath(moviesPath)
+        if atlas:
+            atlasPath = os.path.join(dataPath,projname + '_ATLAS')
+            sys.stdout.write("Creating ATLAS folder at path '%s' ... " % atlasPath)
+            _createPath(atlasPath)
+        if movies:
+            moviesPaths = [os.path.join(dataPath, projname + '_DATA_' + str(i)) for i in range(1, int(ngrids)+1)]
+            for moviesPath in moviesPaths:
+                sys.stdout.write("Creating movies folder at path '%s' ... " % moviesPath)
+                _createPath(moviesPath)
 
 def launch_backup(acquisition):
     """backup using lsyncd
@@ -108,8 +108,8 @@ def add_acquisition(request):
                                   {'form': formP, 'voltage':settings.VOLTAGE})
                     else:
                         formP.errors['microscope'] = e.args[0]
-                # create directories for data (in mic storage disk)
-                create_directory_three(acquisition)
+                # create directories for atlas data (in mic storage disk)
+                create_directory_three(acquisition.microscope.dataFolder, acquisition.projname, atlas=True, movies=False)
             else:
                 acquisition =formP.cleaned_data['project']
             # save acquisition as session variable so we can link
@@ -221,7 +221,6 @@ def schedule_protocol(acquisition2):
     proc = subprocess.Popen([scipion] +  args)
     proc.wait()
 
-
 @login_required
 def add_acquisition2(request):
     """ Process second half of the form
@@ -244,7 +243,8 @@ def add_acquisition2(request):
                     return render(request,
                                   'create_proj/add_acquisition2.html',
                                   {'form': form})
-
+            # create directories for movies data (in mic storage disk)
+            create_directory_three(acquisition2.acquisition.microscope.dataFolder, acquisition2.acquisition.projname, atlas=True, movies=True, ngrids=acquisition2.nOfDataFolders)
             #create workflow and replace values
             save_workflow(acquisition2)
             #create_project
