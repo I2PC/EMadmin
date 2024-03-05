@@ -13,6 +13,7 @@ def parse_ProtImportMovies(protocol, acquisition2):
                                         '/GRID_??/DATA/Images-Disc1/GridSquare_*/DATA/'
     else:
         protocol['filesPath'] = projectPath + '_DATA_1/Images-Disc1/GridSquare_*/Data/'
+        protocol['gainFile'] = projectPath + '_DATA_1/*EER_GainReference.gain'
     protocol['voltage'] = acquisition.voltage
     protocol["sphericalAberration"] = acquisition.microscope.cs
     protocol["magnification"] = acquisition2.nominal_magnification
